@@ -1,9 +1,10 @@
-package com.sandman.game;
+package com.sandman.game.Scene;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.sandman.game.Sandman;
 
 
 public class MainMenuScreen implements Screen {
@@ -19,18 +20,19 @@ public class MainMenuScreen implements Screen {
     
 	@Override
 	public void render(float delta) {
-		ScreenUtils.clear(0, 0, 0.2f, 1);
+        // TODO Refaire le menu principal
+		ScreenUtils.clear(0, 0, 0.128f, 1);
 
 		camera.update();
 		game.batch.setProjectionMatrix(camera.combined);
 
 		game.batch.begin();
-		game.font.draw(game.batch, "Welcome to Drop!!! ", 100, 150);
-		game.font.draw(game.batch, "Tap anywhere to begin!", 100, 100);
+		game.font.draw(game.batch, "Bienvenue sur le Menu Principal", 300, 240);
+		game.font.draw(game.batch, "Appuyer pour commencer à jouer", 300, 200);
 		game.batch.end();
 
 		if (Gdx.input.isTouched()) {
-			game.setScreen(new GameScreen(game));
+			game.setScreen(new LevelJardin(game));
 			dispose();
 		}
 	}
@@ -41,32 +43,27 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void show() {
-        // TODO Auto-generated method stub
         
     }
 
     @Override
     public void resize(int width, int height) {
-        // TODO Auto-generated method stub
         
     }
 
     @Override
     public void pause() {
-        // TODO Auto-generated method stub
         
     }
 
     @Override
     public void resume() {
-        // TODO Auto-generated method stub
         
     }
 
     @Override
     public void hide() {
-        // TODO Auto-generated method stub
-        
+    
     }
         
 }

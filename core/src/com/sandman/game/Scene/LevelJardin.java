@@ -1,4 +1,4 @@
-package com.sandman.game;
+package com.sandman.game.Scene;
 
 import java.util.Iterator;
 
@@ -15,8 +15,9 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.sandman.game.Sandman;
     
-public class GameScreen implements Screen {
+public class LevelJardin implements Screen {
     final Sandman game;
     
     Texture dropImage;
@@ -29,7 +30,7 @@ public class GameScreen implements Screen {
     long lastDropTime;
     int dropsGathered;
     
-    public GameScreen(final Sandman game) {
+    public LevelJardin(final Sandman game) {
         this.game = game;
 
         // load the images for the droplet and the bucket, 64x64 pixels each
@@ -69,11 +70,8 @@ public class GameScreen implements Screen {
     
     @Override
     public void render(float delta) {
-        // clear the screen with a dark blue color. The
-        // arguments to clear are the red, green
-        // blue and alpha component in the range [0,1]
-        // of the color to be used to clear the screen.
-        ScreenUtils.clear(0, 0, 0.2f, 1);
+        
+        ScreenUtils.clear(0, 0.2f, 1f, 1);
     
         // tell the camera to update its matrices.
         camera.update();
