@@ -9,6 +9,7 @@ public class Herbe {
     private float y;
 
     // TODO Interface plateforme qui permettra de gerer toute les plateforme de la même manière
+    // TODO Interface freezable qui demande l'implementation d'une méthode stoptime
     public Herbe(float x,float y,float width,float height){
         this.x = x;
         this.y = y;

@@ -1,7 +1,6 @@
 package com.sandman.game.Scene;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -60,15 +59,8 @@ public class LevelJardin implements Screen {
         perso.render(game.batch);
         game.batch.end();
 
-        if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
-			camera.translate(-3, 0, 0);
-            perso.gauche();
-		}
-
-        if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-			camera.translate(3, 0, 0);
-            perso.droite();
-		}
+        perso.mouvement(delta,camera);
+        
     
     }
     
