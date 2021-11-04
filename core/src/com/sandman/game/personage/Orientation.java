@@ -1,4 +1,4 @@
-package com.sandman.game;
+package com.sandman.game.personage;
 
 public enum Orientation {
     DROITE,GAUCHE;

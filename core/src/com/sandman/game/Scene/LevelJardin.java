@@ -7,8 +7,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.sandman.game.Perso;
 import com.sandman.game.Sandman;
+import com.sandman.game.personage.Perso;
     
 public class LevelJardin implements Screen {
     final Sandman game;
