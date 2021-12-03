@@ -19,7 +19,11 @@ public class LevelJardin implements Screen {
     OrthographicCamera camera;
     Rectangle sol;
 
-    
+    //Attributs pour tmx    
+    private TmxMapLoader maploader;
+    private TiledMap map;
+    private OrthogonalTiledMapRenderer renderer;
+  
     public LevelJardin(final Sandman game) {
         this.game = game;
 
