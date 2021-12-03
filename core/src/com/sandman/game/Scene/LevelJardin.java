@@ -1,7 +1,7 @@
 package com.sandman.game.Scene;
 
-
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -25,7 +25,7 @@ public class LevelJardin implements Screen {
         this.game = game;
 
        camera = new OrthographicCamera();
-       camera.setToOrtho(false, 800, 480);
+       camera.setToOrtho(false, 320, 320);
 
 
        maploader = new TmxMapLoader();
@@ -43,17 +43,17 @@ public class LevelJardin implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        game.batch.setProjectionMatrix(camera.combined);
         renderer.render();
-
-        //game.batch.setProjectionMatrix(camera.combined);
-
-        
     
     }
 
     public void handleInput(float dt) {
-    	if(Gdx.input.isTouched()) {
+    	if(Gdx.input.isKeyPressed(Input.Keys.D)) {
     		camera.position.x += 100 * dt;
+    	}
+        if(Gdx.input.isKeyPressed(Input.Keys.Q)) {
+    		camera.position.x -= 100 * dt;
     	}
     }    
     //Méthode pour mettre à jour l'écran et gérer l'input ca marche po
