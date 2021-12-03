@@ -27,10 +27,7 @@ public class LevelJardin implements Screen {
        this.game = game;
 
        camera = new OrthographicCamera();
-       camera.setToOrtho(false, 800, 480);
-      
-      
-       gamePort = new FitViewport(Sandman.V_WIDTH, Sandman.V_HEIGHT, camera);
+       camera.setToOrtho(false, Sandman.V_WIDTH, Sandman.V_HEIGHT);
        
        hud = new Hud(game.batch);
 
