@@ -48,6 +48,19 @@ public class LevelJardin implements Screen {
         
         //Set our batch to now draw what the Hud camera sees.
     }
+
+    public void handleInput(float dt) {
+    	if(Gdx.input.isTouched()) {
+    		camera.position.x += 100 * dt;
+    	}
+    }
+
+    public void update(float dt) {
+    	handleInput(dt);
+
+    	camera.update();
+    	renderer.setView(camera);
+    }
     
     @Override
     public void resize(int width, int height) {
