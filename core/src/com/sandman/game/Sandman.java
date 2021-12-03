@@ -11,6 +11,10 @@ public class Sandman extends Game{
     
     public SpriteBatch batch;
 	public BitmapFont font;
+	
+	//Scren size
+	public static final int V_WIDTH = 800;
+    public static final int V_HEIGHT = 200;
 
 	public void create() {
 		batch = new SpriteBatch();
