@@ -20,13 +20,19 @@ public class LevelJardin implements Screen {
     private TmxMapLoader maploader;
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
+    
+    private Hud hud;
 
     public LevelJardin(final Sandman game) {
-        this.game = game;
+       this.game = game;
 
        camera = new OrthographicCamera();
-       camera.setToOrtho(false, 320, 320);
-
+       camera.setToOrtho(false, 800, 480);
+      
+      
+       gamePort = new FitViewport(Sandman.V_WIDTH, Sandman.V_HEIGHT, camera);
+       
+       hud = new Hud(game.batch);
 
        maploader = new TmxMapLoader();
        map = maploader.load("jardin.tmx");
@@ -45,7 +51,12 @@ public class LevelJardin implements Screen {
 
         game.batch.setProjectionMatrix(camera.combined);
         renderer.render();
-    
+
+        //game.batch.setProjectionMatrix(camera.combined);
+
+        
+        game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
+        hud.stage.draw();
     }
 
     public void handleInput(float dt) {
