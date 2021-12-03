@@ -18,7 +18,6 @@ public class Hud {
 	private Viewport viewport;
 	
 	private Integer worldTimer;
-	private float timeCount;
 	private Integer score;
 	
 	//Tous les attributs qui seront affichés
@@ -31,7 +30,6 @@ public class Hud {
 	
 	public Hud(SpriteBatch sb) {
 		worldTimer = 300;
-		timeCount = 0;
 		score = 0;
 		
 		viewport = new FitViewport(Sandman.V_WIDTH, Sandman.V_HEIGHT, new OrthographicCamera());
