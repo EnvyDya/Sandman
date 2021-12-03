@@ -2,78 +2,93 @@ package com.sandman.game.Scene;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.sandman.game.Sandman;
+import com.sandman.game.personage.Perso;
     
 public class LevelJardin implements Screen {
     private final Sandman game;
     
-    private OrthographicCamera camera;
-    private Viewport gamePort;
+    Texture soltext;
+    Perso perso;
+    Music rainMusic;
+    OrthographicCamera camera;
+    Rectangle sol;
 
-    
     //Attributs pour tmx    
     private TmxMapLoader maploader;
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
-    
+  
     public LevelJardin(final Sandman game) {
         this.game = game;
 
-       camera = new OrthographicCamera();
-       
-       gamePort = new FitViewport(800, 200, camera);
-       
-       maploader = new TmxMapLoader();
-       maploader.load("jardin.tmx");
-       renderer = new OrthogonalTiledMapRenderer(map);
-       camera.position.set(gamePort.getWorldWidth()/2, gamePort.getWorldHeight()/2, 0);
+        soltext = new Texture(Gdx.files.internal("grass.png"));
+        perso = new Perso(336f, 64f, 64f, 64f);
+    
+        // load the rain background "music"
+        //rainMusic = Gdx.audio.newMusic(Gdx.files.internal("rain.mp3"));
+        //rainMusic.setLooping(true);
+    
+        // create the camera and the SpriteBatch
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, 800, 480);
+    
+        sol = new Rectangle();
+        sol.x = 0;
+        sol.y = 0;
+        sol.width = 800;
+        sol.height = 64; 
+
+        
     }
     
     @Override
     public void render(float delta) {
-    	update(delta);
-    	
-    	//Clear the game screen with Black
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        ScreenUtils.clear(0, 0.2f, 1f, 1);
+        camera.update();
+    
+
+        game.batch.setProjectionMatrix(camera.combined);
+    
+        game.batch.begin();
+        game.batch.draw(soltext, sol.x, sol.y, sol.width, sol.height);
+        game.batch.draw(soltext, 800, sol.y, sol.width, 200);
+        perso.render(game.batch);
+        game.batch.end();
+
+        perso.mouvement(delta,camera);
         
-        renderer.render();
-        
-        //Set our batch to now draw what the Hud camera sees.
+    
+    }
+
+    public void handleInput(float dt) {
+    	if(Gdx.input.isTouched()) {
+    		camera.position.x += 100 * dt;
+    	}
+    }    
+    //Mï¿½thode pour mettre ï¿½ jour l'ï¿½cran et gï¿½rer l'input ca marche po
+    public void update(float dt) {
+    	handleInput(dt);
+
+    	camera.update();
+    	renderer.setView(camera);
     }
     
     @Override
     public void resize(int width, int height) {
-    	//Updated our game viewport
-    	gamePort.update(width, height);
     }
     
     @Override
     public void show() {
         // start the playback of the background music
         // when the screen is shown
-    }
-    
-    public void handleInput(float dt) {
-    	if(Gdx.input.isTouched()) {
-    		camera.position.x += 100 * dt;
-    	}
-    }
-    
-    //Méthode pour mettre à jour l'écran et gérer l'input ca marche po
-    public void update(float dt) {
-    	handleInput(dt);
-    	
-    	camera.update();
-    	renderer.setView(camera);
+        //rainMusic.play();
     }
     
     @Override
@@ -90,8 +105,8 @@ public class LevelJardin implements Screen {
     
     @Override
     public void dispose() {
-        //soltext.dispose();
-        //rainMusic.dispose();
+        soltext.dispose();
+        rainMusic.dispose();
     }
     
 }
