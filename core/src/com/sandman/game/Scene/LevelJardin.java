@@ -19,6 +19,7 @@ public class LevelJardin implements Screen {
     private Viewport gamePort;
 
     
+    //Attributs pour tmx    
     private TmxMapLoader maploader;
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
