@@ -11,7 +11,7 @@ import com.sandman.game.Sandman;
 import com.sandman.game.personage.Perso;
     
 public class LevelJardin implements Screen {
-    final Sandman game;
+    private final Sandman game;
     
     Texture soltext;
     Perso perso;
@@ -25,11 +25,10 @@ public class LevelJardin implements Screen {
 
         soltext = new Texture(Gdx.files.internal("grass.png"));
         perso = new Perso(336f, 64f, 64f, 64f);
-        
     
         // load the rain background "music"
-        rainMusic = Gdx.audio.newMusic(Gdx.files.internal("rain.mp3"));
-        rainMusic.setLooping(true);
+        //rainMusic = Gdx.audio.newMusic(Gdx.files.internal("rain.mp3"));
+        //rainMusic.setLooping(true);
     
         // create the camera and the SpriteBatch
         camera = new OrthographicCamera();
@@ -72,7 +71,7 @@ public class LevelJardin implements Screen {
     public void show() {
         // start the playback of the background music
         // when the screen is shown
-        rainMusic.play();
+        //rainMusic.play();
     }
     
     @Override
