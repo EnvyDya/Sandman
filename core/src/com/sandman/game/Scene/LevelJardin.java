@@ -67,8 +67,8 @@ public class LevelJardin implements Screen {
     	if(Gdx.input.isTouched()) {
     		camera.position.x += 100 * dt;
     	}
-    }
-
+    }    
+    //M�thode pour mettre � jour l'�cran et g�rer l'input ca marche po
     public void update(float dt) {
     	handleInput(dt);
 
