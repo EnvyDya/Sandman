@@ -8,8 +8,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.sandman.game.Sandman;
     
 
@@ -17,7 +15,6 @@ public class LevelJardin implements Screen {
     private final Sandman game;
 
     private OrthographicCamera camera;
-    private Viewport gamePort;
 
 
     private TmxMapLoader maploader;
@@ -28,13 +25,12 @@ public class LevelJardin implements Screen {
         this.game = game;
 
        camera = new OrthographicCamera();
+       camera.setToOrtho(false, 800, 480);
 
-       gamePort = new FitViewport(800, 200, camera);
 
        maploader = new TmxMapLoader();
-       maploader.load("jardin.tmx");
+       map = maploader.load("jardin.tmx");
        renderer = new OrthogonalTiledMapRenderer(map);
-       camera.position.set(gamePort.getWorldWidth()/2, gamePort.getWorldHeight()/2, 0);
         
     }
     
@@ -46,6 +42,11 @@ public class LevelJardin implements Screen {
     	//Clear the game screen with Black
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        renderer.render();
+
+        //game.batch.setProjectionMatrix(camera.combined);
+
         
     
     }
@@ -55,7 +56,7 @@ public class LevelJardin implements Screen {
     		camera.position.x += 100 * dt;
     	}
     }    
-    //M�thode pour mettre � jour l'�cran et g�rer l'input ca marche po
+    //Méthode pour mettre à jour l'écran et gérer l'input ca marche po
     public void update(float dt) {
     	handleInput(dt);
 
@@ -69,9 +70,6 @@ public class LevelJardin implements Screen {
     
     @Override
     public void show() {
-        // start the playback of the background music
-        // when the screen is shown
-        //rainMusic.play();
     }
     
     @Override
@@ -88,6 +86,8 @@ public class LevelJardin implements Screen {
     
     @Override
     public void dispose() {
+        map.dispose();
+        renderer.dispose();
     }
     
 }
