@@ -59,19 +59,8 @@ public class LevelJardin implements Screen {
     public void show() {
         // start the playback of the background music
         // when the screen is shown
-    }
-    
-    public void handleInput(float dt) {
-    	if(Gdx.input.isTouched()) {
-    		camera.position.x += 100 * dt;
-    	}
-    }
-    
-    public void update(float dt) {
-    	handleInput(dt);
-    	
-    	camera.update();
-    	renderer.setView(camera);
+
+        //rainMusic.play();
     }
     
     @Override

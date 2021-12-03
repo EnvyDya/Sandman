@@ -40,7 +40,7 @@ public class Perso implements Disposable {
             debutsaut = TimeUtils.nanoTime();
         }
         if(etat==Status.saute&&MathUtils.nanoToSec*(TimeUtils.nanoTime()-debutsaut)<0.5){
-            translation.y+= delta * 600;
+            translation.y = 400;
         }
         else if(etat==Status.saute){
             etat = Status.tombe;
