@@ -67,6 +67,7 @@ public class LevelJardin implements Screen {
     	}
     }
     
+    //Méthode pour mettre à jour l'écran et gérer l'input
     public void update(float dt) {
     	handleInput(dt);
     	
