@@ -76,7 +76,6 @@ public class LevelJardin implements Screen {
      * Methode qui prend en charge les appuis de touche
      */
     public void handleInput(float dt) {
-<<<<<<< HEAD
     	if(Gdx.input.isKeyPressed(Input.Keys.Z)) {
     		player.b2body.applyLinearImpulse(new Vector2(0, 0.4f), player.b2body.getWorldCenter(), true);
     	}
@@ -85,16 +84,6 @@ public class LevelJardin implements Screen {
     	}
     	if(Gdx.input.isKeyPressed(Input.Keys.Q) && player.b2body.getLinearVelocity().x >= -5) {
     		player.b2body.applyLinearImpulse(new Vector2(-0.4f, 0), player.b2body.getWorldCenter(), true);
-=======
-    	if(Gdx.input.isKeyPressed(Input.Keys.UP)) {
-    		player.b2body.applyLinearImpulse(new Vector2(0, 0.4f), player.b2body.getWorldCenter(), true);
-    	}
-    	if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x <= 2) {
-    		player.b2body.applyLinearImpulse(new Vector2(0.1f, 0), player.b2body.getWorldCenter(), true);
-    	}
-    	if(Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >= -2) {
-    		player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
->>>>>>> 6b5c4bb36efee01e289e05e43545e63bf57e78e7
     	}
     }    
     
