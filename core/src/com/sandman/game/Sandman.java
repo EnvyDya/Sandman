@@ -3,7 +3,7 @@ package com.sandman.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.sandman.game.Scene.MainMenuScreen;
+import com.sandman.game.Scene.LevelJardin;
 
 
 //Classe qui va géré les différentes scènes du jeu
@@ -13,13 +13,16 @@ public class Sandman extends Game{
 	public BitmapFont font;
 	
 	//Taille de notre �cran
-	public static final int V_WIDTH = 800;
-    public static final int V_HEIGHT = 200;
+	public static final int V_WIDTH = 1600;
+    public static final int V_HEIGHT = 900;
+    
+    //Pixels par metre
+    public static final float PPM = 100;
 
 	public void create() {
 		batch = new SpriteBatch();
-		font = new BitmapFont();
-		this.setScreen(new MainMenuScreen(this));
+		//font = new BitmapFont();
+		this.setScreen(new LevelJardin(this));
 	}
 
 	public void render() {
