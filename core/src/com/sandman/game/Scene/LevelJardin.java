@@ -8,16 +8,32 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.World;
 import com.sandman.game.Sandman;
+import com.sandman.game.sprites.Perso;
+import com.sandman.game.tools.B2WorldCreator;
     
 
 public class LevelJardin implements Screen {
-    private final Sandman game;
+    private Sandman game;
 
     private OrthographicCamera camera;
+
+    //Tiled map variables
     private TmxMapLoader maploader;
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
+    
+    //Box2d variables
+    private World world;
+    private Box2DDebugRenderer b2dr;
+    
+    //Player variable
+    private Perso player;
+    
+    private Hud hud;
 
     public LevelJardin(final Sandman game) {
         this.game = game;
@@ -29,8 +45,14 @@ public class LevelJardin implements Screen {
        
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 30, 20);
-
-        
+       
+       
+       world = new World(new Vector2(0, -10), true);
+       b2dr = new Box2DDebugRenderer();
+       
+       new B2WorldCreator(world, map);
+       
+	   player = new Perso(world);
     }
     
     @Override
@@ -43,6 +65,10 @@ public class LevelJardin implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         renderer.render();
+        
+        //Affiche les box2d dans le jeu
+        b2dr.render(world, camera.combined);
+
     }
 
     
@@ -50,11 +76,14 @@ public class LevelJardin implements Screen {
      * Methode qui prend en charge les appuis de touche
      */
     public void handleInput(float dt) {
-    	if(Gdx.input.isKeyPressed(Input.Keys.D)) {
-    		camera.translate(10*dt, 0);
+    	if(Gdx.input.isKeyPressed(Input.Keys.Z)) {
+    		player.b2body.applyLinearImpulse(new Vector2(0, 0.4f), player.b2body.getWorldCenter(), true);
     	}
-        if(Gdx.input.isKeyPressed(Input.Keys.Q)) {
-    		camera.translate(-10*dt, 0);
+    	if(Gdx.input.isKeyPressed(Input.Keys.D) && player.b2body.getLinearVelocity().x <= 5) {
+    		player.b2body.applyLinearImpulse(new Vector2(0.4f, 0), player.b2body.getWorldCenter(), true);
+    	}
+    	if(Gdx.input.isKeyPressed(Input.Keys.Q) && player.b2body.getLinearVelocity().x >= -5) {
+    		player.b2body.applyLinearImpulse(new Vector2(-0.4f, 0), player.b2body.getWorldCenter(), true);
     	}
     }    
     
@@ -62,7 +91,14 @@ public class LevelJardin implements Screen {
     public void update(float dt) {
     	handleInput(dt);
 
+    	//On rafraichit les calculs 60x par seconde
+    	world.step(1/60f, 6, 2);
+    	
+    	camera.position.x = player.b2body.getPosition().x;
+    	
     	camera.update();
+    	
+    	//Dit au renderer de n'afficher que ce que la camera voit
     	renderer.setView(camera);
     }
     
@@ -90,6 +126,9 @@ public class LevelJardin implements Screen {
     public void dispose() {
         map.dispose();
         renderer.dispose();
+        world.dispose();
+        b2dr.dispose();
+        hud.dispose();
     }
     
 }

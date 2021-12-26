@@ -7,11 +7,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.sandman.game.Sandman;
 
-public class Hud {
+public class Hud implements Disposable{
 	
 	//TODO: A modifier pour convenir au HUD de notre jeu
 	public Stage stage;
@@ -26,7 +27,7 @@ public class Hud {
 	Label timeLabel;
 	Label levelLabel;
 	Label worldLabel;
-	Label marioLabel;
+	Label boyLabel;
 	
 	public Hud(SpriteBatch sb) {
 		worldTimer = 300;
@@ -46,10 +47,10 @@ public class Hud {
 		timeLabel = new Label("TIME", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 		levelLabel = new Label("Jardin", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 		worldLabel = new Label("Niveau", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-		marioLabel = new Label("Boy", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+		boyLabel = new Label("Boy", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 		
-		//On ajoute nos label en haut de notre Ecran
-		table.add(marioLabel).expandX().padTop(10);
+		//On ajoute nos label en haut de notre �cran
+		table.add(boyLabel).expandX().padTop(10);
 		table.add(worldLabel).expandX().padTop(10);
 		table.add(timeLabel).expandX().padTop(10);
 		table.row();
@@ -58,5 +59,10 @@ public class Hud {
 		table.add(countdownLabel).expandX();
 		
 		stage.addActor(table);
+	}
+	
+	@Override
+	public void dispose() {
+		stage.dispose();
 	}
 }
