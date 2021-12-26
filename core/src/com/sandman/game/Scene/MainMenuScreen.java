@@ -15,7 +15,7 @@ public class MainMenuScreen implements Screen {
     public MainMenuScreen(final Sandman game) {
         this.game = game;
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 800, 480);
+        camera.setToOrtho(false, Sandman.V_WIDTH, Sandman.V_HEIGHT);
     }
     
 	@Override

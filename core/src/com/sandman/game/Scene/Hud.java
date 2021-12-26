@@ -20,7 +20,7 @@ public class Hud {
 	private Integer worldTimer;
 	private Integer score;
 	
-	//Tous les attributs qui seront affichés
+	//Tous les attributs qui seront affiches
 	Label countdownLabel;
 	Label scoreLabel;
 	Label timeLabel;
@@ -40,7 +40,7 @@ public class Hud {
 		table.top();
 		table.setFillParent(true);
 		
-		//On crée nos label
+		//On cree nos label
 		countdownLabel = new Label(String.format("%03d", worldTimer), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 		scoreLabel = new Label(String.format("%06d", score), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 		timeLabel = new Label("TIME", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
@@ -48,7 +48,7 @@ public class Hud {
 		worldLabel = new Label("Niveau", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 		marioLabel = new Label("Boy", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 		
-		//On ajoute nos label en haut de notre écran
+		//On ajoute nos label en haut de notre Ecran
 		table.add(marioLabel).expandX().padTop(10);
 		table.add(worldLabel).expandX().padTop(10);
 		table.add(timeLabel).expandX().padTop(10);
