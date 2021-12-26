@@ -49,7 +49,7 @@ public class Hud implements Disposable{
 		worldLabel = new Label("Niveau", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 		boyLabel = new Label("Boy", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 		
-		//On ajoute nos label en haut de notre �cran
+		//On ajoute nos label en haut de notre Ecran
 		table.add(boyLabel).expandX().padTop(10);
 		table.add(worldLabel).expandX().padTop(10);
 		table.add(timeLabel).expandX().padTop(10);

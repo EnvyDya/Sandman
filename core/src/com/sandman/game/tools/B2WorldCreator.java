@@ -18,7 +18,7 @@ public class B2WorldCreator {
 	       FixtureDef fdef = new FixtureDef();
 	       Body body;
 	       
-	       //Crée les box2D du sol
+	       //Cree les box2D du sol
 	       for(MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)) {
 	    	   Rectangle rect = ((RectangleMapObject) object).getRectangle();
 	    	   
@@ -32,7 +32,7 @@ public class B2WorldCreator {
 	    	   body.createFixture(fdef);
 	       }
 	    
-		    //Crée les box2D de l'eau
+		    //Cree les box2D de l'eau
 		    for(MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
 		 	   Rectangle rect = ((RectangleMapObject) object).getRectangle();
 		 	   
