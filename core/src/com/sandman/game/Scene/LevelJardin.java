@@ -87,6 +87,17 @@ public class LevelJardin implements Screen {
     	}
     }    
     
+    /*
+    * Méthode qui place la caméra au bon endroit sur la carte
+    */
+    public void cameraHandle() {
+    	//Gestion de la caméra horizontale
+    	//System.out.println(camera.position.x); //track la position de la camera, 15 bonne position au départ, 115 à la fin
+    	if(player.b2body.getPosition().x >= 15 && player.b2body.getPosition().x <= 115) {
+        	camera.position.x = player.b2body.getPosition().x;
+    	}
+    }
+    
     //MÃ©thode pour mettre Ã  jour l'Ã©cran et gÃ©rer l'input
     public void update(float dt) {
     	handleInput(dt);
@@ -94,7 +105,7 @@ public class LevelJardin implements Screen {
     	//On rafraichit les calculs 60x par seconde
     	world.step(1/60f, 6, 2);
     	
-    	camera.position.x = player.b2body.getPosition().x;
+    	cameraHandle();
     	
     	camera.update();
     	
