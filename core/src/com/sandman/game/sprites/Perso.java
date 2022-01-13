@@ -46,7 +46,7 @@ public class Perso extends Sprite {
     }
     
     /**
-     * @return l'état dans lequel se trouve notre personnage
+     * @return l'Ã©tat dans lequel se trouve notre personnage
      */
     public State getState() {
     	if(b2body.getLinearVelocity().y > 0 || (b2body.getLinearVelocity().y < 0 && previousState == State.JUMPING)) {
@@ -65,7 +65,7 @@ public class Perso extends Sprite {
      * Methode qui prend en charge les appuis de touche
      */
     public void handleInput(float dt) {
-    	//On vérifie si une touche de saut est appuyée et que le joueur ne soit pas déjà dans les airs
+    	//On vï¿½rifie si une touche de saut est appuyï¿½e et que le joueur ne soit pas dï¿½jï¿½ dans les airs
     	if(Gdx.input.isKeyJustPressed(Input.Keys.Z) && this.b2body.getLinearVelocity().y == 0) {
     		this.b2body.applyLinearImpulse(new Vector2(0, jumpForce), this.b2body.getWorldCenter(), true);
     	}
@@ -80,7 +80,7 @@ public class Perso extends Sprite {
     }
     
     /**
-     * Définition physique du personnage
+     * DÃ©finition physique du personnage
      */
     public void definePerso() {
     	BodyDef bdef = new BodyDef();

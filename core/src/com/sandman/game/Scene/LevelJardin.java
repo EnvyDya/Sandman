@@ -76,7 +76,7 @@ public class LevelJardin implements Screen {
     
     
     /**
-     * Contraint le joueur à rester dans les limites du jeu, le ramène et annule sa vélocité s'il essaye d'en sortir
+     * Contraint le joueur Ã  rester dans les limites du jeu, le ramÃ¨ne et annule sa vÃ©locitÃ© s'il essaye d'en sortir
      */
     public void borderManagement() {
     	if(player.b2body.getPosition().x < 1) {
@@ -90,17 +90,17 @@ public class LevelJardin implements Screen {
     }
     
     /**
-    * Méthode qui place la caméra au bon endroit sur la carte
+    * MÃ©thode qui place la camÃ©ra au bon endroit sur la carte
     */
     public void cameraHandle() {
-    	//Gestion de la caméra horizontale
-    	//System.out.println(camera.position.x); //track la position de la camera, 15 bonne position au départ, 115 à la fin
+    	//Gestion de la camÃ©ra horizontale
+    	//System.out.println(camera.position.x); //track la position de la camera, 15 bonne position au dÃ©part, 115 Ã  la fin
     	if(player.b2body.getPosition().x >= 15 && player.b2body.getPosition().x <= 115) {
         	camera.position.x = player.b2body.getPosition().x;
     	}
     }
     
-    //Méthode pour mettre à jour l'écran et gérer l'input
+    //Mï¿½thode pour mettre Ã  jour l'Ã©cran et gÃ©rer l'input
     public void update(float dt) {
     	player.handleInput(dt);
     	borderManagement();
