@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.sandman.game.Scene.LevelJardin;
 
 
-//Classe qui va gÃ©rÃ© les diffÃ©rentes scÃ¨nes du jeu
+//Classe qui va gérer les différentes scènes du jeu
 public class Sandman extends Game{
     
     public SpriteBatch batch;
