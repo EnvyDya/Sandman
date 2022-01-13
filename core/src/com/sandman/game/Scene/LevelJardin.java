@@ -29,9 +29,13 @@ public class LevelJardin implements Screen {
     //Box2d variables
     private World world;
     private Box2DDebugRenderer b2dr;
+    private float gravity = 10f;
     
     //Player variable
     private Perso player;
+    private float speed = 0.4f;
+    private float maxSpeed = 5;
+    private float jumpForce = 6f;
     
     private Hud hud;
 
@@ -47,12 +51,12 @@ public class LevelJardin implements Screen {
         camera.setToOrtho(false, 30, 20);
        
        
-       world = new World(new Vector2(0, -10), true);
+       world = new World(new Vector2(0, -gravity), true);
        b2dr = new Box2DDebugRenderer();
        
        new B2WorldCreator(world, map);
        
-	   player = new Perso(world);
+	   player = new Perso(world, jumpForce, speed, maxSpeed);
     }
     
     @Override
@@ -68,26 +72,24 @@ public class LevelJardin implements Screen {
         
         //Affiche les box2d dans le jeu
         b2dr.render(world, camera.combined);
-
-    }
-
+    }  
     
-    /*
-     * Methode qui prend en charge les appuis de touche
+    
+    /**
+     * Contraint le joueur à rester dans les limites du jeu, le ramène et annule sa vélocité s'il essaye d'en sortir
      */
-    public void handleInput(float dt) {
-    	if(Gdx.input.isKeyPressed(Input.Keys.Z)) {
-    		player.b2body.applyLinearImpulse(new Vector2(0, 0.4f), player.b2body.getWorldCenter(), true);
+    public void borderManagement() {
+    	if(player.b2body.getPosition().x < 1) {
+    		player.b2body.setTransform(1, player.b2body.getPosition().y, player.b2body.getAngle());
+    		player.b2body.setLinearVelocity(0, 0);
     	}
-    	if(Gdx.input.isKeyPressed(Input.Keys.D) && player.b2body.getLinearVelocity().x <= 5) {
-    		player.b2body.applyLinearImpulse(new Vector2(0.4f, 0), player.b2body.getWorldCenter(), true);
+    	else if (player.b2body.getPosition().x > 129) {
+    		player.b2body.setTransform(129, player.b2body.getPosition().y, player.b2body.getAngle());
+    		player.b2body.setLinearVelocity(0, 0);
     	}
-    	if(Gdx.input.isKeyPressed(Input.Keys.Q) && player.b2body.getLinearVelocity().x >= -5) {
-    		player.b2body.applyLinearImpulse(new Vector2(-0.4f, 0), player.b2body.getWorldCenter(), true);
-    	}
-    }    
+    }
     
-    /*
+    /**
     * Méthode qui place la caméra au bon endroit sur la carte
     */
     public void cameraHandle() {
@@ -98,9 +100,10 @@ public class LevelJardin implements Screen {
     	}
     }
     
-    //MÃ©thode pour mettre Ã  jour l'Ã©cran et gÃ©rer l'input
+    //Méthode pour mettre à jour l'écran et gérer l'input
     public void update(float dt) {
-    	handleInput(dt);
+    	player.handleInput(dt);
+    	borderManagement();
 
     	//On rafraichit les calculs 60x par seconde
     	world.step(1/60f, 6, 2);
