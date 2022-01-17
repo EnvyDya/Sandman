@@ -81,11 +81,11 @@ public class LevelJardin implements Screen {
     public void borderManagement() {
     	if(player.b2body.getPosition().x < 1) {
     		player.b2body.setTransform(1, player.b2body.getPosition().y, player.b2body.getAngle());
-    		player.b2body.setLinearVelocity(0, 0);
+    		player.b2body.setLinearVelocity(0, player.b2body.getLinearVelocity().y);
     	}
     	else if (player.b2body.getPosition().x > 129) {
     		player.b2body.setTransform(129, player.b2body.getPosition().y, player.b2body.getAngle());
-    		player.b2body.setLinearVelocity(0, 0);
+    		player.b2body.setLinearVelocity(0, player.b2body.getLinearVelocity().y);
     	}
     }
     
