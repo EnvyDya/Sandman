@@ -18,7 +18,6 @@ import com.sandman.game.tools.B2WorldCreator;
 
 public class LevelJardin implements Screen {
     private Sandman game;
-    private TextureAtlas atlas;
     private OrthographicCamera camera;
 
     //Tiled map variables
@@ -42,7 +41,6 @@ public class LevelJardin implements Screen {
 
     public LevelJardin(final Sandman game) {
         this.game = game;
-        atlas = new TextureAtlas("Sandman.pack");
 
         //Charge notre carte cree avec Tmx
         maploader = new TmxMapLoader();

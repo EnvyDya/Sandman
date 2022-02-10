@@ -15,7 +15,6 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.sandman.game.Sandman;
-import com.sandman.game.Scene.LevelJardin;
 
 public class Perso extends Sprite{
 	public enum State  { FALLING, JUMPING, STANDING, RUNNING};
