@@ -2,6 +2,7 @@ package com.sandman.game.sprites;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -26,7 +27,7 @@ public class Perso extends Sprite{
     //Attributs animation
     private Animation<TextureRegion> playerRun;
     private Animation<TextureRegion> playerJump;
-	private Animation<TextureRegion> playerStand;    
+	  private Animation<TextureRegion> playerStand;    
     private float stateTimer;
     private boolean runningRight;
 	
@@ -35,9 +36,9 @@ public class Perso extends Sprite{
     private float jumpForce;
     private float speed;
     private float maxSpeed;
-    
+    private float minRunningSpeed = 1f;    
     //Constructeur
-    public Perso(World world, float jumpForce, float speed, float maxSpeed, LevelJardin level) {
+    public Perso(World world, float jumpForce, float speed, float maxSpeed) {
 		super(new TextureRegion(new Texture("Sandman.png"),0,0,256,96));
     	this.world = world;
     	this.jumpForce = jumpForce;
@@ -47,6 +48,7 @@ public class Perso extends Sprite{
 		//Initialisation Animation
     	currentState = State.STANDING;
     	previousState = State.STANDING;
+
     	stateTimer = 0;
     	runningRight = true;
 
@@ -68,6 +70,7 @@ public class Perso extends Sprite{
 		}
 		playerStand = new Animation<TextureRegion>(0.1f, frames);
 		setBounds(0, 0, 32/Sandman.PPM, 32/Sandman.PPM);	
+
     	definePerso();
 		setRegion(getFrame(0));
     }
@@ -125,11 +128,16 @@ public class Perso extends Sprite{
      * Methode qui prend en charge les appuis de touche
      */
     public void handleInput(float dt) {
-    	//On vérifie si une touche de saut est appuy�e et que le joueur ne soit pas déjà dans les airs
-    	if(Gdx.input.isKeyJustPressed(Input.Keys.Z) && this.b2body.getLinearVelocity().y == 0) {
+
+
+    	//TODO: Régler problème escalade des murs
+    	
+    	//On v�rifie si une touche de saut est appuy�e et que le joueur ne soit pas d�j� dans les airs
+    	if(Gdx.input.isKeyPressed(Input.Keys.Z) && (getState() == State.STANDING || getState() == State.RUNNING)) {
+
     		this.b2body.applyLinearImpulse(new Vector2(0, jumpForce), this.b2body.getWorldCenter(), true);
     	}
-    	if(Gdx.input.isKeyPressed(Input.Keys.D) && this.b2body.getLinearVelocity().x <= maxSpeed) {
+    	if(Gdx.input.isKeyPressed(Input.Keys.D) && this.b2body.getLinearVelocity().x <= maxSpeed ) {
     		this.b2body.applyLinearImpulse(new Vector2(speed, 0), this.b2body.getWorldCenter(), true);
     		//System.out.println(player.b2body.getPosition().x);
     	}
@@ -137,6 +145,21 @@ public class Perso extends Sprite{
     		this.b2body.applyLinearImpulse(new Vector2(-speed, 0), this.b2body.getWorldCenter(), true);
     		//System.out.println(player.b2body.getPosition().x);
     	}
+    	
+    	//On ralentit le joueur s'il n'appuie plus sur la touche pour avancer
+    	if(!Gdx.input.isKeyJustPressed(Input.Keys.Q) && !Gdx.input.isKeyJustPressed(Input.Keys.D) && Math.abs(this.b2body.getLinearVelocity().x) > minRunningSpeed && getState() == State.RUNNING) {
+    		this.b2body.applyLinearImpulse(new Vector2(-this.b2body.getLinearVelocity().x/10, 0), this.b2body.getWorldCenter(), true);
+    	}
+    	//On arrête le joueur s'il est sous la vitesse minimale
+    	if(Math.abs(this.b2body.getLinearVelocity().x) < minRunningSpeed && getState() == State.RUNNING) {
+    		System.out.println("Arret de course");
+    		this.b2body.setLinearVelocity(new Vector2(0, this.b2body.getLinearVelocity().y));
+    	}
+    	
+    	if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)){
+    		System.out.println("Clic bouton gauche souris en " + Gdx.input.getX() + "x et " + Gdx.input.getY() + "y.");
+    		
+        }
     }
     
     /**
