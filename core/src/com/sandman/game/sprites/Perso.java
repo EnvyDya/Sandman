@@ -28,8 +28,7 @@ public class Perso extends Sprite {
     private float jumpForce;
     private float speed;
     private float maxSpeed;
-    private float minRunningSpeed = .1f;
-    
+    private float minRunningSpeed = 1f;    
     //Constructeur
     public Perso(World world, float jumpForce, float speed, float maxSpeed) {
     	this.world = world;
@@ -80,8 +79,13 @@ public class Perso extends Sprite {
     	}
     	
     	//On ralentit le joueur s'il n'appuie plus sur la touche pour avancer
-    	if(!Gdx.input.isKeyJustPressed(Input.Keys.Q) && !Gdx.input.isKeyJustPressed(Input.Keys.D) && Math.abs(this.b2body.getLinearVelocity().x) > minRunningSpeed) {
+    	if(!Gdx.input.isKeyJustPressed(Input.Keys.Q) && !Gdx.input.isKeyJustPressed(Input.Keys.D) && Math.abs(this.b2body.getLinearVelocity().x) > minRunningSpeed && getState() == State.RUNNING) {
     		this.b2body.applyLinearImpulse(new Vector2(-this.b2body.getLinearVelocity().x/10, 0), this.b2body.getWorldCenter(), true);
+    	}
+    	//On arrête le joueur s'il est sous la vitesse minimale
+    	if(Math.abs(this.b2body.getLinearVelocity().x) < minRunningSpeed && getState() == State.RUNNING) {
+    		System.out.println("Arret de course");
+    		this.b2body.setLinearVelocity(new Vector2(0, this.b2body.getLinearVelocity().y));
     	}
     	
     	if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)){
