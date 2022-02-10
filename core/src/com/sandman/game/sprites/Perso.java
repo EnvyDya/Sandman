@@ -157,7 +157,7 @@ public class Perso extends Sprite{
     	}
     	
     	if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)){
-    		System.out.println("Clic bouton gauche souris en " + Gdx.input.getX() + "x et " + Gdx.input.getY() + "y.");
+    		//System.out.println("Clic bouton gauche souris en " + Gdx.input.getX() + "x et " + Gdx.input.getY() + "y.");
     		
         }
     }
