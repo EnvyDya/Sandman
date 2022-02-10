@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -17,12 +18,13 @@ import com.sandman.game.tools.B2WorldCreator;
 
 public class LevelJardin implements Screen {
     private Sandman game;
-
+    private TextureAtlas atlas;
     private OrthographicCamera camera;
 
     //Tiled map variables
     private TmxMapLoader maploader;
     private TiledMap map;
+
     private OrthogonalTiledMapRenderer renderer;
     
     //Box2d variables
@@ -40,6 +42,7 @@ public class LevelJardin implements Screen {
 
     public LevelJardin(final Sandman game) {
         this.game = game;
+        atlas = new TextureAtlas("Sandman.pack");
 
         //Charge notre carte cree avec Tmx
         maploader = new TmxMapLoader();
@@ -55,6 +58,7 @@ public class LevelJardin implements Screen {
        
         new B2WorldCreator(world, map);
        
+
         player = new Perso(world, jumpForce, speed, maxSpeed);
     }
     
@@ -67,10 +71,18 @@ public class LevelJardin implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        renderer.render();
         
+
+        renderer.render();
+
+        //rendu du joueur
+        game.batch.setProjectionMatrix(camera.combined);
+        game.batch.begin();
+		player.draw(game.batch);
+		game.batch.end();
+
         //Affiche les box2d dans le jeu
-        b2dr.render(world, camera.combined);
+        //b2dr.render(world, camera.combined);
     }  
     
     
@@ -99,9 +111,10 @@ public class LevelJardin implements Screen {
     	}
     }
     
-    //M�thode pour mettre à jour l'écran et gérer l'input
+    //Méthode pour mettre à jour l'écran et gérer l'input
     public void update(float dt) {
     	player.handleInput(dt);
+        player.update(dt);
     	borderManagement();
 
     	//On rafraichit les calculs 60x par seconde
