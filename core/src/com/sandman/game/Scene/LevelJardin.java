@@ -1,7 +1,6 @@
 package com.sandman.game.Scene;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -33,7 +32,7 @@ public class LevelJardin implements Screen {
     
     //Player variable
     private Perso player;
-    private float speed = 0.4f;
+    private float speed = 1.5f;
     private float maxSpeed = 5;
     private float jumpForce = 6f;
     
@@ -51,12 +50,12 @@ public class LevelJardin implements Screen {
         camera.setToOrtho(false, 30, 20);
        
        
-       world = new World(new Vector2(0, -gravity), true);
-       b2dr = new Box2DDebugRenderer();
+        world = new World(new Vector2(0, -gravity), true);
+        b2dr = new Box2DDebugRenderer();
        
-       new B2WorldCreator(world, map);
+        new B2WorldCreator(world, map);
        
-	   player = new Perso(world, jumpForce, speed, maxSpeed);
+        player = new Perso(world, jumpForce, speed, maxSpeed);
     }
     
     @Override
