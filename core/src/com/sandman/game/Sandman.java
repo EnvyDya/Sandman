@@ -1,6 +1,8 @@
 package com.sandman.game;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.sandman.game.Scene.LevelJardin;
@@ -11,6 +13,9 @@ public class Sandman extends Game{
     
     public SpriteBatch batch;
 	public BitmapFont font;
+
+    //Curseur
+	public Pixmap curseur;
 	
 	//Taille de notre Ecran
 	public static final int V_WIDTH = 1600;
@@ -22,6 +27,11 @@ public class Sandman extends Game{
 	public void create() {
 		batch = new SpriteBatch();
 		//font = new BitmapFont();
+		
+		//Modification du curseur en jeu
+    	curseur = new Pixmap(Gdx.files.internal("cursor.png"));
+    	Gdx.graphics.setCursor(Gdx.graphics.newCursor(curseur, 0, 0));
+		curseur.dispose();
 		this.setScreen(new LevelJardin(this));
 	}
 
