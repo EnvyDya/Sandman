@@ -59,7 +59,7 @@ public class LevelJardin implements Screen {
         new B2WorldCreator(world, map);
        
 
-        player = new Perso(world, jumpForce, speed, maxSpeed);
+        player = new Perso(world, jumpForce, speed, maxSpeed, map);
     }
     
     @Override
@@ -82,7 +82,7 @@ public class LevelJardin implements Screen {
 		game.batch.end();
 
         //Affiche les box2d dans le jeu
-        //b2dr.render(world, camera.combined);
+        b2dr.render(world, camera.combined);
     }  
     
     

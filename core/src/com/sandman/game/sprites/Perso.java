@@ -2,11 +2,14 @@ package com.sandman.game.sprites;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -15,13 +18,13 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.sandman.game.Sandman;
-import com.sandman.game.Scene.LevelJardin;
 
 public class Perso extends Sprite{
 	public enum State  { FALLING, JUMPING, STANDING, RUNNING};
 	public State currentState;
 	public State previousState;
     public World world;
+    public TiledMap map;
     public Body b2body;
     
     //Attributs animation
@@ -37,13 +40,17 @@ public class Perso extends Sprite{
     private float speed;
     private float maxSpeed;
     private float minRunningSpeed = 1f;    
+    private boolean justJumping;
+    
     //Constructeur
-    public Perso(World world, float jumpForce, float speed, float maxSpeed) {
+    public Perso(World world, float jumpForce, float speed, float maxSpeed, TiledMap map) {
 		super(new TextureRegion(new Texture("Sandman.png"),0,0,256,96));
     	this.world = world;
     	this.jumpForce = jumpForce;
     	this.speed = speed;
     	this.maxSpeed = maxSpeed;
+    	this.justJumping = false;
+    	this.map = map;
 
 		//Initialisation Animation
     	currentState = State.STANDING;
@@ -102,6 +109,10 @@ public class Perso extends Sprite{
 		TextureRegion region;
 		switch (currentState) {
 			case JUMPING:
+				if(justJumping) {
+					stateTimer = 0;
+					justJumping = false;
+				}
 				region = playerJump.getKeyFrame(stateTimer);
 				break;
 			case RUNNING:
@@ -129,14 +140,12 @@ public class Perso extends Sprite{
      * Methode qui prend en charge les appuis de touche
      */
     public void handleInput(float dt) {
-
-
     	//TODO: Régler problème escalade des murs
     	
     	//On v�rifie si une touche de saut est appuy�e et que le joueur ne soit pas d�j� dans les airs
     	if(Gdx.input.isKeyPressed(Input.Keys.Z) && (getState() == State.STANDING || getState() == State.RUNNING)) {
-
     		this.b2body.applyLinearImpulse(new Vector2(0, jumpForce), this.b2body.getWorldCenter(), true);
+    		justJumping = true;
     	}
     	if(Gdx.input.isKeyPressed(Input.Keys.D) && this.b2body.getLinearVelocity().x <= maxSpeed ) {
     		this.b2body.applyLinearImpulse(new Vector2(speed, 0), this.b2body.getWorldCenter(), true);
@@ -148,7 +157,7 @@ public class Perso extends Sprite{
     	}
     	
     	//On ralentit le joueur s'il n'appuie plus sur la touche pour avancer
-    	if(!Gdx.input.isKeyJustPressed(Input.Keys.Q) && !Gdx.input.isKeyJustPressed(Input.Keys.D) && Math.abs(this.b2body.getLinearVelocity().x) > minRunningSpeed && getState() == State.RUNNING) {
+    	if(!Gdx.input.isKeyPressed(Input.Keys.Q) && !Gdx.input.isKeyPressed(Input.Keys.D) && Math.abs(this.b2body.getLinearVelocity().x) > minRunningSpeed && getState() == State.RUNNING) {
     		this.b2body.applyLinearImpulse(new Vector2(-this.b2body.getLinearVelocity().x/10, 0), this.b2body.getWorldCenter(), true);
     	}
     	//On arrête le joueur s'il est sous la vitesse minimale
@@ -157,8 +166,15 @@ public class Perso extends Sprite{
     	}
     	
     	if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)){
+    		//TODO: Marche pas
     		//System.out.println("Clic bouton gauche souris en " + Gdx.input.getX() + "x et " + Gdx.input.getY() + "y.");
-    		
+    		for(MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
+ 		 	   Rectangle rect = ((RectangleMapObject) object).getRectangle();
+ 		 	   if(rect.contains(Gdx.input.getX(), Gdx.input.getY())) {
+ 		 		   System.out.println("Clic sur eau");
+ 		 	   }
+ 		 	  
+ 		    }
         }
     }
     
