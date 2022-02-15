@@ -26,8 +26,8 @@ public class Perso extends Sprite{
     //Attributs animation
     private Animation<TextureRegion> playerRun;
     private Animation<TextureRegion> playerJump;
-	private Animation<TextureRegion> playerFall;
-	private Animation<TextureRegion> playerStand;    
+	  private Animation<TextureRegion> playerFall;
+	  private Animation<TextureRegion> playerStand;    
     private float stateTimer;
     private boolean runningRight;
 	
@@ -65,6 +65,7 @@ public class Perso extends Sprite{
 		}
 		playerRun = new Animation<TextureRegion>(0.1f,frames);
 		frames.clear();
+
 
 		for (int i = 2; i < 5; i++) {
 			frames.add(new TextureRegion(getTexture(),i*32,32,32,32));
@@ -171,12 +172,11 @@ public class Perso extends Sprite{
     	}
     	//On arrête le joueur s'il est sous la vitesse minimale
     	if(Math.abs(this.b2body.getLinearVelocity().x) < minRunningSpeed && getState() == State.RUNNING) {
-    		//System.out.println("Arret de course");
     		this.b2body.setLinearVelocity(new Vector2(0, this.b2body.getLinearVelocity().y));
     	}
     	
     	if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)){
-    		System.out.println("Clic bouton gauche souris en " + Gdx.input.getX() + "x et " + Gdx.input.getY() + "y.");
+    		//System.out.println("Clic bouton gauche souris en " + Gdx.input.getX() + "x et " + Gdx.input.getY() + "y.");
     		
         }
     }
