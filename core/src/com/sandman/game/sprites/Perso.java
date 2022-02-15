@@ -6,10 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -18,6 +15,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.sandman.game.Sandman;
+import com.sandman.game.tools.B2WorldCreator;
 
 public class Perso extends Sprite{
 	public enum State  { FALLING, JUMPING, STANDING, RUNNING};
@@ -26,6 +24,7 @@ public class Perso extends Sprite{
     public World world;
     public TiledMap map;
     public Body b2body;
+    public B2WorldCreator worldCreator;
     
     //Attributs animation
     private Animation<TextureRegion> playerRun;
@@ -43,7 +42,7 @@ public class Perso extends Sprite{
     private boolean justJumping;
     
     //Constructeur
-    public Perso(World world, float jumpForce, float speed, float maxSpeed, TiledMap map) {
+    public Perso(World world, float jumpForce, float speed, float maxSpeed, TiledMap map, B2WorldCreator worldCreator) {
 		super(new TextureRegion(new Texture("Sandman.png"),0,0,256,96));
     	this.world = world;
     	this.jumpForce = jumpForce;
@@ -51,6 +50,7 @@ public class Perso extends Sprite{
     	this.maxSpeed = maxSpeed;
     	this.justJumping = false;
     	this.map = map;
+    	this.worldCreator = worldCreator;
 
 		//Initialisation Animation
     	currentState = State.STANDING;
@@ -65,8 +65,7 @@ public class Perso extends Sprite{
 		}
 		playerRun = new Animation<TextureRegion>(0.1f,frames);
 		frames.clear();
-
-		//TODO: Refaire le saut quand multijump
+		
 		for (int i = 0; i < 8; i++) {
 			frames.add(new TextureRegion(getTexture(),i*32,32,32,32));
 		}
@@ -164,17 +163,31 @@ public class Perso extends Sprite{
     	if(Math.abs(this.b2body.getLinearVelocity().x) < minRunningSpeed && getState() == State.RUNNING) {
     		this.b2body.setLinearVelocity(new Vector2(0, this.b2body.getLinearVelocity().y));
     	}
-    	
     	if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)){
+			System.out.println("Pos perso = " + b2body.getPosition());
+    		for(InteractiveTileObject w : worldCreator.interactiveTiles) {
+				System.out.println("Position en x = " + w.bounds.x + " Position en y = " + w.bounds.y);
+			}
     		//TODO: Marche pas
-    		//System.out.println("Clic bouton gauche souris en " + Gdx.input.getX() + "x et " + Gdx.input.getY() + "y.");
-    		for(MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
- 		 	   Rectangle rect = ((RectangleMapObject) object).getRectangle();
- 		 	   if(rect.contains(Gdx.input.getX(), Gdx.input.getY())) {
- 		 		   System.out.println("Clic sur eau");
- 		 	   }
- 		 	  
- 		    }
+    		float posX = Gdx.input.getX()/Sandman.PPM;
+    		float posY = -(Gdx.input.getY()-400)/Sandman.PPM;
+    		System.out.println("Clic en " + posX + " " + posY);
+    		Array<Body> al = new Array<Body>();
+    		world.getBodies(al);
+    		for(Body b : al) {
+    			if(b.getFixtureList().get(0).testPoint(posX, posY)) {
+    				System.out.println("Contact avec " + b);
+    				for(InteractiveTileObject w : worldCreator.interactiveTiles) {
+    					if(w.body == b) {
+    						System.out.println("Contact avec l'eau : " + w);
+    						w.onClick();
+    						System.out.println(posX + " " + posY);
+    						System.out.println("Position en x = " + w.bounds.x + " Position en y = " + w.bounds.y);
+    					}
+    				}
+    			}
+    			
+    		}
         }
     }
     

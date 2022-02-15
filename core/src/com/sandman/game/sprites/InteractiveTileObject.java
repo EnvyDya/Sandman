@@ -11,7 +11,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.sandman.game.Sandman;
 
-public abstract class InteractiveTileObject {
+public abstract class InteractiveTileObject{
 	protected World world;
 	protected TiledMap map;
 	protected TiledMapTile tile;
@@ -37,6 +37,11 @@ public abstract class InteractiveTileObject {
  	    shape.setAsBox((bounds.getWidth()/2)/Sandman.PPM, (bounds.getHeight()/2)/Sandman.PPM);
  	    fdef.shape = shape;
  	    fixture = body.createFixture(fdef);
+ 	    
+	}
+	
+	public Body getBody() {
+		return body;
 	}
 	
 	public abstract void onClick();

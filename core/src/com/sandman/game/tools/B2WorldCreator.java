@@ -1,5 +1,7 @@
 package com.sandman.game.tools;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -10,11 +12,14 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.sandman.game.Sandman;
+import com.sandman.game.sprites.InteractiveTileObject;
 import com.sandman.game.sprites.Water;
 
 public class B2WorldCreator {
+    public ArrayList<InteractiveTileObject> interactiveTiles = new ArrayList<InteractiveTileObject>();
+    
 	public B2WorldCreator(World world, TiledMap map) {
-		BodyDef bdef = new BodyDef();
+		   BodyDef bdef = new BodyDef();
 	       PolygonShape shape = new PolygonShape();
 	       FixtureDef fdef = new FixtureDef();
 	       Body body;
@@ -37,8 +42,10 @@ public class B2WorldCreator {
 		    for(MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
 		 	   Rectangle rect = ((RectangleMapObject) object).getRectangle();
 		 	   
-		 	   new Water(world, map, rect);
+		 	   Water w = new Water(world, map, rect);
+		 	  interactiveTiles.add(w);
 		    }
 		    
 	}
+	
 }
