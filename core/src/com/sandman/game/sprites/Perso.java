@@ -2,7 +2,7 @@ package com.sandman.game.sprites;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -36,7 +36,11 @@ public class Perso extends Sprite{
     private float jumpForce;
     private float speed;
     private float maxSpeed;
-    private float minRunningSpeed = 1f;    
+    private float minRunningSpeed = 1f;   
+	
+	//Attributs Bruit
+	private Sound bruitSaut;
+	
     //Constructeur
     public Perso(World world, float jumpForce, float speed, float maxSpeed) {
 		super(new TextureRegion(new Texture("Sandman.png"),0,0,256,96));
@@ -48,6 +52,9 @@ public class Perso extends Sprite{
 		//Initialisation Animation
     	currentState = State.STANDING;
     	previousState = State.STANDING;
+
+		//Initialise les différents son
+        bruitSaut = Gdx.audio.newSound(Gdx.files.internal("bruitSaut.wav"));
 
     	stateTimer = 0;
     	runningRight = true;
@@ -99,6 +106,9 @@ public class Perso extends Sprite{
 
 	public void update(float dt){
 		setPosition(b2body.getPosition().x - getWidth()/2, b2body.getPosition().y - getHeight()/2);
+		if(previousState==State.FALLING && (getState()==State.STANDING||getState()==State.RUNNING)){
+			
+		}
 		setRegion(getFrame(dt));
 	}
     
@@ -141,9 +151,9 @@ public class Perso extends Sprite{
 
     	//TODO: Régler problème escalade des murs
     	
-    	//On vérifie si une touche de saut est appuy�e et que le joueur ne soit pas déjà dans les airs
-    	if(Gdx.input.isKeyPressed(Input.Keys.Z) && (getState() == State.STANDING || getState() == State.RUNNING)) {
-
+    	//On vérifie si une touche de saut est appuyée et que le joueur ne soit pas déjà dans les airs
+    	if(Gdx.input.isKeyPressed(Input.Keys.SPACE) && (getState() == State.STANDING || getState() == State.RUNNING)) {
+			bruitSaut.play();
     		this.b2body.applyLinearImpulse(new Vector2(0, jumpForce), this.b2body.getWorldCenter(), true);
     	}
     	if(Gdx.input.isKeyPressed(Input.Keys.D) && this.b2body.getLinearVelocity().x <= maxSpeed ) {
@@ -161,7 +171,7 @@ public class Perso extends Sprite{
     	}
     	//On arrête le joueur s'il est sous la vitesse minimale
     	if(Math.abs(this.b2body.getLinearVelocity().x) < minRunningSpeed && getState() == State.RUNNING) {
-    		System.out.println("Arret de course");
+    		//System.out.println("Arret de course");
     		this.b2body.setLinearVelocity(new Vector2(0, this.b2body.getLinearVelocity().y));
     	}
     	
