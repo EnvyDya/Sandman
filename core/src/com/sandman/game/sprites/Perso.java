@@ -2,7 +2,7 @@ package com.sandman.game.sprites;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -26,7 +26,8 @@ public class Perso extends Sprite{
     //Attributs animation
     private Animation<TextureRegion> playerRun;
     private Animation<TextureRegion> playerJump;
-	private Animation<TextureRegion> playerStand;    
+	  private Animation<TextureRegion> playerFall;
+	  private Animation<TextureRegion> playerStand;    
     private float stateTimer;
     private boolean runningRight;
 	
@@ -35,7 +36,11 @@ public class Perso extends Sprite{
     private float jumpForce;
     private float speed;
     private float maxSpeed;
-    private float minRunningSpeed = 1f;    
+    private float minRunningSpeed = 1f;   
+	
+	//Attributs Bruit
+	private Sound bruitSaut;
+	
     //Constructeur
     public Perso(World world, float jumpForce, float speed, float maxSpeed) {
 		super(new TextureRegion(new Texture("Sandman.png"),0,0,256,96));
@@ -48,6 +53,9 @@ public class Perso extends Sprite{
     	currentState = State.STANDING;
     	previousState = State.STANDING;
 
+		//Initialise les différents son
+        bruitSaut = Gdx.audio.newSound(Gdx.files.internal("bruitSaut.wav"));
+
     	stateTimer = 0;
     	runningRight = true;
 
@@ -58,11 +66,17 @@ public class Perso extends Sprite{
 		playerRun = new Animation<TextureRegion>(0.1f,frames);
 		frames.clear();
 
-		//TODO: Refaire le saut quand multijump
-		for (int i = 0; i < 8; i++) {
+
+		for (int i = 2; i < 5; i++) {
 			frames.add(new TextureRegion(getTexture(),i*32,32,32,32));
 		}
 		playerJump = new Animation<TextureRegion>(0.1f, frames);
+		frames.clear();
+
+		for (int i = 5; i < 8; i++) {
+			frames.add(new TextureRegion(getTexture(),i*32,32,32,32));
+		}
+		playerFall = new Animation<TextureRegion>(0.2f, frames);
 		frames.clear();
 
 		for (int i = 0; i < 4; i++) {
@@ -79,7 +93,7 @@ public class Perso extends Sprite{
      * @return l'état dans lequel se trouve notre personnage
      */
     public State getState() {
-    	if(b2body.getLinearVelocity().y > 0 || (b2body.getLinearVelocity().y < 0 && previousState == State.JUMPING)) {
+    	if(b2body.getLinearVelocity().y > 0 ){//|| (b2body.getLinearVelocity().y < 0 && previousState == State.JUMPING)) {
     		return State.JUMPING;
     	}
     	else if(b2body.getLinearVelocity().y < 0) {
@@ -93,6 +107,9 @@ public class Perso extends Sprite{
 
 	public void update(float dt){
 		setPosition(b2body.getPosition().x - getWidth()/2, b2body.getPosition().y - getHeight()/2);
+		if(previousState==State.FALLING && (getState()==State.STANDING||getState()==State.RUNNING)){
+			
+		}
 		setRegion(getFrame(dt));
 	}
     
@@ -102,6 +119,9 @@ public class Perso extends Sprite{
 		switch (currentState) {
 			case JUMPING:
 				region = playerJump.getKeyFrame(stateTimer);
+				break;
+			case FALLING:
+				region = playerFall.getKeyFrame(stateTimer);
 				break;
 			case RUNNING:
 				region = playerRun.getKeyFrame(stateTimer,true);
@@ -132,9 +152,9 @@ public class Perso extends Sprite{
 
     	//TODO: Régler problème escalade des murs
     	
-    	//On v�rifie si une touche de saut est appuy�e et que le joueur ne soit pas d�j� dans les airs
-    	if(Gdx.input.isKeyPressed(Input.Keys.Z) && (getState() == State.STANDING || getState() == State.RUNNING)) {
-
+    	//On vérifie si une touche de saut est appuyée et que le joueur ne soit pas déjà dans les airs
+    	if(Gdx.input.isKeyPressed(Input.Keys.SPACE) && (getState() == State.STANDING || getState() == State.RUNNING)) {
+			bruitSaut.play();
     		this.b2body.applyLinearImpulse(new Vector2(0, jumpForce), this.b2body.getWorldCenter(), true);
     	}
     	if(Gdx.input.isKeyPressed(Input.Keys.D) && this.b2body.getLinearVelocity().x <= maxSpeed ) {
