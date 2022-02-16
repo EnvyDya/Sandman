@@ -2,7 +2,6 @@ package com.sandman.game.sprites;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -14,60 +13,58 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.sandman.game.Sandman;
-import com.sandman.game.tools.B2WorldCreator;
+import com.sandman.game.Scene.Level;
 
 public class Perso extends Sprite implements Disposable{
-	public enum State  { FALLING, JUMPING, STANDING, RUNNING};
-	public State currentState;
-	public State previousState;
-    public World world;
+    public enum State  { FALLING, JUMPING, STANDING, RUNNING};
+    public Level level;
+    public State currentState;
+    public State previousState;
     public Body b2body;
-    public B2WorldCreator worldCreator;
-    public OrthographicCamera camera;
     
     //Attributs animation
     private Animation<TextureRegion> playerRun;
     private Animation<TextureRegion> playerJump;
-	private Animation<TextureRegion> playerFall;
-	private Animation<TextureRegion> playerStand;    
+	  private Animation<TextureRegion> playerFall;
+	  private Animation<TextureRegion> playerStand;    
     private float stateTimer;
     private boolean runningRight;
 	
     
     //Attributs de deplacement
-    private float jumpForce;
-    private float speed;
-    private float maxSpeed;
-    private float minRunningSpeed = 1f;    
-    private boolean justJumping;
-	private Sound bruitSaut;
+    private float minRunningSpeed = 1f;
+	  private Sound bruitSaut;
   
   
     //Constructeur
-    public Perso(World world, float jumpForce, float speed, float maxSpeed,B2WorldCreator worldCreator, OrthographicCamera camera) {
-		super(new TextureRegion(new Texture("Sandman.png"),0,0,256,96));
-    	this.world = world;
-    	this.jumpForce = jumpForce;
-    	this.speed = speed;
-    	this.maxSpeed = maxSpeed;
-    	this.justJumping = false;
-    	this.worldCreator = worldCreator;
-    	this.camera = camera;
+    public Perso(Level level) {
+      super(new TextureRegion(new Texture("Sandman.png"),0,0,256,96));
+      this.level = level;
 
-		//Initialisation Animation
-    	currentState = State.STANDING;
-    	previousState = State.STANDING;
+      //Initialisation Animation
+      currentState = State.STANDING;
+      previousState = State.STANDING;
 
-		//Initialise les différents son
-        bruitSaut = Gdx.audio.newSound(Gdx.files.internal("bruitSaut.wav"));
+      //Initialise les différents sons
+      bruitSaut = Gdx.audio.newSound(Gdx.files.internal("bruitSaut.wav"));
 
-    	stateTimer = 0;
-    	runningRight = true;
+      stateTimer = 0;
+      runningRight = true;
 
+      createFrames();
+
+      definePerso();
+      setRegion(getFrame(0));
+    }
+    
+    
+    /**
+     * Méthode qui crée les différentes animations
+     */
+    public void createFrames() {
 		Array<TextureRegion> frames = new Array<TextureRegion>();
 		for (int i = 0; i < 6; i++) {
 			frames.add(new TextureRegion(getTexture(),i*32,64,32,32));
@@ -92,16 +89,14 @@ public class Perso extends Sprite implements Disposable{
 		}
 		playerStand = new Animation<TextureRegion>(0.1f, frames);
 		setBounds(0, 0, 32/Sandman.PPM, 32/Sandman.PPM);	
-
-    	definePerso();
-		setRegion(getFrame(0));
     }
+    
     
     /**
      * @return l'état dans lequel se trouve notre personnage
      */
     public State getState() {
-    	if(b2body.getLinearVelocity().y > 0 ){//|| (b2body.getLinearVelocity().y < 0 && previousState == State.JUMPING)) {
+    	if(b2body.getLinearVelocity().y > 0){
     		return State.JUMPING;
     	}
     	else if(b2body.getLinearVelocity().y < 0) {
@@ -112,24 +107,29 @@ public class Perso extends Sprite implements Disposable{
     	}
     	else return State.STANDING;
     }
-
+    
+    /**
+     * Met à jour la frame de l'animation en fonction de la position
+     * @param dt
+     */
 	public void update(float dt){
-		setPosition(b2body.getPosition().x - getWidth()/2, b2body.getPosition().y - getHeight()/2);
+		//TODO: Régler l'animation pour qu'elle soit cohérente avec la hitbox carrée.
+		setPosition(b2body.getPosition().x - getWidth()/2, b2body.getPosition().y + .15f - getHeight()/2);
 		if(previousState==State.FALLING && (getState()==State.STANDING||getState()==State.RUNNING)){
 			
 		}
 		setRegion(getFrame(dt));
 	}
-    
+	
+	/*
+	 * Récupère la frame d'animation correspondant au temps de l'animation ainsi que son orientation
+	 */
     private TextureRegion getFrame(float dt) {
 		currentState = getState();
 		TextureRegion region;
+		//Donne l'animation correspondant à l'action
 		switch (currentState) {
 			case JUMPING:
-				if(justJumping) {
-					stateTimer = 0;
-					justJumping = false;
-				}
 				region = playerJump.getKeyFrame(stateTimer);
 				break;
 			case FALLING:
@@ -142,7 +142,8 @@ public class Perso extends Sprite implements Disposable{
 				region = playerStand.getKeyFrame(stateTimer,true);
 				break;
 		}
-
+		
+		//Donne l'orientation
 		if((b2body.getLinearVelocity().x < 0 || !runningRight) && !region.isFlipX()){
 			region.flip(true,false);
 			runningRight = false;
@@ -151,6 +152,8 @@ public class Perso extends Sprite implements Disposable{
 			region.flip(true, false);
 			runningRight = true;
 		}
+		
+		//Réglage du timer de l'animation
 		stateTimer = currentState == previousState ? stateTimer + dt : 0;
 		previousState = currentState;
 		return region;
@@ -164,17 +167,14 @@ public class Perso extends Sprite implements Disposable{
       
     	//On vérifie si une touche de saut est appuyée et que le joueur ne soit pas déjà dans les airs
     	if(Gdx.input.isKeyPressed(Input.Keys.SPACE) && (getState() == State.STANDING || getState() == State.RUNNING)) {
-			  bruitSaut.play();
-    		this.b2body.applyLinearImpulse(new Vector2(0, jumpForce), this.b2body.getWorldCenter(), true);
-    		justJumping = true;
+			bruitSaut.play();
+    		this.b2body.applyLinearImpulse(new Vector2(0, level.getJumpForce()), this.b2body.getWorldCenter(), true);
     	}
-    	if(Gdx.input.isKeyPressed(Input.Keys.D) && this.b2body.getLinearVelocity().x <= maxSpeed ) {
-    		this.b2body.applyLinearImpulse(new Vector2(speed, 0), this.b2body.getWorldCenter(), true);
-    		//System.out.println(player.b2body.getPosition().x);
+    	if(Gdx.input.isKeyPressed(Input.Keys.D) && this.b2body.getLinearVelocity().x <= level.getMaxSpeed() ) {
+    		this.b2body.applyLinearImpulse(new Vector2(level.getSpeed(), 0), this.b2body.getWorldCenter(), true);
     	}
-    	if(Gdx.input.isKeyPressed(Input.Keys.Q) && this.b2body.getLinearVelocity().x >= -maxSpeed) {
-    		this.b2body.applyLinearImpulse(new Vector2(-speed, 0), this.b2body.getWorldCenter(), true);
-    		//System.out.println(player.b2body.getPosition().x);
+    	if(Gdx.input.isKeyPressed(Input.Keys.Q) && this.b2body.getLinearVelocity().x >= -level.getMaxSpeed()) {
+    		this.b2body.applyLinearImpulse(new Vector2(-level.getSpeed(), 0), this.b2body.getWorldCenter(), true);
     	}
     	
     	//On ralentit le joueur s'il n'appuie plus sur la touche pour avancer
@@ -185,17 +185,21 @@ public class Perso extends Sprite implements Disposable{
     	if(Math.abs(this.b2body.getLinearVelocity().x) < minRunningSpeed && getState() == State.RUNNING) {
     		this.b2body.setLinearVelocity(new Vector2(0, this.b2body.getLinearVelocity().y));
     	}
+    	//Gestion du clic souris
     	if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)){
-    		//TODO: Marche pas
+    		//On replace le curseur dans le contexte du jeu
     		Vector3 pos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-    		pos = camera.unproject(pos);
-    		System.out.println("Clic en " + pos.x + " " + pos.y);
+    		pos = level.getCamera().unproject(pos);
+    		//On recherche tous les body du monde
     		Array<Body> al = new Array<Body>();
-    		world.getBodies(al);
+    		level.getWorld().getBodies(al);
     		for(Body b : al) {
+    			//Pour chaque body, on teste si notre clic est dedans
     			if(b.getFixtureList().get(0).testPoint(pos.x, pos.y)) {
-    				for(InteractiveTileObject w : worldCreator.interactiveTiles) {
+    				//Si le clic est dedans, on teste chaque InteractiveTile du niveau pour voir si on a le même body
+    				for(InteractiveTileObject w : level.getWorldCreator().interactiveTiles) {
     					if(w.body == b) {
+    						//Le cas échéant, on réalise le comportement associé à l'objet récupéré
     						System.out.println("Contact avec l'eau : " + w);
     						w.onClick();
     					}
@@ -213,11 +217,11 @@ public class Perso extends Sprite implements Disposable{
     	BodyDef bdef = new BodyDef();
     	bdef.position.set(16/Sandman.PPM, 64/Sandman.PPM);
     	bdef.type = BodyDef.BodyType.DynamicBody;
-    	b2body = world.createBody(bdef);
+    	b2body = level.getWorld().createBody(bdef);
     	
     	FixtureDef fdef = new FixtureDef();
     	PolygonShape shape = new PolygonShape();
-    	shape.setAsBox(10/Sandman.PPM, 16/Sandman.PPM);
+    	shape.setAsBox(10/Sandman.PPM, 14/Sandman.PPM);
     	
     	fdef.shape = shape;
     	b2body.createFixture(fdef);
