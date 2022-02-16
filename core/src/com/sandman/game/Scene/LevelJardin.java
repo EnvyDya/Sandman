@@ -14,6 +14,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.sandman.game.Sandman;
 import com.sandman.game.sprites.Perso;
+import com.sandman.game.sprites.Tondeuse;
 import com.sandman.game.tools.B2WorldCreator;
     
 
@@ -38,6 +39,9 @@ public class LevelJardin implements Screen {
     private float speed = 1.5f;
     private float maxSpeed = 5;
     private float jumpForce = 7f;
+
+    //Entité variable
+    private Tondeuse tondeuse;
 
     //Music
     private Music mainTheme;
@@ -71,8 +75,10 @@ public class LevelJardin implements Screen {
        
         worldCreator = new B2WorldCreator(world, map);
        
+        // Creation des entités
+        player = new Perso(world, jumpForce, speed, maxSpeed,worldCreator, camera);
+        tondeuse = new Tondeuse(world);
 
-        player = new Perso(world, jumpForce, speed, maxSpeed, map, worldCreator, camera);
     }
     
     @Override
@@ -92,6 +98,7 @@ public class LevelJardin implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
 		player.draw(game.batch);
+        tondeuse.draw(game.batch);
 		game.batch.end();
 
         //Affiche les box2d dans le jeu
@@ -128,6 +135,7 @@ public class LevelJardin implements Screen {
     public void update(float dt) {
     	player.handleInput(dt);
         player.update(dt);
+        tondeuse.update(dt);
     	borderManagement();
 
     	//On rafraichit les calculs 60x par seconde

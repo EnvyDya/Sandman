@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -26,7 +25,6 @@ public class Perso extends Sprite implements Disposable{
 	public State currentState;
 	public State previousState;
     public World world;
-    public TiledMap map;
     public Body b2body;
     public B2WorldCreator worldCreator;
     public OrthographicCamera camera;
@@ -50,14 +48,13 @@ public class Perso extends Sprite implements Disposable{
   
   
     //Constructeur
-    public Perso(World world, float jumpForce, float speed, float maxSpeed, TiledMap map, B2WorldCreator worldCreator, OrthographicCamera camera) {
+    public Perso(World world, float jumpForce, float speed, float maxSpeed,B2WorldCreator worldCreator, OrthographicCamera camera) {
 		super(new TextureRegion(new Texture("Sandman.png"),0,0,256,96));
     	this.world = world;
     	this.jumpForce = jumpForce;
     	this.speed = speed;
     	this.maxSpeed = maxSpeed;
     	this.justJumping = false;
-    	this.map = map;
     	this.worldCreator = worldCreator;
     	this.camera = camera;
 
@@ -214,7 +211,7 @@ public class Perso extends Sprite implements Disposable{
      */
     public void definePerso() {
     	BodyDef bdef = new BodyDef();
-    	bdef.position.set(32/Sandman.PPM, 60/Sandman.PPM);
+    	bdef.position.set(16/Sandman.PPM, 64/Sandman.PPM);
     	bdef.type = BodyDef.BodyType.DynamicBody;
     	b2body = world.createBody(bdef);
     	
