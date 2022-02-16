@@ -2,12 +2,14 @@ package com.sandman.game.sprites;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
@@ -25,6 +27,7 @@ public class Perso extends Sprite{
     public TiledMap map;
     public Body b2body;
     public B2WorldCreator worldCreator;
+    public OrthographicCamera camera;
     
     //Attributs animation
     private Animation<TextureRegion> playerRun;
@@ -42,7 +45,7 @@ public class Perso extends Sprite{
     private boolean justJumping;
     
     //Constructeur
-    public Perso(World world, float jumpForce, float speed, float maxSpeed, TiledMap map, B2WorldCreator worldCreator) {
+    public Perso(World world, float jumpForce, float speed, float maxSpeed, TiledMap map, B2WorldCreator worldCreator, OrthographicCamera camera) {
 		super(new TextureRegion(new Texture("Sandman.png"),0,0,256,96));
     	this.world = world;
     	this.jumpForce = jumpForce;
@@ -51,6 +54,7 @@ public class Perso extends Sprite{
     	this.justJumping = false;
     	this.map = map;
     	this.worldCreator = worldCreator;
+    	this.camera = camera;
 
 		//Initialisation Animation
     	currentState = State.STANDING;
@@ -164,25 +168,18 @@ public class Perso extends Sprite{
     		this.b2body.setLinearVelocity(new Vector2(0, this.b2body.getLinearVelocity().y));
     	}
     	if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)){
-			System.out.println("Pos perso = " + b2body.getPosition());
-    		for(InteractiveTileObject w : worldCreator.interactiveTiles) {
-				System.out.println("Position en x = " + w.bounds.x + " Position en y = " + w.bounds.y);
-			}
     		//TODO: Marche pas
-    		float posX = Gdx.input.getX()/Sandman.PPM;
-    		float posY = -(Gdx.input.getY()-400)/Sandman.PPM;
-    		System.out.println("Clic en " + posX + " " + posY);
+    		Vector3 pos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+    		pos = camera.unproject(pos);
+    		System.out.println("Clic en " + pos.x + " " + pos.y);
     		Array<Body> al = new Array<Body>();
     		world.getBodies(al);
     		for(Body b : al) {
-    			if(b.getFixtureList().get(0).testPoint(posX, posY)) {
-    				System.out.println("Contact avec " + b);
+    			if(b.getFixtureList().get(0).testPoint(pos.x, pos.y)) {
     				for(InteractiveTileObject w : worldCreator.interactiveTiles) {
     					if(w.body == b) {
     						System.out.println("Contact avec l'eau : " + w);
     						w.onClick();
-    						System.out.println(posX + " " + posY);
-    						System.out.println("Position en x = " + w.bounds.x + " Position en y = " + w.bounds.y);
     					}
     				}
     			}

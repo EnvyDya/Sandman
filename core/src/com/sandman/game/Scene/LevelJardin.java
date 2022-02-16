@@ -61,7 +61,7 @@ public class LevelJardin implements Screen {
         worldCreator = new B2WorldCreator(world, map);
        
 
-        player = new Perso(world, jumpForce, speed, maxSpeed, map, worldCreator);
+        player = new Perso(world, jumpForce, speed, maxSpeed, map, worldCreator, camera);
     }
     
     @Override
