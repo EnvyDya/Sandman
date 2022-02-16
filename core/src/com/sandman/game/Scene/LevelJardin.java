@@ -10,7 +10,6 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.sandman.game.Sandman;
@@ -38,7 +37,7 @@ public class LevelJardin implements Screen {
     private Perso player;
     private float speed = 1.5f;
     private float maxSpeed = 5;
-    private float jumpForce = 6f;
+    private float jumpForce = 7f;
 
     //Music
     private Music mainTheme;
@@ -169,6 +168,9 @@ public class LevelJardin implements Screen {
         world.dispose();
         b2dr.dispose();
         hud.dispose();
+        mainTheme.dispose();
+        sonBird.dispose();
+        player.dispose();
     }
     
 }

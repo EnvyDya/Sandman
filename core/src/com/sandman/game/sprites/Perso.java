@@ -13,14 +13,15 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Disposable;
 import com.sandman.game.Sandman;
 import com.sandman.game.tools.B2WorldCreator;
 
-public class Perso extends Sprite{
+public class Perso extends Sprite implements Disposable{
 	public enum State  { FALLING, JUMPING, STANDING, RUNNING};
 	public State currentState;
 	public State previousState;
@@ -33,8 +34,8 @@ public class Perso extends Sprite{
     //Attributs animation
     private Animation<TextureRegion> playerRun;
     private Animation<TextureRegion> playerJump;
-	  private Animation<TextureRegion> playerFall;
-	  private Animation<TextureRegion> playerStand;    
+	private Animation<TextureRegion> playerFall;
+	private Animation<TextureRegion> playerStand;    
     private float stateTimer;
     private boolean runningRight;
 	
@@ -45,7 +46,7 @@ public class Perso extends Sprite{
     private float maxSpeed;
     private float minRunningSpeed = 1f;    
     private boolean justJumping;
-	  private Sound bruitSaut;
+	private Sound bruitSaut;
   
   
     //Constructeur
@@ -218,11 +219,17 @@ public class Perso extends Sprite{
     	b2body = world.createBody(bdef);
     	
     	FixtureDef fdef = new FixtureDef();
-    	CircleShape shape = new CircleShape();
-    	shape.setRadius(15/Sandman.PPM);
+    	PolygonShape shape = new PolygonShape();
+    	shape.setAsBox(10/Sandman.PPM, 16/Sandman.PPM);
     	
     	fdef.shape = shape;
     	b2body.createFixture(fdef);
     	
     }
+
+	@Override
+	public void dispose() {
+		bruitSaut.dispose();
+		
+	}
 }
