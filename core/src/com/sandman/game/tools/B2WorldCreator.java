@@ -16,6 +16,7 @@ import com.sandman.game.sprites.InteractiveTileObject;
 import com.sandman.game.sprites.Water;
 
 public class B2WorldCreator {
+	//Liste de toutes nos interactives tiles
     public ArrayList<InteractiveTileObject> interactiveTiles = new ArrayList<InteractiveTileObject>();
     
 	public B2WorldCreator(World world, TiledMap map) {
@@ -43,9 +44,7 @@ public class B2WorldCreator {
 		 	   Rectangle rect = ((RectangleMapObject) object).getRectangle();
 		 	   
 		 	   Water w = new Water(world, map, rect);
-		 	  interactiveTiles.add(w);
+		 	   interactiveTiles.add(w);
 		    }
-		    
 	}
-	
 }
