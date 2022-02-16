@@ -11,52 +11,52 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Disposable;
 import com.sandman.game.Sandman;
 import com.sandman.game.Scene.Level;
 
-public class Perso extends Sprite{
-	public enum State  { FALLING, JUMPING, STANDING, RUNNING};
-	public Level level;
-	public State currentState;
-	public State previousState;
+public class Perso extends Sprite implements Disposable{
+    public enum State  { FALLING, JUMPING, STANDING, RUNNING};
+    public Level level;
+    public State currentState;
+    public State previousState;
     public Body b2body;
     
     //Attributs animation
     private Animation<TextureRegion> playerRun;
     private Animation<TextureRegion> playerJump;
-	private Animation<TextureRegion> playerFall;
-	private Animation<TextureRegion> playerStand;    
+	  private Animation<TextureRegion> playerFall;
+	  private Animation<TextureRegion> playerStand;    
     private float stateTimer;
     private boolean runningRight;
 	
     
     //Attributs de deplacement
     private float minRunningSpeed = 1f;
-	private Sound bruitSaut;
+	  private Sound bruitSaut;
   
   
     //Constructeur
     public Perso(Level level) {
-		super(new TextureRegion(new Texture("Sandman.png"),0,0,256,96));
-		this.level = level;
+      super(new TextureRegion(new Texture("Sandman.png"),0,0,256,96));
+      this.level = level;
 
-		//Initialisation Animation
-    	currentState = State.STANDING;
-    	previousState = State.STANDING;
+      //Initialisation Animation
+      currentState = State.STANDING;
+      previousState = State.STANDING;
 
-		//Initialise les différents sons
-        bruitSaut = Gdx.audio.newSound(Gdx.files.internal("bruitSaut.wav"));
+      //Initialise les différents sons
+      bruitSaut = Gdx.audio.newSound(Gdx.files.internal("bruitSaut.wav"));
 
-    	stateTimer = 0;
-    	runningRight = true;
-    	
-    	createFrames();
+      stateTimer = 0;
+      runningRight = true;
 
-    	definePerso();
-		setRegion(getFrame(0));
+      createFrames();
+
+      definePerso();
+      setRegion(getFrame(0));
     }
     
     
@@ -219,11 +219,17 @@ public class Perso extends Sprite{
     	b2body = level.getWorld().createBody(bdef);
     	
     	FixtureDef fdef = new FixtureDef();
-    	CircleShape shape = new CircleShape();
-    	shape.setRadius(15/Sandman.PPM);
+    	PolygonShape shape = new PolygonShape();
+    	shape.setAsBox(10/Sandman.PPM, 16/Sandman.PPM);
     	
     	fdef.shape = shape;
     	b2body.createFixture(fdef);
     	
     }
+
+	@Override
+	public void dispose() {
+		bruitSaut.dispose();
+		
+	}
 }

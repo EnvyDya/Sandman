@@ -6,45 +6,44 @@ import com.badlogic.gdx.graphics.GL20;
 import com.sandman.game.Sandman;
 import com.sandman.game.sprites.Perso;
     
-
 public class LevelJardin extends Level{
 	//Son ambiance
-    private Sound sonBird;
-    
-    public LevelJardin(final Sandman game) {
-    	super(game, "jardin.tmx", "themejardin.wav", 10f);
+  private Sound sonBird;
 
-        //ajout bruit Oiseaux
-        sonBird = Gdx.audio.newSound(Gdx.files.internal("sonBird.wav"));
-        sonBird.loop(0.25f);
-        
-        //Player variable
-        speed = 1.5f;
-        maxSpeed = 5;
-        jumpForce = 6f;
+  public LevelJardin(final Sandman game) {
+    super(game, "jardin.tmx", "themejardin.wav", 10f);
 
-        player = new Perso(this);
-    }
+      //ajout bruit Oiseaux
+      sonBird = Gdx.audio.newSound(Gdx.files.internal("sonBird.wav"));
+      sonBird.loop(0.25f);
+
+      //Player variable
+      speed = 1.5f;
+      maxSpeed = 5;
+      jumpForce = 6f;
+
+      player = new Perso(this);
+  }
     
-    @Override
-    public void borderManagement() {
-    	if(player.b2body.getPosition().x < 1) {
-    		player.b2body.setTransform(1, player.b2body.getPosition().y, player.b2body.getAngle());
-    		player.b2body.setLinearVelocity(0, player.b2body.getLinearVelocity().y);
-    	}
-    	else if (player.b2body.getPosition().x > 129) {
-    		player.b2body.setTransform(129, player.b2body.getPosition().y, player.b2body.getAngle());
-    		player.b2body.setLinearVelocity(0, player.b2body.getLinearVelocity().y);
-    	}
+  @Override
+  public void borderManagement() {
+    if(player.b2body.getPosition().x < 1) {
+      player.b2body.setTransform(1, player.b2body.getPosition().y, player.b2body.getAngle());
+      player.b2body.setLinearVelocity(0, player.b2body.getLinearVelocity().y);
     }
-    
-    @Override
-    public void cameraHandle() {
-    	//Gestion de la caméra horizontale
-    	if(player.b2body.getPosition().x >= 15 && player.b2body.getPosition().x <= 115) {
-        	camera.position.x = player.b2body.getPosition().x;
-    	}
+    else if (player.b2body.getPosition().x > 129) {
+      player.b2body.setTransform(129, player.b2body.getPosition().y, player.b2body.getAngle());
+      player.b2body.setLinearVelocity(0, player.b2body.getLinearVelocity().y);
     }
+  }
+
+  @Override
+  public void cameraHandle() {
+    //Gestion de la caméra horizontale
+    if(player.b2body.getPosition().x >= 15 && player.b2body.getPosition().x <= 115) {
+        camera.position.x = player.b2body.getPosition().x;
+    }
+  }
 
 	@Override
 	public void render(float delta) {
