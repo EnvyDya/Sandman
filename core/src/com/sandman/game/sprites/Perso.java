@@ -114,7 +114,7 @@ public class Perso extends Sprite implements Disposable{
      */
 	public void update(float dt){
 		//TODO: Régler l'animation pour qu'elle soit cohérente avec la hitbox carrée.
-		setPosition(b2body.getPosition().x - getWidth()/2, b2body.getPosition().y - getHeight()/2);
+		setPosition(b2body.getPosition().x - getWidth()/2, b2body.getPosition().y + .15f - getHeight()/2);
 		if(previousState==State.FALLING && (getState()==State.STANDING||getState()==State.RUNNING)){
 			
 		}
@@ -221,7 +221,7 @@ public class Perso extends Sprite implements Disposable{
     	
     	FixtureDef fdef = new FixtureDef();
     	PolygonShape shape = new PolygonShape();
-    	shape.setAsBox(10/Sandman.PPM, 16/Sandman.PPM);
+    	shape.setAsBox(10/Sandman.PPM, 14/Sandman.PPM);
     	
     	fdef.shape = shape;
     	b2body.createFixture(fdef);
