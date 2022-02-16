@@ -10,6 +10,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.sandman.game.Sandman;
@@ -26,6 +27,7 @@ public class LevelJardin implements Screen {
     private TiledMap map;
 
     private OrthogonalTiledMapRenderer renderer;
+    private B2WorldCreator worldCreator;
     
     //Box2d variables
     private World world;
@@ -62,16 +64,16 @@ public class LevelJardin implements Screen {
         sonBird.loop(0.25f);
 
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 30, 20);
+        camera.setToOrtho(false, 30, 20);        
        
        
         world = new World(new Vector2(0, -gravity), true);
         b2dr = new Box2DDebugRenderer();
        
-        new B2WorldCreator(world, map);
+        worldCreator = new B2WorldCreator(world, map);
        
 
-        player = new Perso(world, jumpForce, speed, maxSpeed);
+        player = new Perso(world, jumpForce, speed, maxSpeed, map, worldCreator, camera);
     }
     
     @Override
@@ -94,7 +96,7 @@ public class LevelJardin implements Screen {
 		game.batch.end();
 
         //Affiche les box2d dans le jeu
-        //b2dr.render(world, camera.combined);
+        b2dr.render(world, camera.combined);
     }  
     
     
