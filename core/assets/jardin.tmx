@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.8" tiledversion="1.8.1" orientation="orthogonal" renderorder="right-down" width="130" height="20" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="76">
- <tileset firstgid="1" source="C:/Users/lllld/Desktop/tile.tsx"/>
+ <tileset firstgid="1" source="tile.tsx"/>
  <tileset firstgid="85" name="BG" tilewidth="16" tileheight="16" tilecount="55" columns="5">
-  <image source="C:/Users/lllld/Desktop/Forest Tileset/BG/NonParallax.png" width="80" height="176"/>
+  <image source="NonParallax.png" width="80" height="176"/>
  </tileset>
  <layer id="8" name="Background" width="130" height="20">
   <data encoding="base64" compression="zlib">
