@@ -2,9 +2,10 @@ package com.sandman.game.Scene;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -19,7 +20,6 @@ import com.sandman.game.tools.B2WorldCreator;
 
 public class LevelJardin implements Screen {
     private Sandman game;
-    private TextureAtlas atlas;
     private OrthographicCamera camera;
 
     //Tiled map variables
@@ -39,18 +39,30 @@ public class LevelJardin implements Screen {
     private float speed = 1.5f;
     private float maxSpeed = 5;
     private float jumpForce = 6f;
+
+    //Music
+    private Music mainTheme;
+    private Sound sonBird;
     
     private Hud hud;
 
     public LevelJardin(final Sandman game) {
         this.game = game;
-        atlas = new TextureAtlas("Sandman.pack");
 
         //Charge notre carte cree avec Tmx
         maploader = new TmxMapLoader();
         map = maploader.load("jardin.tmx");
         renderer = new OrthogonalTiledMapRenderer(map,1/16f);
-       
+
+        //Charge et lance la musique
+        mainTheme = Gdx.audio.newMusic(Gdx.files.internal("themejardin.wav"));
+        mainTheme.setLooping(true);
+        mainTheme.play();
+
+        //ajout bruit Oiseaux
+        sonBird = Gdx.audio.newSound(Gdx.files.internal("sonBird.wav"));
+        sonBird.loop(0.25f);
+
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 30, 20);        
        
