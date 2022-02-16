@@ -21,7 +21,7 @@ public class Hud implements Disposable{
 	private Integer worldTimer;
 	private Integer score;
 	
-	//Tous les attributs qui seront affiches
+	//Tous les attributs qui seront affichés
 	Label countdownLabel;
 	Label scoreLabel;
 	Label timeLabel;
@@ -41,7 +41,7 @@ public class Hud implements Disposable{
 		table.top();
 		table.setFillParent(true);
 		
-		//On cree nos label
+		//On crée nos label
 		countdownLabel = new Label(String.format("%03d", worldTimer), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 		scoreLabel = new Label(String.format("%06d", score), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 		timeLabel = new Label("TIME", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
@@ -49,7 +49,7 @@ public class Hud implements Disposable{
 		worldLabel = new Label("Niveau", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 		boyLabel = new Label("Boy", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 		
-		//On ajoute nos label en haut de notre Ecran
+		//On ajoute nos label en haut de notre écran
 		table.add(boyLabel).expandX().padTop(10);
 		table.add(worldLabel).expandX().padTop(10);
 		table.add(timeLabel).expandX().padTop(10);
