@@ -28,36 +28,36 @@ public class Perso extends Sprite implements Disposable{
     //Attributs animation
     private Animation<TextureRegion> playerRun;
     private Animation<TextureRegion> playerJump;
-	  private Animation<TextureRegion> playerFall;
-	  private Animation<TextureRegion> playerStand;    
+	private Animation<TextureRegion> playerFall;
+	private Animation<TextureRegion> playerStand;    
     private float stateTimer;
     private boolean runningRight;
 	
     
     //Attributs de deplacement
     private float minRunningSpeed = 1f;
-	  private Sound bruitSaut;
+	private Sound bruitSaut;
   
   
     //Constructeur
     public Perso(Level level) {
-      super(new TextureRegion(new Texture("Sandman.png"),0,0,256,96));
-      this.level = level;
+    	super(new TextureRegion(new Texture("Sandman.png"),0,0,256,96));
+		this.level = level;
 
-      //Initialisation Animation
-      currentState = State.STANDING;
-      previousState = State.STANDING;
+		//Initialisation Animation
+		currentState = State.STANDING;
+		previousState = State.STANDING;
 
-      //Initialise les différents sons
-      bruitSaut = Gdx.audio.newSound(Gdx.files.internal("bruitSaut.wav"));
+		//Initialise les différents sons
+		bruitSaut = Gdx.audio.newSound(Gdx.files.internal("bruitSaut.wav"));
 
-      stateTimer = 0;
-      runningRight = true;
+		stateTimer = 0;
+		runningRight = true;
 
-      createFrames();
+		createFrames();
 
-      definePerso();
-      setRegion(getFrame(0));
+		definePerso();
+		setRegion(getFrame(0));
     }
     
     
