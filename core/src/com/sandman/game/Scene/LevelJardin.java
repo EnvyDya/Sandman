@@ -27,7 +27,7 @@ public class LevelJardin extends Level{
         maxSpeed = 5;
         jumpForce = 6f;
 
-        //Initialisation Entité
+        //Initialisation Entités
         player = new Perso(this);
         tondeuse = new Tondeuse(world);
     }
