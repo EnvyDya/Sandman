@@ -196,15 +196,14 @@ public class Perso extends Sprite implements Disposable{
     			//Pour chaque body, on teste si notre clic est dedans
     			if(b.getFixtureList().get(0).testPoint(pos.x, pos.y)) {
     				//Si le clic est dedans, on teste chaque InteractiveTile du niveau pour voir si on a le même body
-    				for(InteractiveTileObject w : level.getWorldCreator().interactiveTiles) {
-    					if(w.body == b) {
+    				for(InteractiveTileObject o : level.getWorldCreator().interactiveTiles) {
+    					if(o.body == b) {
     						//Le cas échéant, on réalise le comportement associé à l'objet récupéré
-    						System.out.println("Contact avec un Objet Interactif : " + w);
-    						w.onClick();
+    						System.out.println("Contact avec l'objet interactif : " + o);
+    						o.onClick();
     					}
     				}
     			}
-    			
     		}
         }
     }

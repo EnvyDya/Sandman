@@ -50,10 +50,6 @@ public abstract class InteractiveTileObject extends Sprite{
  	    fixture = body.createFixture(fdef);
 	}
 	
-	public Body getBody() {
-		return body;
-	}
-	
 	/**
 	 * Fonction à définir sur l'intéractivité de notre tile, c'est ici que seront définis les comportements en cas d'arrêt du temps
 	 */
