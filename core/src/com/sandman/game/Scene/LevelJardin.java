@@ -4,10 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.sandman.game.Sandman;
-import com.sandman.game.sprites.InteractiveTileObject;
 import com.sandman.game.sprites.Perso;
 import com.sandman.game.sprites.Tondeuse;
-import com.sandman.game.sprites.Water;
+
     
 public class LevelJardin extends Level{
 
@@ -68,13 +67,11 @@ public class LevelJardin extends Level{
 	    //rendu du joueur
 	    game.batch.setProjectionMatrix(camera.combined);
 	    game.batch.begin();
-		  player.draw(game.batch);
+		player.draw(game.batch);
 	    tondeuse.draw(game.batch);
-	    for(InteractiveTileObject w : worldCreator.interactiveTiles) {
-	    	if(w instanceof Water) {
-	    		((Water) w).draw(game.batch);
-	    	}
-	    }
+		if(player.getGel()){
+	    	player.getObjetGel().draw(game.batch);
+		}
 	    game.batch.end();
 	
 	    //Affiche les box2d dans le jeu

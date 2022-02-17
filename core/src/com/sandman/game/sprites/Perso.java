@@ -45,7 +45,7 @@ public class Perso extends Sprite implements Disposable{
   
     //Constructeur
     public Perso(Level level) {
-    	super(new TextureRegion(new Texture("Sandman.png"),0,0,256,96));
+    	super(new TextureRegion(new Texture("Sandman.png")));
 		this.level = level;
 
 		//Initialisation Animation
@@ -220,10 +220,12 @@ public class Perso extends Sprite implements Disposable{
     					if(o.body == b) {
     						//Le cas échéant, on réalise le comportement associé à l'objet récupéré
     						System.out.println("Contact avec l'objet interactif : " + o);
-    						o.onClick();
-							tmpsGel = 0;
-							objetGel = o;
-							gel = !gel;
+							if(!gel||o == objetGel){
+								o.onClick();
+								tmpsGel = 0;
+								objetGel = o;
+								gel = !gel;
+							}
     					}
     				}
     			}
@@ -254,6 +256,14 @@ public class Perso extends Sprite implements Disposable{
     	b2body.createFixture(fdef);
     	
     }
+
+	public boolean getGel(){
+		return gel;
+	}
+
+	public InteractiveTileObject getObjetGel() {
+		return objetGel;
+	}
 
 	@Override
 	public void dispose() {
