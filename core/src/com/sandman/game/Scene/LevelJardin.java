@@ -68,7 +68,7 @@ public class LevelJardin extends Level{
 	    //rendu du joueur
 	    game.batch.setProjectionMatrix(camera.combined);
 	    game.batch.begin();
-		player.draw(game.batch);
+		  player.draw(game.batch);
 	    tondeuse.draw(game.batch);
 	    for(InteractiveTileObject w : worldCreator.interactiveTiles) {
 	    	if(w instanceof Water) {
