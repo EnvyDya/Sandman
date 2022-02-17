@@ -29,7 +29,7 @@ public class LevelJardin extends Level{
 
         //Initialisation Entité
         player = new Perso(this);
-        tondeuse = new Tondeuse(world);
+        tondeuse = worldCreator.getTondeuse();
     }
     
   @Override
@@ -54,50 +54,50 @@ public class LevelJardin extends Level{
 
 	@Override
 	public void render(float delta) {
-        update(delta);
+    update(delta);
 
-    	//On met tout au noir pour nettoyer l'écran
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+    //On met tout au noir pour nettoyer l'écran
+    Gdx.gl.glClearColor(0, 0, 0, 1);
+    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        renderer.render();
+    renderer.render();
 
-        //rendu du joueur
-        game.batch.setProjectionMatrix(camera.combined);
-        game.batch.begin();
+    //rendu du joueur
+    game.batch.setProjectionMatrix(camera.combined);
+    game.batch.begin();
 		player.draw(game.batch);
-        tondeuse.draw(game.batch);
+    tondeuse.draw(game.batch);
 		game.batch.end();
 
-        //Affiche les box2d dans le jeu
-        b2dr.render(world, camera.combined);
+    //Affiche les box2d dans le jeu
+    b2dr.render(world, camera.combined);
 		
 	}
 
 	@Override
 	public void update(float dt) {
 		player.handleInput(dt);
-        player.update(dt);
-        tondeuse.update(dt);
-    	borderManagement();
+    player.update(dt);
+    tondeuse.update(dt);
+    borderManagement();
 
-    	//On rafraichit les calculs 60x par seconde
-    	world.step(1/60f, 6, 2);
+    //On rafraichit les calculs 60x par seconde
+    world.step(1/60f, 6, 2);
     	
-    	cameraHandle();
+    cameraHandle();
     	
-    	camera.update();
+    camera.update();
     	
-    	//Dit au renderer de n'afficher que ce que la camera voit
-    	renderer.setView(camera);
+    //Dit au renderer de n'afficher que ce que la camera voit
+    renderer.setView(camera);
 	}
 
 	@Override
 	public void dispose() {
-		 map.dispose();
-	     renderer.dispose();
-	     world.dispose();
-	     b2dr.dispose();
-	     //hud.dispose();
+    map.dispose();
+	  renderer.dispose();
+	  world.dispose();
+	  b2dr.dispose();
+	  //hud.dispose();
 	}
 }

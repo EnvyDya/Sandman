@@ -52,6 +52,7 @@ public abstract class Level implements Screen{
         //Charge et lance la musique
         mainTheme = Gdx.audio.newMusic(Gdx.files.internal(themeName));
         mainTheme.setLooping(true);
+        mainTheme.setVolume(0.5f);
         mainTheme.play();
         
     	camera = new OrthographicCamera();

@@ -13,11 +13,16 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.sandman.game.Sandman;
 import com.sandman.game.sprites.InteractiveTileObject;
+import com.sandman.game.sprites.Tondeuse;
 import com.sandman.game.sprites.Water;
 
 public class B2WorldCreator {
+
 	//Liste de toutes nos interactives tiles
     public ArrayList<InteractiveTileObject> interactiveTiles = new ArrayList<InteractiveTileObject>();
+
+	//Liste des entités
+	private Tondeuse t;
     
 	public B2WorldCreator(World world, TiledMap map) {
 		   BodyDef bdef = new BodyDef();
@@ -43,8 +48,18 @@ public class B2WorldCreator {
 		    for(MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
 		 	   Rectangle rect = ((RectangleMapObject) object).getRectangle();
 		 	   
-		 	   Water w = new Water(world, map, rect);
+		 	   Water w = new Water(world, rect);
 		 	   interactiveTiles.add(w);
 		    }
+			
+			//Ajout de la tondeuse
+			t = new Tondeuse(world);
+			interactiveTiles.add(t);
 	}
+
+	public Tondeuse getTondeuse() {
+		return t;
+	}
+
+	//TODO Faire libération de mémoire si besoin
 }

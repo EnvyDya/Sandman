@@ -113,7 +113,6 @@ public class Perso extends Sprite implements Disposable{
      * @param dt
      */
 	public void update(float dt){
-		//TODO: Régler l'animation pour qu'elle soit cohérente avec la hitbox carrée.
 		setPosition(b2body.getPosition().x - getWidth()/2, b2body.getPosition().y + .15f - getHeight()/2);
 		if(previousState==State.FALLING && (getState()==State.STANDING||getState()==State.RUNNING)){
 			
@@ -200,7 +199,7 @@ public class Perso extends Sprite implements Disposable{
     				for(InteractiveTileObject w : level.getWorldCreator().interactiveTiles) {
     					if(w.body == b) {
     						//Le cas échéant, on réalise le comportement associé à l'objet récupéré
-    						System.out.println("Contact avec l'eau : " + w);
+    						System.out.println("Contact avec un Objet Interactif : " + w);
     						w.onClick();
     					}
     				}
@@ -215,7 +214,8 @@ public class Perso extends Sprite implements Disposable{
      */
     public void definePerso() {
     	BodyDef bdef = new BodyDef();
-    	bdef.position.set(16/Sandman.PPM, 64/Sandman.PPM);
+    	//bdef.position.set(16/Sandman.PPM, 64/Sandman.PPM);
+		bdef.position.set(1300/Sandman.PPM, 150/Sandman.PPM);
     	bdef.type = BodyDef.BodyType.DynamicBody;
     	b2body = level.getWorld().createBody(bdef);
     	

@@ -2,21 +2,13 @@ package com.sandman.game.sprites;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.sandman.game.Sandman;
 
-public class Tondeuse extends Sprite{
-
-    //Attribut Physique
-    public World world;
-    public Body b2body;
+public class Tondeuse extends InteractiveTileObject{
 
     //Attribut animation
     private Animation<TextureRegion> animTondeuse;
@@ -24,8 +16,11 @@ public class Tondeuse extends Sprite{
 
     //Constructeur
     public Tondeuse(World world){
-        super(new TextureRegion(new Texture("Tondeuse.png"),0,0,384,64));
-    	this.world = world;
+        //TODO revoir pour la hitbox
+        //Rectangle de positionnement et hitbox de la tondeuse
+        super(new TextureRegion(new Texture("Tondeuse.png"),0,0,384,64),world,new Rectangle(1360, 95, 80, 55));
+
+        //reset le temps d'état
         stateTimer = 0;
 
         //Creation de l'animation
@@ -40,8 +35,6 @@ public class Tondeuse extends Sprite{
 		setRegion(getFrame(0));
         setPosition(1360/Sandman.PPM, 100/Sandman.PPM);
 
-        //Creation physique de la Tondeuse
-        defineTondeuse();
     }
 
     public void update(float dt){
@@ -54,18 +47,8 @@ public class Tondeuse extends Sprite{
         return animTondeuse.getKeyFrame(stateTimer,true);
     }
 
-    private void defineTondeuse() {
-        BodyDef bdef = new BodyDef();
-    	bdef.position.set(1400/Sandman.PPM, 135/Sandman.PPM);
-    	bdef.type = BodyDef.BodyType.StaticBody;
-    	b2body = world.createBody(bdef);
-    	
-    	FixtureDef fdef = new FixtureDef();
-    	PolygonShape shape = new PolygonShape();
-    	shape.setAsBox(40/Sandman.PPM, 20/Sandman.PPM);
-    	
-    	fdef.shape = shape;
-    	b2body.createFixture(fdef);
-    	
-    }
+	@Override
+	public void onClick() {
+		System.out.println("mon hélice ne tourne plus");
+	}
 }
