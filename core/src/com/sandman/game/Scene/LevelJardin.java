@@ -5,25 +5,32 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.sandman.game.Sandman;
 import com.sandman.game.sprites.Perso;
+import com.sandman.game.sprites.Tondeuse;
     
 public class LevelJardin extends Level{
-	//Son ambiance
-  private Sound sonBird;
 
-  public LevelJardin(final Sandman game) {
-    super(game, "jardin.tmx", "themejardin.wav", 10f);
+    //Son ambiance
+    private Sound sonBird;
 
-      //ajout bruit Oiseaux
-      sonBird = Gdx.audio.newSound(Gdx.files.internal("sonBird.wav"));
-      sonBird.loop(0.25f);
+    //Entité variable
+    private Tondeuse tondeuse;
 
-      //Player variable
-      speed = 1.5f;
-      maxSpeed = 5;
-      jumpForce = 6f;
+    public LevelJardin(final Sandman game) {
+        super(game, "jardin.tmx", "themejardin.wav", 10f);
 
-      player = new Perso(this);
-  }
+        //ajout bruit Oiseaux
+        sonBird = Gdx.audio.newSound(Gdx.files.internal("sonBird.wav"));
+        sonBird.loop(0.25f);
+
+        //Player variable
+        speed = 1.5f;
+        maxSpeed = 5;
+        jumpForce = 6f;
+
+        //Initialisation Entité
+        player = new Perso(this);
+        tondeuse = new Tondeuse(world);
+    }
     
   @Override
   public void borderManagement() {
@@ -59,6 +66,7 @@ public class LevelJardin extends Level{
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
 		player.draw(game.batch);
+        tondeuse.draw(game.batch);
 		game.batch.end();
 
         //Affiche les box2d dans le jeu
@@ -70,6 +78,7 @@ public class LevelJardin extends Level{
 	public void update(float dt) {
 		player.handleInput(dt);
         player.update(dt);
+        tondeuse.update(dt);
     	borderManagement();
 
     	//On rafraichit les calculs 60x par seconde
