@@ -1,7 +1,6 @@
 package com.sandman.game.sprites;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -19,15 +18,13 @@ import com.sandman.game.Sandman;
  */
 public abstract class InteractiveTileObject extends Sprite{
 	protected World world;
-	protected TiledMap map;
 	protected TiledMapTile tile;
 	protected Rectangle bounds;
 	protected Body body;
 	protected Fixture fixture;
 	
-	public InteractiveTileObject(World world, TiledMap map, Rectangle bounds) {
+	public InteractiveTileObject(World world, Rectangle bounds) {
 		this.world = world;
-		this.map = map;
 		this.bounds = bounds;
 		
 		BodyDef bdef = new BodyDef();
@@ -44,10 +41,6 @@ public abstract class InteractiveTileObject extends Sprite{
  	    fdef.shape = shape;
  	    fixture = body.createFixture(fdef);
  	    
-	}
-	
-	public Body getBody() {
-		return body;
 	}
 	
 	/**
