@@ -213,8 +213,13 @@ public class Perso extends Sprite implements Disposable{
      */
     public void definePerso() {
     	BodyDef bdef = new BodyDef();
-    	//bdef.position.set(16/Sandman.PPM, 64/Sandman.PPM);
-		bdef.position.set(1300/Sandman.PPM, 150/Sandman.PPM);
+
+		//Position Spawn :
+    	bdef.position.set(16/Sandman.PPM, 64/Sandman.PPM);
+
+		//Position Tondeuse :
+		//bdef.position.set(1300/Sandman.PPM, 150/Sandman.PPM);
+
     	bdef.type = BodyDef.BodyType.DynamicBody;
     	b2body = level.getWorld().createBody(bdef);
     	
