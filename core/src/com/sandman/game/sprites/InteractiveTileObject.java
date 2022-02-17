@@ -20,10 +20,12 @@ public abstract class InteractiveTileObject extends Sprite{
 	protected World world;
 	protected Body body;
 	protected Fixture fixture;
+	protected boolean gel;
 	
 	public InteractiveTileObject(World world, Rectangle bounds) {
 		this.world = world;
 		defineObject(bounds);
+		gel = false;
 	}
 
 	//Constructeur pour les sprites
@@ -31,6 +33,7 @@ public abstract class InteractiveTileObject extends Sprite{
 		super(region);
 		this.world = world; 
 		defineObject(bounds);
+		gel = false;
 	}
 
 	//Creer la hitbox de l'objet
@@ -54,4 +57,8 @@ public abstract class InteractiveTileObject extends Sprite{
 	 * Fonction à définir sur l'intéractivité de notre tile, c'est ici que seront définis les comportements en cas d'arrêt du temps
 	 */
 	public abstract void onClick();
+	
+	public boolean isFrozen() {
+		return gel;
+	}
 }

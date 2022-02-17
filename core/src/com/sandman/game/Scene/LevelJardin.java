@@ -3,9 +3,12 @@ package com.sandman.game.Scene;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.sandman.game.Sandman;
+import com.sandman.game.sprites.InteractiveTileObject;
 import com.sandman.game.sprites.Perso;
 import com.sandman.game.sprites.Tondeuse;
+import com.sandman.game.sprites.Water;
     
 public class LevelJardin extends Level{
 
@@ -30,6 +33,7 @@ public class LevelJardin extends Level{
         //Initialisation Entités
         player = new Perso(this);
         tondeuse = worldCreator.getTondeuse();
+        
     }
     
   @Override
@@ -54,50 +58,55 @@ public class LevelJardin extends Level{
 
 	@Override
 	public void render(float delta) {
-    update(delta);
-
-    //On met tout au noir pour nettoyer l'écran
-    Gdx.gl.glClearColor(0, 0, 0, 1);
-    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-    renderer.render();
-
-    //rendu du joueur
-    game.batch.setProjectionMatrix(camera.combined);
-    game.batch.begin();
+	    update(delta);
+	
+	    //On met tout au noir pour nettoyer l'écran
+	    Gdx.gl.glClearColor(0, 0, 0, 1);
+	    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+	
+	    renderer.render();
+	
+	    //rendu du joueur
+	    game.batch.setProjectionMatrix(camera.combined);
+	    game.batch.begin();
 		player.draw(game.batch);
-    tondeuse.draw(game.batch);
-		game.batch.end();
-
-    //Affiche les box2d dans le jeu
-    b2dr.render(world, camera.combined);
-		
+	    tondeuse.draw(game.batch);
+	    for(InteractiveTileObject w : worldCreator.interactiveTiles) {
+	    	if(w instanceof Water) {
+	    		((Water) w).draw(game.batch);
+	    	}
+	    }
+	    game.batch.end();
+	
+	    //Affiche les box2d dans le jeu
+	    b2dr.render(world, camera.combined);
+			
 	}
 
 	@Override
 	public void update(float dt) {
 		player.handleInput(dt);
-    player.update(dt);
-    tondeuse.update(dt);
-    borderManagement();
-
-    //On rafraichit les calculs 60x par seconde
-    world.step(1/60f, 6, 2);
-    	
-    cameraHandle();
-    	
-    camera.update();
-    	
-    //Dit au renderer de n'afficher que ce que la camera voit
-    renderer.setView(camera);
+	    player.update(dt);
+	    tondeuse.update(dt);
+	    borderManagement();
+	
+	    //On rafraichit les calculs 60x par seconde
+	    world.step(1/60f, 6, 2);
+	    	
+	    cameraHandle();
+	    	
+	    camera.update();
+	    	
+	    //Dit au renderer de n'afficher que ce que la camera voit
+	    renderer.setView(camera);
 	}
 
 	@Override
 	public void dispose() {
-    map.dispose();
-	  renderer.dispose();
-	  world.dispose();
-	  b2dr.dispose();
-	  //hud.dispose();
+		map.dispose();
+		renderer.dispose();
+		world.dispose();
+		b2dr.dispose();
+		//hud.dispose();
 	}
 }
