@@ -62,7 +62,7 @@ public class LevelJardin extends Level{
 
     renderer.render();
 
-    //rendu du joueur
+    //rendu du joueur et de la tondeuse
     game.batch.setProjectionMatrix(camera.combined);
     game.batch.begin();
 		player.draw(game.batch);

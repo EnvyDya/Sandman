@@ -37,7 +37,11 @@ public class Perso extends Sprite implements Disposable{
     //Attributs de deplacement
     private float minRunningSpeed = 1f;
 	private Sound bruitSaut;
-  
+
+	//Attributs Gel
+	private boolean gel;
+	private float tmpsGel;
+	private InteractiveTileObject objetGel;
   
     //Constructeur
     public Perso(Level level) {
@@ -117,7 +121,23 @@ public class Perso extends Sprite implements Disposable{
 		if(previousState==State.FALLING && (getState()==State.STANDING||getState()==State.RUNNING)){
 			
 		}
+
+		//Affiche la frame de la texture
 		setRegion(getFrame(dt));
+
+		//Gère le gel de l'objet
+		if(gel){
+			gestionGel(dt);
+		}
+	}
+
+	public void gestionGel(float dt){
+		tmpsGel += dt;
+		if(tmpsGel>5){
+			tmpsGel = 0;
+			gel = false;
+			objetGel.onClick();
+		}
 	}
 	
 	/*
@@ -201,6 +221,9 @@ public class Perso extends Sprite implements Disposable{
     						//Le cas échéant, on réalise le comportement associé à l'objet récupéré
     						System.out.println("Contact avec l'objet interactif : " + o);
     						o.onClick();
+							tmpsGel = 0;
+							objetGel = o;
+							gel = !gel;
     					}
     				}
     			}
@@ -215,10 +238,10 @@ public class Perso extends Sprite implements Disposable{
     	BodyDef bdef = new BodyDef();
 
 		//Position Spawn :
-    	bdef.position.set(16/Sandman.PPM, 64/Sandman.PPM);
+    	//bdef.position.set(16/Sandman.PPM, 64/Sandman.PPM);
 
 		//Position Tondeuse :
-		//bdef.position.set(1300/Sandman.PPM, 150/Sandman.PPM);
+		bdef.position.set(1300/Sandman.PPM, 150/Sandman.PPM);
 
     	bdef.type = BodyDef.BodyType.DynamicBody;
     	b2body = level.getWorld().createBody(bdef);

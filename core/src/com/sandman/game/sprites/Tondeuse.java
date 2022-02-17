@@ -14,14 +14,18 @@ public class Tondeuse extends InteractiveTileObject{
     private Animation<TextureRegion> animTondeuse;
     private float stateTimer;
 
+    //Attribut gel
+    private boolean gel;
+
     //Constructeur
     public Tondeuse(World world){
         //TODO revoir pour la hitbox
         //Rectangle de positionnement et hitbox de la tondeuse
         super(new TextureRegion(new Texture("Tondeuse.png"),0,0,384,64),world,new Rectangle(1360, 95, 80, 55));
 
-        //reset le temps d'état
+        //set l'état initial
         stateTimer = 0;
+        gel = false;
 
         //Creation de l'animation
         Array<TextureRegion> frames = new Array<TextureRegion>();
@@ -38,7 +42,9 @@ public class Tondeuse extends InteractiveTileObject{
     }
 
     public void update(float dt){
-		setRegion(getFrame(dt));
+        if(!gel){
+		    setRegion(getFrame(dt));
+        }
 	}
 
     //Retourne la frame à affiché
@@ -50,5 +56,6 @@ public class Tondeuse extends InteractiveTileObject{
 	@Override
 	public void onClick() {
 		System.out.println("mon hélice ne tourne plus");
+        gel = !gel;
 	}
 }
