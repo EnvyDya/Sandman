@@ -8,12 +8,9 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.sandman.game.Sandman;
 
 public class Water extends InteractiveTileObject{
-	private Texture texture;
-	private Rectangle bounds;
-	
+
 	public Water(World world, Rectangle bounds) {
 		super(new TextureRegion(new Texture(Gdx.files.internal("iceFilter.png"))),world, bounds);
-		this.bounds = bounds;
 		fixture.setUserData(this);
 		
 		//definit la taille et la position de la texture
