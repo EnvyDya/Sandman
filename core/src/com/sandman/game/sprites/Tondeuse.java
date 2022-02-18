@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.sandman.game.Sandman;
@@ -14,14 +15,11 @@ public class Tondeuse extends InteractiveTileObject{
     private Animation<TextureRegion> animTondeuse;
     private float stateTimer;
 
-    //Attribut gel
-    private boolean gel;
-
     //Constructeur
     public Tondeuse(World world){
         //TODO revoir pour la hitbox
         //Rectangle de positionnement et hitbox de la tondeuse
-        super(new TextureRegion(new Texture("Tondeuse.png")),world,new Rectangle(1360, 95, 80, 55));
+        super(new TextureRegion(new Texture("Tondeuse.png")),world,new Rectangle(1360, 95, 80, 55), BodyDef.BodyType.StaticBody);
 
         //set l'état initial
         stateTimer = 0;

@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.sandman.game.Sandman;
+import com.sandman.game.sprites.Feuille;
 import com.sandman.game.sprites.InteractiveTileObject;
 import com.sandman.game.sprites.Tondeuse;
 import com.sandman.game.sprites.Water;
@@ -23,6 +24,7 @@ public class B2WorldCreator {
 
 	//Liste des entités
 	private Tondeuse t;
+	private Feuille feuille;
     
 	public B2WorldCreator(World world, TiledMap map) {
 		   BodyDef bdef = new BodyDef();
@@ -55,10 +57,18 @@ public class B2WorldCreator {
 			//Ajout de la tondeuse
 			t = new Tondeuse(world);
 			interactiveTiles.add(t);
+			
+			//Ajout de la feuille
+			feuille = new Feuille(world);
+			interactiveTiles.add(feuille);
 	}
 
 	public Tondeuse getTondeuse() {
 		return t;
+	}
+	
+	public Feuille getFeuille() {
+		return feuille;
 	}
 
 	//TODO Faire libération de mémoire si besoin

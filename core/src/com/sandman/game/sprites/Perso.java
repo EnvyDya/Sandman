@@ -37,6 +37,7 @@ public class Perso extends Sprite implements Disposable{
     //Attributs de deplacement
     private float minRunningSpeed = 1f;
 	private Sound bruitSaut;
+	private Sound bruitHorloge;
 
 	//Attributs Gel
 	private boolean gel;
@@ -54,6 +55,7 @@ public class Perso extends Sprite implements Disposable{
 
 		//Initialise les différents sons
 		bruitSaut = Gdx.audio.newSound(Gdx.files.internal("bruitSaut.wav"));
+		bruitHorloge = Gdx.audio.newSound(Gdx.files.internal("tic tac.mp3"));
 
 		stateTimer = 0;
 		runningRight = true;
@@ -118,9 +120,6 @@ public class Perso extends Sprite implements Disposable{
      */
 	public void update(float dt){
 		setPosition(b2body.getPosition().x - getWidth()/2, b2body.getPosition().y + .15f - getHeight()/2);
-		if(previousState==State.FALLING && (getState()==State.STANDING||getState()==State.RUNNING)){
-			
-		}
 
 		//Affiche la frame de la texture
 		setRegion(getFrame(dt));
@@ -137,6 +136,7 @@ public class Perso extends Sprite implements Disposable{
 			tmpsGel = 0;
 			gel = false;
 			objetGel.onClick();
+			bruitHorloge.stop();
 		}
 	}
 	
@@ -220,8 +220,13 @@ public class Perso extends Sprite implements Disposable{
     					if(o.body == b) {
     						//Le cas échéant, on réalise le comportement associé à l'objet récupéré
     						System.out.println("Contact avec l'objet interactif : " + o);
-							if(!gel||o == objetGel){
+							if(!gel || o == objetGel){
 								o.onClick();
+								if(!gel) {
+									bruitHorloge.play(0.5f);
+								}else {
+									bruitHorloge.stop();
+								}
 								tmpsGel = 0;
 								objetGel = o;
 								gel = !gel;

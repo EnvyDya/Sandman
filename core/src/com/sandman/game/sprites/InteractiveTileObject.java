@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
@@ -24,26 +25,26 @@ public abstract class InteractiveTileObject extends Sprite{
 	
 	public InteractiveTileObject(World world, Rectangle bounds) {
 		this.world = world;
-		defineObject(bounds);
+		defineObject(bounds, BodyDef.BodyType.StaticBody);
 		gel = false;
 	}
 
 	//Constructeur pour les sprites
-	public InteractiveTileObject(TextureRegion region,World world,Rectangle bounds) {
+	public InteractiveTileObject(TextureRegion region,World world,Rectangle bounds, BodyType bodyType) {
 		super(region);
 		this.world = world; 
-		defineObject(bounds);
+		defineObject(bounds, bodyType);
 		gel = false;
 	}
 
 	//Creer la hitbox de l'objet
-	public void defineObject(Rectangle bounds){
+	public void defineObject(Rectangle bounds, BodyType bodyType){
 		BodyDef bdef = new BodyDef();
 		FixtureDef fdef = new FixtureDef();
 		PolygonShape shape = new PolygonShape();
 		
 		//Création du body
-		bdef.type = BodyDef.BodyType.StaticBody;
+		bdef.type = bodyType;
  	    bdef.position.set((bounds.getX() + bounds.getWidth()/2)/Sandman.PPM, (bounds.getY() + bounds.getHeight()/2)/Sandman.PPM);
  	    body = world.createBody(bdef);
  	  
@@ -60,5 +61,9 @@ public abstract class InteractiveTileObject extends Sprite{
 	
 	public boolean isFrozen() {
 		return gel;
+	}
+	
+	public World getWorld() {
+		return world;
 	}
 }
