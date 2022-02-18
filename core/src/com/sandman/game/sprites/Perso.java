@@ -46,7 +46,7 @@ public class Perso extends Sprite implements Disposable{
   
     //Constructeur
     public Perso(Level level) {
-    	super(new TextureRegion(new Texture("Sandman.png")));
+    	super(new TextureRegion(new Texture("images/Sandman.png")));
 		this.level = level;
 
 		//Initialisation Animation
@@ -54,8 +54,8 @@ public class Perso extends Sprite implements Disposable{
 		previousState = State.STANDING;
 
 		//Initialise les différents sons
-		bruitSaut = Gdx.audio.newSound(Gdx.files.internal("bruitSaut.wav"));
-		bruitHorloge = Gdx.audio.newSound(Gdx.files.internal("tic tac.mp3"));
+		bruitSaut = Gdx.audio.newSound(Gdx.files.internal("sounds/bruitSaut.wav"));
+		bruitHorloge = Gdx.audio.newSound(Gdx.files.internal("sounds/tic tac.mp3"));
 
 		stateTimer = 0;
 		runningRight = true;

@@ -19,7 +19,7 @@ public class Tondeuse extends InteractiveTileObject{
     public Tondeuse(World world){
         //TODO revoir pour la hitbox
         //Rectangle de positionnement et hitbox de la tondeuse
-        super(new TextureRegion(new Texture("Tondeuse.png")),world,new Rectangle(1360, 95, 80, 55), BodyDef.BodyType.StaticBody);
+        super(new TextureRegion(new Texture("images/Tondeuse.png")),world,new Rectangle(1360, 95, 80, 55), BodyDef.BodyType.StaticBody);
 
         //set l'état initial
         stateTimer = 0;
