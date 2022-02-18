@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.1" orientation="orthogonal" renderorder="right-down" width="130" height="20" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="76">
+<map version="1.8" tiledversion="1.8.1" orientation="orthogonal" renderorder="right-down" width="130" height="20" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="79">
  <tileset firstgid="1" source="tile.tsx"/>
  <tileset firstgid="85" name="BG" tilewidth="16" tileheight="16" tilecount="55" columns="5">
   <image source="BG.png" width="80" height="176"/>
@@ -14,14 +14,13 @@
  </layer>
  <layer id="2" name="Graphique" width="130" height="20">
   <data encoding="base64" compression="zlib">
-   eJztlslOxDAMhgNzhpHgYXgA7sOLse+IrcCBfRM7vBx/D5FKsJN06iQD40/6pJGmrR3XTmqMoiiKoiiKoiiKoihKGVbgKlyD63CjbDr/EqrGm3ALbsMd5pqc7MMDeAiP4HHm+OMAVeMKnsBTeMZck5NzeAEv4RW8zhx/HKBqfANv4R28Z67JwS7cg0/wGb7AV/iWKX4JHuBjgbhUjd/hB/yEX8w19h2lYgJOMvYC97rnGoWtd9t1pD4jfev2GapJ6vjSeVim4DRjP3BvZX6eaxTN9bbJPdUZafOZNfy6fdY1mRPQV/fYPIaFmt8ufeCea02oerfJXfqM7Pr+m2uYF7BkH1Tm9/x26QP3XFuES3CZee6Mid8bpL5VpN4/1wcD5vco9wE1v6E+4Pa10PkWqntsT4Ti9Dw5Suy/f2E/aM6fD/ut5s6vCeRTx+L6XbK+vt4OxeHei801ZR+4899mb5Dog9A3fpvZ9c2tb82j1gcDkz5PajZilc6rH3hG/f+C47AxqWd1fWaKPuBylM4zJl6sEn3wDQctpTE=
+   eJztlklOAzEQAA05AxI8hgdwDx9j3xFLBjiwb2KHz1E5jBSMPe5xbByiLqmkHCy7p93tjjGKoiiKoiiKoiiKoijKuLKKa7iOG7iJW7iNO7jrWVM6RiUtB3iIR3iMPazwBE/xzLOmdIxKWs7xAi/xCq/xBm/xDu89a0rHOK484GOBc5/wGV/wFd/wHT/wE788a/ZwP3Ns9Rmu8yXY822QOt9tvyP3jJrAyQg7hc9PHYckHulZlfk533z7t4k914yq45nD6QhncD6BU5HnD8YRi6tvm+KRnmXPtz6ufLeJPfWMGvb+B79hIYEl66Ayv/s2RR3Y882376yRvw2xM8om1f376qDr+T3KdeDq21AdSN4412wJ5V1aE6E52gnENmy+/8N7sITLuNKQxz71fzVp39rfbNe53QM5azu0t+9e6hhz1kEoL7nrIPTfTtKvkr6VvoGjUAdd485/jjoI3XFTXabMWaiHFy1jz3Tt5bJ0HeSMLTYnf5Gzb1VEpdA=
   </data>
  </layer>
  <objectgroup id="3" name="Sol">
   <object id="56" x="0" y="288.458" width="127.333" height="31.7917"/>
   <object id="59" x="193" y="288.333" width="111.667" height="31.6667"/>
-  <object id="60" x="304.542" y="192" width="127.25" height="128.333"/>
-  <object id="61" x="528.667" y="256" width="127.792" height="64.3333"/>
+  <object id="60" x="304.542" y="207" width="127.25" height="113.333"/>
   <object id="62" x="656.667" y="224.333" width="31.75" height="95.6667"/>
   <object id="63" x="688.333" y="208" width="63.25" height="112"/>
   <object id="64" x="751.792" y="240" width="47.9583" height="80"/>
@@ -32,11 +31,12 @@
   <object id="69" x="1264.33" y="208" width="32.8333" height="112.333"/>
   <object id="70" x="1296" y="192" width="239.417" height="127.667"/>
   <object id="71" x="1807.67" y="192" width="272" height="128"/>
+  <object id="77" x="575.666" y="257" width="81" height="63"/>
  </objectgroup>
  <objectgroup id="4" name="Eau">
   <object id="72" x="127.25" y="290" width="65.3333" height="30.5"/>
-  <object id="73" x="430.417" y="258.208" width="98.5417" height="61.5833"/>
   <object id="74" x="1087.42" y="258.042" width="112.542" height="61.625"/>
   <object id="75" x="1535.67" y="208.917" width="272.667" height="111.083"/>
+  <object id="78" x="431" y="258" width="144.667" height="61.6667"/>
  </objectgroup>
 </map>

@@ -107,6 +107,10 @@ public abstract class Level implements Screen{
 		return camera;
 	}
 
+    public Sandman getGame() {
+        return game;
+    }
+
 	//
 	public B2WorldCreator getWorldCreator() {
 		return worldCreator;

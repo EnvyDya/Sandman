@@ -128,6 +128,16 @@ public class Perso extends Sprite implements Disposable{
 		if(gel){
 			gestionGel(dt);
 		}
+
+		//Gère la mort du perso
+		if(b2body.getPosition().y <=0){
+			respawn();
+		}
+	}
+
+	public void respawn(){
+		b2body.setTransform(new Vector2(16/Sandman.PPM, 64/Sandman.PPM), 0);
+		level.getCamera().setToOrtho(false, 30, 20);
 	}
 
 	public void gestionGel(float dt){
@@ -245,10 +255,10 @@ public class Perso extends Sprite implements Disposable{
     	BodyDef bdef = new BodyDef();
 
 		//Position Spawn :
-    	//bdef.position.set(16/Sandman.PPM, 64/Sandman.PPM);
+    	bdef.position.set(16/Sandman.PPM, 64/Sandman.PPM);
 
 		//Position Tondeuse :
-		bdef.position.set(1300/Sandman.PPM, 150/Sandman.PPM);
+		//bdef.position.set(1300/Sandman.PPM, 150/Sandman.PPM);
 
     	bdef.type = BodyDef.BodyType.DynamicBody;
     	b2body = level.getWorld().createBody(bdef);
