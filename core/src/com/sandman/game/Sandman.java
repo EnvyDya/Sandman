@@ -29,7 +29,7 @@ public class Sandman extends Game{
 		//font = new BitmapFont();
 		
 		//Modification du curseur en jeu
-    	curseur = new Pixmap(Gdx.files.internal("cursor.png"));
+    	curseur = new Pixmap(Gdx.files.internal("images/cursor.png"));
     	Gdx.graphics.setCursor(Gdx.graphics.newCursor(curseur, 0, 0));
 		curseur.dispose();
 		this.setScreen(new LevelJardin(this));

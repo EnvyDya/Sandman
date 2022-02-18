@@ -20,10 +20,10 @@ public class LevelJardin extends Level{
     private Feuille feuille;
 
     public LevelJardin(final Sandman game) {
-        super(game, "jardin.tmx", "themejardin.wav", 10f);
+        super(game, "images/jardin.tmx", "sounds/themejardin.wav", 10f);
 
         //ajout bruit Oiseaux
-        sonBird = Gdx.audio.newSound(Gdx.files.internal("sonBird.wav"));
+        sonBird = Gdx.audio.newSound(Gdx.files.internal("sounds/sonBird.wav"));
         sonBird.loop(0.25f);
 
         //Player variable

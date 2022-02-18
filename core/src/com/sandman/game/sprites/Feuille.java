@@ -12,7 +12,7 @@ public class Feuille extends InteractiveTileObject{
 	//Constructeur
     public Feuille(World world){
         //Rectangle de positionnement et hitbox de la tondeuse
-        super(new TextureRegion(new Texture("feuille.png")),world,new Rectangle(1360, 190, 40, 10), BodyDef.BodyType.KinematicBody);
+        super(new TextureRegion(new Texture("images/feuille.png")),world,new Rectangle(1360, 190, 40, 10), BodyDef.BodyType.KinematicBody);
         //Etat initial
         gel = false;
 
