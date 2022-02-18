@@ -11,7 +11,7 @@ import com.sandman.game.Sandman;
 public class Water extends InteractiveTileObject{
 
 	public Water(World world, Rectangle bounds) {
-		super(new TextureRegion(new Texture(Gdx.files.internal("iceFilter.png"))),world, bounds, BodyDef.BodyType.StaticBody);
+		super(new TextureRegion(new Texture(Gdx.files.internal("images/iceFilter.png"))),world, bounds, BodyDef.BodyType.StaticBody);
 		fixture.setUserData(this);
 		
 		//definit la taille et la position de la texture
