@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.sandman.game.Sandman;
+import com.sandman.game.sprites.Feuille;
 import com.sandman.game.sprites.Perso;
 import com.sandman.game.sprites.Tondeuse;
 
@@ -15,6 +16,8 @@ public class LevelJardin extends Level{
 
     //Entité variable
     private Tondeuse tondeuse;
+    
+    private Feuille feuille;
 
     public LevelJardin(final Sandman game) {
         super(game, "jardin.tmx", "themejardin.wav", 10f);
@@ -31,6 +34,7 @@ public class LevelJardin extends Level{
         //Initialisation Entités
         player = new Perso(this);
         tondeuse = worldCreator.getTondeuse();
+        feuille = worldCreator.getFeuille();
         
     }
     
@@ -72,6 +76,7 @@ public class LevelJardin extends Level{
 		if(player.getGel()){
 	    	player.getObjetGel().draw(game.batch);
 		}
+		feuille.draw(game.batch);
 	    game.batch.end();
 	
 	    //Affiche les box2d dans le jeu
@@ -84,6 +89,7 @@ public class LevelJardin extends Level{
 		player.handleInput(dt);
 	    player.update(dt);
 	    tondeuse.update(dt);
+	    feuille.update();
 	    borderManagement();
 	
 	    //On rafraichit les calculs 60x par seconde
