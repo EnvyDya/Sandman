@@ -26,7 +26,6 @@ public class Sandman extends Game{
 
 	public void create() {
 		batch = new SpriteBatch();
-		//font = new BitmapFont();
 		
 		//Modification du curseur en jeu
     	curseur = new Pixmap(Gdx.files.internal("images/cursor.png"));
@@ -41,6 +40,5 @@ public class Sandman extends Game{
 
 	public void dispose() {
 		batch.dispose();
-		font.dispose();
 	}
 }

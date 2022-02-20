@@ -11,19 +11,22 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.sandman.game.Sandman;
 import com.sandman.game.Scene.Level;
+import com.sandman.game.sprites.interfaces.CanDie;
 
-public class Perso extends Sprite implements Disposable{
+public class Perso extends Sprite implements Disposable,CanDie{
     public enum State  { FALLING, JUMPING, STANDING, RUNNING};
     public Level level;
     public State currentState;
     public State previousState;
     public Body b2body;
+	private Fixture fixture;
     
     //Attributs animation
     private Animation<TextureRegion> playerRun;
@@ -43,6 +46,9 @@ public class Perso extends Sprite implements Disposable{
 	private boolean gel;
 	private float tmpsGel;
 	private InteractiveTileObject objetGel;
+
+	//Attributs Mort
+	private boolean dead;
   
     //Constructeur
     public Perso(Level level) {
@@ -59,6 +65,7 @@ public class Perso extends Sprite implements Disposable{
 
 		stateTimer = 0;
 		runningRight = true;
+		dead = false;
 
 		createFrames();
 
@@ -124,20 +131,35 @@ public class Perso extends Sprite implements Disposable{
 		//Affiche la frame de la texture
 		setRegion(getFrame(dt));
 
+		
+		
+
 		//Gère le gel de l'objet
 		if(gel){
 			gestionGel(dt);
 		}
 
-		//Gère la mort du perso
+		//Gère la mort du perso si le perso sort de la carte
 		if(b2body.getPosition().y <=0){
+			die();
+		}
+
+		if(dead){
 			respawn();
 		}
 	}
 
+	//lance le respawn du joueur en le repositionnant au spawn et annule son dernier gel
 	public void respawn(){
 		b2body.setTransform(new Vector2(16/Sandman.PPM, 64/Sandman.PPM), 0);
 		level.getCamera().setToOrtho(false, 30, 20);
+		dead = false;
+		if(gel){
+			tmpsGel = 0;
+			gel = false;
+			objetGel.onClick();
+			bruitHorloge.stop();
+		}
 	}
 
 	public void gestionGel(float dt){
@@ -255,10 +277,10 @@ public class Perso extends Sprite implements Disposable{
     	BodyDef bdef = new BodyDef();
 
 		//Position Spawn :
-    	bdef.position.set(16/Sandman.PPM, 64/Sandman.PPM);
+    	//bdef.position.set(16/Sandman.PPM, 64/Sandman.PPM);
 
 		//Position Tondeuse :
-		//bdef.position.set(1300/Sandman.PPM, 150/Sandman.PPM);
+		bdef.position.set(1300/Sandman.PPM, 150/Sandman.PPM);
 
     	bdef.type = BodyDef.BodyType.DynamicBody;
     	b2body = level.getWorld().createBody(bdef);
@@ -268,7 +290,8 @@ public class Perso extends Sprite implements Disposable{
     	shape.setAsBox(10/Sandman.PPM, 14/Sandman.PPM);
     	
     	fdef.shape = shape;
-    	b2body.createFixture(fdef);
+    	fixture = b2body.createFixture(fdef);
+		fixture.setUserData(this);
     	
     }
 
@@ -283,6 +306,11 @@ public class Perso extends Sprite implements Disposable{
 	@Override
 	public void dispose() {
 		bruitSaut.dispose();
-		
+		bruitHorloge.dispose();
+	}
+
+	@Override
+	public void die() {
+		dead = true;
 	}
 }

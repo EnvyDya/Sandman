@@ -11,16 +11,22 @@ import com.sandman.game.sprites.Tondeuse;
     
 public class LevelJardin extends Level{
 
+	//Gestionnaire de colision
+	private ColisionListener colision;
+
     //Son ambiance
     private Sound sonBird;
 
     //Entité variable
     private Tondeuse tondeuse;
-    
     private Feuille feuille;
 
     public LevelJardin(final Sandman game) {
         super(game, "images/jardin.tmx", "sounds/themejardin.wav", 10f);
+
+		//Initialise les colisions
+		colision = new ColisionListener();
+        world.setContactListener(colision);
 
         //ajout bruit Oiseaux
         sonBird = Gdx.audio.newSound(Gdx.files.internal("sounds/sonBird.wav"));
@@ -80,7 +86,7 @@ public class LevelJardin extends Level{
 	    game.batch.end();
 	
 	    //Affiche les box2d dans le jeu
-	    //b2dr.render(world, camera.combined);
+	    b2dr.render(world, camera.combined);
 			
 	}
 

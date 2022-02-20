@@ -4,12 +4,16 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.EdgeShape;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.sandman.game.Sandman;
+import com.sandman.game.sprites.interfaces.Danger;
 
-public class Tondeuse extends InteractiveTileObject{
+public class Tondeuse extends InteractiveTileObject implements Danger{
 
     //Attribut animation
     private Animation<TextureRegion> animTondeuse;
@@ -23,7 +27,6 @@ public class Tondeuse extends InteractiveTileObject{
 
         //set l'état initial
         stateTimer = 0;
-        gel = false;
 
         //Creation de l'animation
         Array<TextureRegion> frames = new Array<TextureRegion>();
@@ -37,6 +40,13 @@ public class Tondeuse extends InteractiveTileObject{
 		setRegion(getFrame(0));
         setPosition(1360/Sandman.PPM, 100/Sandman.PPM);
 
+        //Création d'un sensor sur la tete de la tondeuse qui va detecté les colisions
+        FixtureDef fdef = new FixtureDef();
+        EdgeShape danger = new EdgeShape();
+        danger.set(new Vector2(-32/Sandman.PPM, 32/Sandman.PPM),new Vector2(32/Sandman.PPM, 32/Sandman.PPM));
+        fdef.shape = danger;
+        fdef.isSensor = true;
+        body.createFixture(fdef).setUserData(this);
     }
 
     public void update(float dt){
@@ -53,7 +63,11 @@ public class Tondeuse extends InteractiveTileObject{
 
 	@Override
 	public void onClick() {
-		System.out.println("mon hélice ne tourne plus");
         gel = !gel;
 	}
+
+    @Override
+    public Boolean canKill() {
+        return !gel;
+    }
 }
