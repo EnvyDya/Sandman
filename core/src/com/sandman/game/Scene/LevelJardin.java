@@ -1,5 +1,7 @@
 package com.sandman.game.Scene;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
@@ -20,8 +22,8 @@ public class LevelJardin extends Level{
 
     //Entité variable
     private Tondeuse tondeuse;
-    private Feuille feuille;
-    private Boulder boulder;
+    private ArrayList<Feuille> feuilles;
+    private ArrayList<Boulder> boulders;
 
     public LevelJardin(final Sandman game) {
         super(game, "images/jardin.tmx", "sounds/themejardin.wav", 10f);
@@ -42,8 +44,8 @@ public class LevelJardin extends Level{
         //Initialisation Entités
         player = new Perso(this);
         tondeuse = worldCreator.getTondeuse();
-        feuille = worldCreator.getFeuille();
-        boulder = worldCreator.getBoulder();
+        feuilles = worldCreator.getFeuille();
+        boulders = worldCreator.getBoulder();
         
     }
     
@@ -85,8 +87,17 @@ public class LevelJardin extends Level{
 		if(player.getGel()){
 	    	player.getObjetGel().draw(game.batch);
 		}
-		feuille.draw(game.batch);
-		boulder.draw(game.batch);
+		
+		//On update et on dessine en même temps pour réduire la complexité d'un parcours
+		for(Feuille f : feuilles) {
+			f.update();
+			f.draw(game.batch);
+		}
+		for(Boulder b : boulders) {
+			b.update();
+			b.draw(game.batch);
+		}
+		
 	    game.batch.end();
 	
 	    //Affiche les box2d dans le jeu
@@ -99,8 +110,7 @@ public class LevelJardin extends Level{
 		player.handleInput(dt);
 	    player.update(dt);
 	    tondeuse.update(dt);
-	    feuille.update();
-	    boulder.update();
+	    worldCreator.update(dt);
 	    borderManagement();
 	
 	    //On rafraichit les calculs 60x par seconde

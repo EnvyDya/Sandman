@@ -34,7 +34,6 @@ public class Feuille extends InteractiveTileObject implements Danger{
 
 	@Override
 	public void onClick() {
-		System.out.println("La feuille s'arrête");
 		gel = !gel;
 		if(gel) {
 			body.setLinearVelocity(0, 0);

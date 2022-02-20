@@ -131,9 +131,6 @@ public class Perso extends Sprite implements Disposable,CanDie{
 		//Affiche la frame de la texture
 		setRegion(getFrame(dt));
 
-		
-		
-
 		//Gère le gel de l'objet
 		if(gel){
 			gestionGel(dt);
