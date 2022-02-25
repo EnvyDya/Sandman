@@ -14,9 +14,9 @@ import com.sandman.game.sprites.interfaces.Danger;
 public class Feuille extends InteractiveTileObject implements Danger{
 
 	//Constructeur
-    public Feuille(World world){
+    public Feuille(World world, int posX, int posY){
         //Rectangle de positionnement et hitbox de la tondeuse
-        super(new TextureRegion(new Texture("images/feuille.png")),world,new Rectangle(1360, 190, 40, 10), BodyDef.BodyType.KinematicBody);
+        super(new TextureRegion(new Texture("images/feuille.png")),world,new Rectangle(posX, posY, 40, 10), BodyDef.BodyType.KinematicBody);
         //Etat initial
         gel = false;
 

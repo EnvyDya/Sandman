@@ -41,7 +41,7 @@ public class B2WorldCreator {
 	       Body body;
 	       
 	       feuille = new ArrayList<Feuille>();
-	       timerFeuilles = 3f;
+	       timerFeuilles = 0f;
 	       
 	       boulder = new ArrayList<Boulder>();
 	       timerBoulder = 2f;
@@ -72,34 +72,35 @@ public class B2WorldCreator {
 			t = new Tondeuse(world);
 			interactiveTiles.add(t);
 			
-			//Ajout de la feuille
-			Feuille f = new Feuille(world);
-			feuille.add(f);
-			interactiveTiles.add(f);
-			
-			//Ajout pierre
-			Boulder b = new Boulder(world);
-			boulder.add(b);
-			interactiveTiles.add(b);
 	}
 	
 	public void update(float dt) {
+		//Mise à jour des timers
+		timerBoulder -= dt;
 		timerFeuilles -= dt;
+		
+		//Gestion des apparitions/suppressions
+		gestionFeuilles();
+		gestionPierres();
+	}
+	
+	public void gestionFeuilles() {
+		//Ajout des feuilles
 		if(timerFeuilles <= 0) {
-			timerFeuilles = 3f;
-			Feuille nf = new Feuille(world);
+			timerFeuilles = 4f;
+			
+			//Feuille spawn
+			Feuille nf = new Feuille(world, 250, 100);
+			feuille.add(nf);
+			interactiveTiles.add(nf);
+			
+			//Feuille avant tondeuse
+			nf = new Feuille(world, 900, 100);
 			feuille.add(nf);
 			interactiveTiles.add(nf);
 		}
 		
-		timerBoulder -= dt;
-		if(timerBoulder <= 0) {
-			timerBoulder = 2f;
-			Boulder nb = new Boulder(world);
-			boulder.add(nb);
-			interactiveTiles.add(nb);
-		}
-		
+		//Suppression des feuilles
 		for(int i = 0; i<feuille.size(); i++) {
 			Feuille f = feuille.get(i);
 			if(f.getY() < -10) {
@@ -108,7 +109,25 @@ public class B2WorldCreator {
 				i--;
 			}
 		}
+	}
+	
+	public void gestionPierres() {
+		//Ajout des pierres
+		if(timerBoulder <= 0) {
+			timerBoulder = 2f;
+			
+			//Pierre spawn
+			Boulder nb = new Boulder(world, 690, 110);;
+			boulder.add(nb);
+			interactiveTiles.add(nb);
+			
+			//Pierre tondeuse
+			nb = new Boulder(world, 1300, 130);;
+			boulder.add(nb);
+			interactiveTiles.add(nb);
+		}
 		
+		//Suppression des pierres
 		for(int i = 0; i<boulder.size(); i++) {
 			Boulder b = boulder.get(i);
 			if(b.getY() < -10) {

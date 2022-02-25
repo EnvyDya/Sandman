@@ -244,6 +244,7 @@ public class Perso extends Sprite implements Disposable,CanDie{
     	if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)){
     		//On replace le curseur dans le contexte du jeu
     		Vector3 pos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+    		//System.out.println("Clic en " + pos.x + "x et " + pos.y + "y.");
     		pos = level.getCamera().unproject(pos);
     		//On recherche tous les body du monde
     		Array<Body> al = new Array<Body>();
@@ -255,7 +256,7 @@ public class Perso extends Sprite implements Disposable,CanDie{
     				for(InteractiveTileObject o : level.getWorldCreator().interactiveTiles) {
     					if(o.body == b) {
     						//Le cas échéant, on réalise le comportement associé à l'objet récupéré
-    						System.out.println("Contact avec l'objet interactif : " + o);
+    						//System.out.println("Contact avec l'objet interactif : " + o);
 							if(!gel || o == objetGel){
 								o.onClick();
 								if(!gel) {
@@ -281,10 +282,10 @@ public class Perso extends Sprite implements Disposable,CanDie{
     	BodyDef bdef = new BodyDef();
 
 		//Position Spawn :
-    	//bdef.position.set(16/Sandman.PPM, 64/Sandman.PPM);
+    	bdef.position.set(16/Sandman.PPM, 64/Sandman.PPM);
 
 		//Position Tondeuse :
-		bdef.position.set(1300/Sandman.PPM, 150/Sandman.PPM);
+		//bdef.position.set(1300/Sandman.PPM, 150/Sandman.PPM);
 
     	bdef.type = BodyDef.BodyType.DynamicBody;
     	b2body = level.getWorld().createBody(bdef);

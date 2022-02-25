@@ -10,14 +10,18 @@ import com.sandman.game.Sandman;
 public class Boulder extends InteractiveTileObject{
 
 	//Constructeur
-    public Boulder(World world){
-        //Rectangle de positionnement et hitbox de la tondeuse
-        super(new TextureRegion(new Texture("images/Boulder.png")),world,new Rectangle(32, 80, 20, 20), BodyDef.BodyType.DynamicBody);
+    public Boulder(World world, int posX, int posY){
+        //Rectangle de positionnement et hitbox des pierres
+    	//Position spawner près de la tondeuse : 1300x 130y
+    	//Position spawner près du spawn : 690x 110y
+        super(new TextureRegion(new Texture("images/Boulder.png")),world,new Rectangle(posX, posY, 20, 20), BodyDef.BodyType.DynamicBody);
         //Etat initial
         gel = false;
 
         setBounds(body.getPosition().x, body.getPosition().y, 20/Sandman.PPM, 20/Sandman.PPM);
         setOrigin(getWidth()/2, getWidth()/2);
+        body.setLinearVelocity(-4, -10);
+        fixture.setFriction(0);
     }
 
 	@Override
@@ -28,6 +32,8 @@ public class Boulder extends InteractiveTileObject{
 	
 	public void update() {
 		setPosition(body.getPosition().x - getWidth()/2, body.getPosition().y - getHeight()/2);
+        body.setLinearVelocity(-6, body.getLinearVelocity().y);
+        body.applyForceToCenter(world.getGravity(), false);
 		if(!gel) this.rotate(10f);
 		else this.rotate(0);
 	}
