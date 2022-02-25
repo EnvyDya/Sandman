@@ -19,20 +19,32 @@ import com.sandman.game.sprites.Tondeuse;
 import com.sandman.game.sprites.Water;
 
 public class B2WorldCreator {
-
+	World world;
+	
 	//Liste de toutes nos interactives tiles
     public ArrayList<InteractiveTileObject> interactiveTiles = new ArrayList<InteractiveTileObject>();
 
 	//Liste des entités
 	private Tondeuse t;
-	private Feuille feuille;
-	private Boulder boulder;
+	private ArrayList<Feuille> feuille;
+	private ArrayList<Boulder> boulder;
+	
+	//Compteurs des spawn feuilles/pierres
+	private float timerFeuilles;
+	private float timerBoulder;
     
 	public B2WorldCreator(World world, TiledMap map) {
+		   this.world = world;
 		   BodyDef bdef = new BodyDef();
 	       PolygonShape shape = new PolygonShape();
 	       FixtureDef fdef = new FixtureDef();
 	       Body body;
+	       
+	       feuille = new ArrayList<Feuille>();
+	       timerFeuilles = 3f;
+	       
+	       boulder = new ArrayList<Boulder>();
+	       timerBoulder = 2f;
 	       
 	       //Cree les box2D du sol
 	       for(MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)) {
@@ -61,23 +73,61 @@ public class B2WorldCreator {
 			interactiveTiles.add(t);
 			
 			//Ajout de la feuille
-			feuille = new Feuille(world);
-			interactiveTiles.add(feuille);
+			Feuille f = new Feuille(world);
+			feuille.add(f);
+			interactiveTiles.add(f);
 			
 			//Ajout pierre
-			boulder = new Boulder(world);
-			interactiveTiles.add(boulder);
+			Boulder b = new Boulder(world);
+			boulder.add(b);
+			interactiveTiles.add(b);
+	}
+	
+	public void update(float dt) {
+		timerFeuilles -= dt;
+		if(timerFeuilles <= 0) {
+			timerFeuilles = 3f;
+			Feuille nf = new Feuille(world);
+			feuille.add(nf);
+			interactiveTiles.add(nf);
+		}
+		
+		timerBoulder -= dt;
+		if(timerBoulder <= 0) {
+			timerBoulder = 2f;
+			Boulder nb = new Boulder(world);
+			boulder.add(nb);
+			interactiveTiles.add(nb);
+		}
+		
+		for(int i = 0; i<feuille.size(); i++) {
+			Feuille f = feuille.get(i);
+			if(f.getY() < -10) {
+				interactiveTiles.remove(f);
+				feuille.remove(f);
+				i--;
+			}
+		}
+		
+		for(int i = 0; i<boulder.size(); i++) {
+			Boulder b = boulder.get(i);
+			if(b.getY() < -10) {
+				interactiveTiles.remove(b);
+				boulder.remove(b);
+				i--;
+			}
+		}
 	}
 
 	public Tondeuse getTondeuse() {
 		return t;
 	}
 	
-	public Feuille getFeuille() {
+	public ArrayList<Feuille> getFeuille() {
 		return feuille;
 	}
 	
-	public Boulder getBoulder() {
+	public ArrayList<Boulder> getBoulder() {
 		return boulder;
 	}
 
