@@ -24,11 +24,7 @@ public class LevelJardin extends Level{
     private Boulder boulder;
 
     public LevelJardin(final Sandman game) {
-        super(game, "images/jardin.tmx", "sounds/themejardin.wav", 10f);
-
-		//Initialise les colisions
-		colision = new ColisionListener();
-        world.setContactListener(colision);
+        super(game, "images/jardin.tmx", "sounds/themejardin.wav", 20f);
 
         //ajout bruit Oiseaux
         sonBird = Gdx.audio.newSound(Gdx.files.internal("sounds/sonBird.wav"));
@@ -37,13 +33,17 @@ public class LevelJardin extends Level{
         //Player variable
         speed = 1.5f;
         maxSpeed = 5;
-        jumpForce = 6f;
+        jumpForce = 12f;
 
         //Initialisation Entités
         player = new Perso(this);
         tondeuse = worldCreator.getTondeuse();
         feuille = worldCreator.getFeuille();
         boulder = worldCreator.getBoulder();
+
+		//Initialise les colisions
+		colision = new ColisionListener(player);
+        world.setContactListener(colision);
         
     }
     
@@ -76,6 +76,7 @@ public class LevelJardin extends Level{
 	    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 	
 	    renderer.render();
+		//colision.update();
 	
 	    //rendu du joueur
 	    game.batch.setProjectionMatrix(camera.combined);

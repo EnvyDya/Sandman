@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
@@ -40,12 +41,13 @@ public class Perso extends Sprite implements Disposable,CanDie{
     //Attributs de deplacement
     private float minRunningSpeed = 1f;
 	private Sound bruitSaut;
-	private Sound bruitHorloge;
+	private Boolean landing;
 
 	//Attributs Gel
 	private boolean gel;
 	private float tmpsGel;
 	private InteractiveTileObject objetGel;
+	private Sound bruitHorloge;
 
 	//Attributs Mort
 	private boolean dead;
@@ -66,6 +68,7 @@ public class Perso extends Sprite implements Disposable,CanDie{
 		stateTimer = 0;
 		runningRight = true;
 		dead = false;
+		landing = true;
 
 		createFrames();
 
@@ -112,13 +115,16 @@ public class Perso extends Sprite implements Disposable,CanDie{
     	if(b2body.getLinearVelocity().y > 0){
     		return State.JUMPING;
     	}
-    	else if(b2body.getLinearVelocity().y < 0) {
+    	else if(b2body.getLinearVelocity().y < 0f) {
     		return State.FALLING;
     	}
-    	else if(b2body.getLinearVelocity().x != 0) {
+    	else if(b2body.getLinearVelocity().x != 0&&b2body.getLinearVelocity().y == 0 && landing) {
     		return State.RUNNING;
     	}
-    	else return State.STANDING;
+    	else if(b2body.getLinearVelocity().y == 0 && landing){
+			return State.STANDING;
+		}
+		else return previousState;
     }
     
     /**
@@ -130,9 +136,6 @@ public class Perso extends Sprite implements Disposable,CanDie{
 
 		//Affiche la frame de la texture
 		setRegion(getFrame(dt));
-
-		
-		
 
 		//Gère le gel de l'objet
 		if(gel){
@@ -218,6 +221,7 @@ public class Perso extends Sprite implements Disposable,CanDie{
       
     	//On vérifie si une touche de saut est appuyée et que le joueur ne soit pas déjà dans les airs
     	if(Gdx.input.isKeyPressed(Input.Keys.SPACE) && (getState() == State.STANDING || getState() == State.RUNNING)) {
+			landing = false;
 			bruitSaut.play();
     		this.b2body.applyLinearImpulse(new Vector2(0, level.getJumpForce()), this.b2body.getWorldCenter(), true);
     	}
@@ -292,6 +296,13 @@ public class Perso extends Sprite implements Disposable,CanDie{
     	fdef.shape = shape;
     	fixture = b2body.createFixture(fdef);
 		fixture.setUserData(this);
+
+		//Création d'un sensor en dessous du perso qui va detecté les colisions
+        EdgeShape pied = new EdgeShape();
+        pied.set(new Vector2(-9/Sandman.PPM, -15/Sandman.PPM),new Vector2(9/Sandman.PPM, -15/Sandman.PPM));
+        fdef.shape = pied;
+        fdef.isSensor = true;
+        b2body.createFixture(fdef).setUserData("pied");
     	
     }
 
@@ -301,6 +312,10 @@ public class Perso extends Sprite implements Disposable,CanDie{
 
 	public InteractiveTileObject getObjetGel() {
 		return objetGel;
+	}
+
+	public void land(){
+		landing = true;
 	}
 
 	@Override
