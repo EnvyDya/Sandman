@@ -30,7 +30,7 @@ public abstract class InteractiveTileObject extends Sprite{
 	}
 
 	//Constructeur pour les sprites
-	public InteractiveTileObject(TextureRegion region,World world,Rectangle bounds, BodyType bodyType) {
+	public InteractiveTileObject(TextureRegion region, World world, Rectangle bounds, BodyType bodyType) {
 		super(region);
 		this.world = world; 
 		defineObject(bounds, bodyType);
@@ -53,7 +53,6 @@ public abstract class InteractiveTileObject extends Sprite{
  	    fdef.shape = shape;
  	    fixture = body.createFixture(fdef);
 	}
-	
 	/**
 	 * Fonction à définir sur l'intéractivité de notre tile, c'est ici que seront définis les comportements en cas d'arrêt du temps
 	 */

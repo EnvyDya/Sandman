@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.sandman.game.Sandman;
 import com.sandman.game.sprites.interfaces.Danger;
@@ -16,9 +17,10 @@ public class Feuille extends InteractiveTileObject implements Danger{
 	//Constructeur
     public Feuille(World world, int posX, int posY){
         //Rectangle de positionnement et hitbox de la tondeuse
-        super(new TextureRegion(new Texture("images/feuille.png")),world,new Rectangle(posX, posY, 40, 10), BodyDef.BodyType.KinematicBody);
+        super(new TextureRegion(new Texture("images/feuille.png")),world,new Rectangle(posX, posY, 40, 40), BodyDef.BodyType.KinematicBody);
         //Etat initial
         gel = false;
+        body.getFixtureList().get(0).setSensor(true);
 
         setBounds(0, 3, 40/Sandman.PPM, 40/Sandman.PPM);
         body.setLinearVelocity(0f, -8f);
@@ -30,6 +32,13 @@ public class Feuille extends InteractiveTileObject implements Danger{
         fdef.shape = danger;
         fdef.isSensor = true;
         body.createFixture(fdef).setUserData(this);
+        
+        //Définition de la plateforme pour sauter contre
+        fdef = new FixtureDef();
+		PolygonShape shape = new PolygonShape();
+ 	    shape.setAsBox(20/Sandman.PPM, 1/Sandman.PPM);
+ 	    fdef.shape = shape;
+ 	    body.createFixture(fdef);
     }
 
 	@Override
