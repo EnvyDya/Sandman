@@ -80,10 +80,9 @@ public class LevelJardin extends Level{
 	    renderer.render();
 		//colision.update();
 	
-	    //rendu du joueur
+	    //rendu
 	    game.batch.setProjectionMatrix(camera.combined);
 	    game.batch.begin();
-		player.draw(game.batch);
 	    tondeuse.draw(game.batch);
 		if(player.getGel()){
 	    	player.getObjetGel().draw(game.batch);
@@ -98,11 +97,12 @@ public class LevelJardin extends Level{
 			b.update();
 			b.draw(game.batch);
 		}
+		player.draw(game.batch);
 		
 	    game.batch.end();
 	
 	    //Affiche les box2d dans le jeu
-	    b2dr.render(world, camera.combined);
+	    //b2dr.render(world, camera.combined);
 			
 	}
 
