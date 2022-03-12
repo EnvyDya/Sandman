@@ -1,5 +1,7 @@
 package com.sandman.game.sprites;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -11,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.sandman.game.Sandman;
+import com.sandman.game.sprites.interfaces.CanDie;
 import com.sandman.game.sprites.interfaces.Danger;
 
 public class Tondeuse extends InteractiveTileObject implements Danger{
@@ -18,13 +21,16 @@ public class Tondeuse extends InteractiveTileObject implements Danger{
     //Attribut animation
     private Animation<TextureRegion> animTondeuse;
     private float stateTimer;
+    public ArrayList<CanDie> atuer;
 
     //Constructeur
     public Tondeuse(World world){
         //TODO revoir pour la hitbox
         //Rectangle de positionnement et hitbox de la tondeuse
-        super(new TextureRegion(new Texture("images/Tondeuse.png")),world,new Rectangle(1360, 95, 80, 55), BodyDef.BodyType.StaticBody);
+        super(new TextureRegion(new Texture("images/Tondeuse.png")),world,new Rectangle(1428, 95, 80, 55), BodyDef.BodyType.StaticBody);
 
+        atuer = new ArrayList<CanDie>();
+        
         //set l'état initial
         stateTimer = 0;
 
@@ -38,7 +44,7 @@ public class Tondeuse extends InteractiveTileObject implements Danger{
 
         setBounds(0, 0, 80/Sandman.PPM, 80/Sandman.PPM);	
 		setRegion(getFrame(0));
-        setPosition(1360/Sandman.PPM, 100/Sandman.PPM);
+        setPosition(1428/Sandman.PPM, 100/Sandman.PPM);
 
         //Création d'un sensor sur la tete de la tondeuse qui va detecté les colisions
         FixtureDef fdef = new FixtureDef();
@@ -52,6 +58,9 @@ public class Tondeuse extends InteractiveTileObject implements Danger{
     public void update(float dt){
         if(!gel){
 		    setRegion(getFrame(dt));
+            for (CanDie canDie : atuer) {
+                canDie.die();
+            }
         }
 	}
 
@@ -67,7 +76,17 @@ public class Tondeuse extends InteractiveTileObject implements Danger{
 	}
 
     @Override
-    public Boolean canKill() {
+    public Boolean canKill(CanDie die) {
+        if(gel){
+            atuer.add(die);
+        }
         return !gel;
+    }
+
+    @Override
+    public void cantKillAnymore(CanDie die) {
+        if(atuer.contains(die)){
+            atuer.remove(die);
+        }
     }
 }

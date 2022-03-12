@@ -154,7 +154,7 @@ public class Perso extends Sprite implements Disposable,CanDie{
 
 	//lance le respawn du joueur en le repositionnant au spawn et annule son dernier gel
 	public void respawn(){
-		b2body.setTransform(new Vector2(16/Sandman.PPM, 64/Sandman.PPM), 0);
+		b2body.setTransform(new Vector2(16/Sandman.PPM, 32/Sandman.PPM), 0);
 		level.getCamera().setToOrtho(false, 30, 20);
 		dead = false;
 		if(gel){
@@ -282,10 +282,10 @@ public class Perso extends Sprite implements Disposable,CanDie{
     	BodyDef bdef = new BodyDef();
 
 		//Position Spawn :
-    	bdef.position.set(16/Sandman.PPM, 64/Sandman.PPM);
+    	//bdef.position.set(16/Sandman.PPM, 64/Sandman.PPM);
 
 		//Position Tondeuse :
-		//bdef.position.set(1300/Sandman.PPM, 150/Sandman.PPM);
+		bdef.position.set(1300/Sandman.PPM, 150/Sandman.PPM);
 
     	bdef.type = BodyDef.BodyType.DynamicBody;
     	b2body = level.getWorld().createBody(bdef);

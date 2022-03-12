@@ -95,7 +95,7 @@ public class B2WorldCreator {
 			interactiveTiles.add(nf);
 			
 			//Feuille avant tondeuse
-			nf = new Feuille(world, 900, 100);
+			nf = new Feuille(world, 932, 100);
 			feuille.add(nf);
 			interactiveTiles.add(nf);
 		}
@@ -122,7 +122,7 @@ public class B2WorldCreator {
 			interactiveTiles.add(nb);
 			
 			//Pierre tondeuse
-			nb = new Boulder(world, 1300, 130);;
+			nb = new Boulder(world, 1332, 130);;
 			boulder.add(nb);
 			interactiveTiles.add(nb);
 		}

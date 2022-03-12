@@ -1,5 +1,6 @@
 package com.sandman.game.sprites;
 
+
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
@@ -22,6 +23,7 @@ public abstract class InteractiveTileObject extends Sprite{
 	protected Body body;
 	protected Fixture fixture;
 	protected boolean gel;
+	
 	
 	public InteractiveTileObject(World world, Rectangle bounds) {
 		this.world = world;

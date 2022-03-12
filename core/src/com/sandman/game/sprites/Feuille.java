@@ -1,5 +1,7 @@
 package com.sandman.game.sprites;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
@@ -10,9 +12,11 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.sandman.game.Sandman;
+import com.sandman.game.sprites.interfaces.CanDie;
 import com.sandman.game.sprites.interfaces.Danger;
 
 public class Feuille extends InteractiveTileObject implements Danger{
+	public ArrayList<CanDie> atuer;
 
 	//Constructeur
     public Feuille(World world, int posX, int posY){
@@ -21,6 +25,8 @@ public class Feuille extends InteractiveTileObject implements Danger{
         //Etat initial
         gel = false;
         body.getFixtureList().get(0).setSensor(true);
+		
+		atuer = new ArrayList<CanDie>();
 
         setBounds(0, 3, 40/Sandman.PPM, 40/Sandman.PPM);
         body.setLinearVelocity(0f, -8f);
@@ -56,7 +62,17 @@ public class Feuille extends InteractiveTileObject implements Danger{
 	}
 
 	@Override
-	public Boolean canKill() {
-		return !gel;
-	}
+    public Boolean canKill(CanDie die) {
+        if(gel){
+            atuer.add(die);
+        }
+        return !gel;
+    }
+
+	@Override
+    public void cantKillAnymore(CanDie die) {
+        if(atuer.contains(die)){
+            atuer.remove(die);
+        }
+    }
 }
