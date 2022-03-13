@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.sandman.game.Sandman;
 import com.sandman.game.sprites.Perso;
 import com.sandman.game.tools.B2WorldCreator;
+import com.sandman.game.tools.Hud;
 
 
 public abstract class Level implements Screen{
@@ -39,7 +40,7 @@ public abstract class Level implements Screen{
     //Music
     protected Music mainTheme;
     
-    //private Hud hud;
+    protected Hud hud;
     
     public Level(final Sandman game, String mapName, String themeName, float gravity) {
     	this.game = game;
@@ -63,6 +64,9 @@ public abstract class Level implements Screen{
         
         //Création et gestion des body
         worldCreator = new B2WorldCreator(world, map);
+        
+        //Creation HUD
+        hud = new Hud(game.batch, camera);
     }
     
     /**

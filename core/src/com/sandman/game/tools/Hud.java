@@ -1,4 +1,4 @@
-package com.sandman.game.Scene;
+package com.sandman.game.tools;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -10,7 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.sandman.game.Sandman;
 
 public class Hud implements Disposable{
 	
@@ -29,17 +28,17 @@ public class Hud implements Disposable{
 	Label worldLabel;
 	Label boyLabel;
 	
-	public Hud(SpriteBatch sb) {
+	public Hud(SpriteBatch sb, OrthographicCamera cam) {
 		worldTimer = 300;
 		score = 0;
 		
-		viewport = new FitViewport(Sandman.V_WIDTH, Sandman.V_HEIGHT, new OrthographicCamera());
+		viewport = new FitViewport(cam.viewportWidth, cam.viewportHeight, cam);
 		stage = new Stage(viewport, sb);
 		
 		//Table sur laquelle on pose nos Label
 		Table table = new Table();
 		table.top();
-		table.setFillParent(true);
+		table.setFillParent(false);
 		
 		//On crée nos label
 		countdownLabel = new Label(String.format("%03d", worldTimer), new Label.LabelStyle(new BitmapFont(), Color.WHITE));

@@ -98,8 +98,9 @@ public class LevelJardin extends Level{
 			b.draw(game.batch);
 		}
 		player.draw(game.batch);
-		
 	    game.batch.end();
+
+		hud.stage.draw();
 	
 	    //Affiche les box2d dans le jeu
 	    //b2dr.render(world, camera.combined);
