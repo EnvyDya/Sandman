@@ -97,10 +97,11 @@ public class LevelJardin extends Level{
 			b.update();
 			b.draw(game.batch);
 		}
+		
+		//On dessine le joueur et le HUD
 		player.draw(game.batch);
+		hud.draw(game.batch);
 	    game.batch.end();
-
-		hud.stage.draw();
 	
 	    //Affiche les box2d dans le jeu
 	    //b2dr.render(world, camera.combined);
@@ -113,6 +114,7 @@ public class LevelJardin extends Level{
 	    player.update(dt);
 	    tondeuse.update(dt);
 	    worldCreator.update(dt);
+	    hud.update();
 	    borderManagement();
 	
 	    //On rafraichit les calculs 60x par seconde
@@ -132,6 +134,5 @@ public class LevelJardin extends Level{
 		renderer.dispose();
 		world.dispose();
 		b2dr.dispose();
-		//hud.dispose();
 	}
 }

@@ -1,67 +1,49 @@
 package com.sandman.game.tools;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.Disposable;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.World;
+import com.sandman.game.Sandman;
+import com.sandman.game.Scene.Level;
 
-public class Hud implements Disposable{
+public class Hud extends Sprite{
 	
 	//TODO: A modifier pour convenir au HUD de notre jeu
-	public Stage stage;
-	private Viewport viewport;
+	private World world;
+	private Level level;
+	private Body body;
+	private Fixture fixture;
 	
-	private Integer worldTimer;
-	private Integer score;
-	
-	//Tous les attributs qui seront affichés
-	Label countdownLabel;
-	Label scoreLabel;
-	Label timeLabel;
-	Label levelLabel;
-	Label worldLabel;
-	Label boyLabel;
-	
-	public Hud(SpriteBatch sb, OrthographicCamera cam) {
-		worldTimer = 300;
-		score = 0;
+	public Hud(World world, Level level) {
+		super(new TextureRegion(new Texture("images/clock.png")));
+		this.world = world;
+		this.level = level;
 		
-		viewport = new FitViewport(cam.viewportWidth, cam.viewportHeight, cam);
-		stage = new Stage(viewport, sb);
+		BodyDef bdef = new BodyDef();
+		FixtureDef fdef = new FixtureDef();
+		PolygonShape shape = new PolygonShape();
 		
-		//Table sur laquelle on pose nos Label
-		Table table = new Table();
-		table.top();
-		table.setFillParent(false);
-		
-		//On crée nos label
-		countdownLabel = new Label(String.format("%03d", worldTimer), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-		scoreLabel = new Label(String.format("%06d", score), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-		timeLabel = new Label("TIME", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-		levelLabel = new Label("Jardin", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-		worldLabel = new Label("Niveau", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-		boyLabel = new Label("Boy", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-		
-		//On ajoute nos label en haut de notre écran
-		table.add(boyLabel).expandX().padTop(10);
-		table.add(worldLabel).expandX().padTop(10);
-		table.add(timeLabel).expandX().padTop(10);
-		table.row();
-		table.add(scoreLabel).expandX();
-		table.add(levelLabel).expandX();
-		table.add(countdownLabel).expandX();
-		
-		stage.addActor(table);
+		//Création du body
+		bdef.type = BodyType.StaticBody;
+ 	    bdef.position.set(0, 0);
+ 	    body = world.createBody(bdef);
+ 	    body.setActive(false);
+	    
+	    
+ 	    //Création de la fixture
+ 	    shape.setAsBox(70/Sandman.PPM, 70/Sandman.PPM);
+ 	    fdef.shape = shape;
+ 	    fixture = body.createFixture(fdef);
 	}
 	
-	@Override
-	public void dispose() {
-		stage.dispose();
+	public void update() {
+ 	    setBounds((level.getCamera().position.x)+5.7f, (level.getCamera().position.y)/Sandman.PPM - .7f, 150/Sandman.PPM, 150/Sandman.PPM);
 	}
 }

@@ -244,7 +244,7 @@ public class Perso extends Sprite implements Disposable,CanDie{
     	if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)){
     		//On replace le curseur dans le contexte du jeu
     		Vector3 pos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-    		//System.out.println("Clic en " + pos.x + "x et " + pos.y + "y.");
+    		//System.out.println("Clic en " + pos.x + "x et " + pos.y + "y.\nCaméra en " + level.getCamera().position.x + "x et " + level.getCamera().position.y + "y.");
     		pos = level.getCamera().unproject(pos);
     		//On recherche tous les body du monde
     		Array<Body> al = new Array<Body>();

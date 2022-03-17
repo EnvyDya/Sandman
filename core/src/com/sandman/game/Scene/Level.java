@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -66,7 +68,7 @@ public abstract class Level implements Screen{
         worldCreator = new B2WorldCreator(world, map);
         
         //Creation HUD
-        hud = new Hud(game.batch, camera);
+        hud = new Hud(world, this);
     }
     
     /**
@@ -138,5 +140,9 @@ public abstract class Level implements Screen{
 	//
 	public float getJumpForce() {
 		return jumpForce;
+	}
+	
+	public Perso getPerso() {
+		return player;
 	}
 }
