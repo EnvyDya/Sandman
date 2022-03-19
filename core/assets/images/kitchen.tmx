@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.8" tiledversion="1.8.1" orientation="orthogonal" renderorder="right-down" width="130" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="5">
+ <tileset firstgid="1" name="cuisinetile" tilewidth="16" tileheight="16" tilecount="224" columns="14">
+  <image source="kitchen.png" width="224" height="256"/>
+ </tileset>
+ <layer id="1" name="Background" width="130" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztl8FtwzAMRbVlkVtGaTtJdkh9T5sBkgyQZJXyYAM5yDZpMhIp/QMhEPj0J8xn2j6mlH4ohjGOK/nA0K9dY8ol2tb9vfTB9efk8H8/B1v7WOpFypnUf+6aEm3r/qX6AAe+/aNzkNOXnEMr/qX6wD7w7V9rHwyF/b3PobZ/dA5y+oh7ubZ/rfeCFQetPI+1/aPvg1bmUNvfGwdb9s+a/1yuqZXcm571mllYcwgO4nHwrn3E9Zb0w9X2rNfMAhy0oy/FQU4PDvzosQ9izAkcgIOIHOxS+vygcy12Sm9w4JsDmvGBwwHFHhz40YODGHMCB+DAMwdzuYaDuZzzjbmUc7U96zWzAAft6K04mPaIJQfDgje3lnNfJm3Pes0scjr6Hzy9zvub/iO/Mv+SpDuAAz96Kw625Hgv+NFbfx+Ag5h6bs0vxR/FeTwtcm6NpvYs0Pas59ZcKK4Ut/G0yLk1mtqbQNuznltzp3hQPMfTIufWaGqfAm3Pem7NP1wAzfo=
+  </data>
+ </layer>
+ <layer id="2" name="Graphique" width="130" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzt1kkKAjEQBdDaOuwdTuNO9ATSK4/i0U3wAFYhQqf7Pfj0rqCST5MIAAAAAAAAAAD43TWRe3HmFPHKzF1qquc1B7eIy7dMxZm9B5m5S031vOYgs9ejOHPtPaie1xzogR50eqAHnR7oQZfZyzuxFu/Ej7X3YKn/g75Xu9tnIXowmOxelXPQg/HogR50evCfHmxati27lv0A3+S96kFt/zi0HFtOLecBvm9x/xxH
+  </data>
+ </layer>
+ <objectgroup id="3" name="Sol">
+  <object id="1" x="0.333333" y="272" width="158.333" height="207"/>
+  <object id="2" x="159.5" y="400.5" width="176.25" height="79.25"/>
+  <object id="3" x="336.333" y="272" width="1039" height="207.667"/>
+  <object id="4" x="1376" y="448.333" width="703.667" height="30.6667"/>
+ </objectgroup>
+ <objectgroup id="4" name="Eau"/>
+</map>

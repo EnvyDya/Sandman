@@ -10,6 +10,8 @@ import com.sandman.game.sprites.Boulder;
 import com.sandman.game.sprites.Feuille;
 import com.sandman.game.sprites.Perso;
 import com.sandman.game.sprites.Tondeuse;
+import com.sandman.game.tools.B2WorldCreatorJardin;
+import com.sandman.game.tools.ColisionListener;
 
     
 public class LevelJardin extends Level{
@@ -28,6 +30,9 @@ public class LevelJardin extends Level{
     public LevelJardin(final Sandman game) {
         super(game, "images/jardin.tmx", "sounds/themejardin.wav", 20f);
 
+		//Création et gestion des body
+        worldCreator = new B2WorldCreatorJardin(world, map);
+
         //ajout bruit Oiseaux
         sonBird = Gdx.audio.newSound(Gdx.files.internal("sounds/sonBird.wav"));
         sonBird.loop(0.25f);
@@ -38,10 +43,10 @@ public class LevelJardin extends Level{
         jumpForce = 12f;
 
         //Initialisation Entités
-        player = new Perso(this);
-        tondeuse = worldCreator.getTondeuse();
-        feuilles = worldCreator.getFeuille();
-        boulders = worldCreator.getBoulder();
+        player = new Perso(this,16/Sandman.PPM,64/Sandman.PPM);
+        tondeuse = ((B2WorldCreatorJardin)worldCreator).getTondeuse();
+        feuilles = ((B2WorldCreatorJardin) worldCreator).getFeuille();
+        boulders = ((B2WorldCreatorJardin) worldCreator).getBoulder();
 
 		//Initialise les colisions
 		colision = new ColisionListener(player);
@@ -55,8 +60,8 @@ public class LevelJardin extends Level{
       player.b2body.setTransform(1, player.b2body.getPosition().y, player.b2body.getAngle());
       player.b2body.setLinearVelocity(0, player.b2body.getLinearVelocity().y);
     }
-    else if (player.b2body.getPosition().x > 129) {
-      player.b2body.setTransform(129, player.b2body.getPosition().y, player.b2body.getAngle());
+    else if (player.b2body.getPosition().x > 139) {
+      player.b2body.setTransform(139, player.b2body.getPosition().y, player.b2body.getAngle());
       player.b2body.setLinearVelocity(0, player.b2body.getLinearVelocity().y);
     }
   }
@@ -64,7 +69,7 @@ public class LevelJardin extends Level{
   @Override
   public void cameraHandle() {
     //Gestion de la caméra horizontale
-    if(player.b2body.getPosition().x >= 15 && player.b2body.getPosition().x <= 115) {
+    if(player.b2body.getPosition().x >= 15 && player.b2body.getPosition().x <= 125) {
         camera.position.x = player.b2body.getPosition().x;
     }
   }

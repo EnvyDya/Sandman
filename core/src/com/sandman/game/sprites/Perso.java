@@ -51,9 +51,11 @@ public class Perso extends Sprite implements Disposable,CanDie{
 
 	//Attributs Mort
 	private boolean dead;
+	private float spawnx;
+	private float spawny;
   
     //Constructeur
-    public Perso(Level level) {
+    public Perso(Level level,float spawnx,float spawny) {
     	super(new TextureRegion(new Texture("images/Sandman.png")));
 		this.level = level;
 
@@ -69,6 +71,8 @@ public class Perso extends Sprite implements Disposable,CanDie{
 		runningRight = true;
 		dead = false;
 		landing = true;
+		this.spawnx =spawnx;
+		this.spawny = spawny;
 
 		createFrames();
 
@@ -154,7 +158,7 @@ public class Perso extends Sprite implements Disposable,CanDie{
 
 	//lance le respawn du joueur en le repositionnant au spawn et annule son dernier gel
 	public void respawn(){
-		b2body.setTransform(new Vector2(16/Sandman.PPM, 32/Sandman.PPM), 0);
+		b2body.setTransform(new Vector2(spawnx, spawny), 0);
 		level.getCamera().setToOrtho(false, 30, 20);
 		dead = false;
 		if(gel){
@@ -281,11 +285,7 @@ public class Perso extends Sprite implements Disposable,CanDie{
     public void definePerso() {
     	BodyDef bdef = new BodyDef();
 
-		//Position Spawn :
-    	//bdef.position.set(16/Sandman.PPM, 64/Sandman.PPM);
-
-		//Position Tondeuse :
-		bdef.position.set(1300/Sandman.PPM, 150/Sandman.PPM);
+		bdef.position.set(spawnx, spawny);
 
     	bdef.type = BodyDef.BodyType.DynamicBody;
     	b2body = level.getWorld().createBody(bdef);

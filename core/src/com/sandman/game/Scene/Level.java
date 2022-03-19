@@ -61,8 +61,6 @@ public abstract class Level implements Screen{
         world = new World(new Vector2(0, -gravity), true);
         b2dr = new Box2DDebugRenderer();
         
-        //Création et gestion des body
-        worldCreator = new B2WorldCreator(world, map);
     }
     
     /**
