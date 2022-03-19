@@ -12,27 +12,27 @@ public class LevelCuisine extends Level{
     //Gestionnaire de colision
 	private ColisionListener colision;
 
-    public LevelCuisine(final Sandman game) {
-        super(game, "images/kitchen.tmx", "sounds/themecuisine.wav", 20f);
+  public LevelCuisine(final Sandman game) {
+    super(game, "images/kitchen.tmx", "sounds/themecuisine.wav", 20f);
 
-        //Création et gestion des body
-        worldCreator = new B2WorldCreatorCuisine(world, map);
+    //Création et gestion des body
+    worldCreator = new B2WorldCreatorCuisine(world, map);
 
-        //Player variable
-        speed = 1.5f;
-        maxSpeed = 5;
-        jumpForce = 15f;
+    //Player variable
+    speed = 1.5f;
+    maxSpeed = 5;
+    jumpForce = 15f;
 
-        //Initialisation Entités
-        player = new Perso(this,16/Sandman.PPM,208/Sandman.PPM);
+    //Initialisation Entités
+    player = new Perso(this,16/Sandman.PPM,208/Sandman.PPM);
 
-		//Initialise les colisions
-		colision = new ColisionListener(player);
-        world.setContactListener(colision);
-        
-    }
+    //Initialise les colisions
+    colision = new ColisionListener(player);
+    world.setContactListener(colision);
+          
+  }
 
-    @Override
+  @Override
   public void borderManagement() {
     if(player.b2body.getPosition().x < 1) {
       player.b2body.setTransform(1, player.b2body.getPosition().y, player.b2body.getAngle());
@@ -55,30 +55,29 @@ public class LevelCuisine extends Level{
     }
   }
 
-    @Override
-    public void render(float delta) {
-        update(delta);
+  @Override
+  public void render(float delta) {
+    update(delta);
+    //On met tout au noir pour nettoyer l'écran
+	  Gdx.gl.glClearColor(0, 0, 0, 1);
+    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 	
-	    //On met tout au noir pour nettoyer l'écran
-	    Gdx.gl.glClearColor(0, 0, 0, 1);
-	    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-	
-	    renderer.render();
+	  renderer.render();
 		//colision.update();
 	
-	    //rendu du joueur
-	    game.batch.setProjectionMatrix(camera.combined);
-	    game.batch.begin();
+	  //rendu du joueur
+	  game.batch.setProjectionMatrix(camera.combined);
+    game.batch.begin();
 		player.draw(game.batch);
         
 		if(player.getGel()){
-	    	player.getObjetGel().draw(game.batch);
+	    player.getObjetGel().draw(game.batch);
 		}
 		
-	    game.batch.end();
+	  game.batch.end();
 	
-	    //Affiche les box2d dans le jeu
-	    b2dr.render(world, camera.combined);
+	  //Affiche les box2d dans le jeu
+	  b2dr.render(world, camera.combined);
         
     }
 
