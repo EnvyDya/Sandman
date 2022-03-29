@@ -13,6 +13,8 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.sandman.game.Sandman;
 import com.sandman.game.sprites.Perso;
 import com.sandman.game.tools.B2WorldCreator;
+import com.sandman.game.tools.Hud;
+import com.sandman.game.tools.Needle;
 
 
 public abstract class Level implements Screen{
@@ -39,7 +41,8 @@ public abstract class Level implements Screen{
     //Music
     protected Music mainTheme;
     
-    //private Hud hud;
+    protected Hud hud;
+    protected Needle needle;
     
     public Level(final Sandman game, String mapName, String themeName, float gravity) {
     	this.game = game;
@@ -63,6 +66,11 @@ public abstract class Level implements Screen{
         
         //Création et gestion des body
         worldCreator = new B2WorldCreator(world, map);
+        
+        //Creation HUD
+        hud = new Hud(world, this);
+        needle = new Needle(world, this);
+        
     }
     
     /**
@@ -134,5 +142,9 @@ public abstract class Level implements Screen{
 	//
 	public float getJumpForce() {
 		return jumpForce;
+	}
+	
+	public Perso getPerso() {
+		return player;
 	}
 }
