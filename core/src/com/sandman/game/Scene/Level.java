@@ -14,6 +14,7 @@ import com.sandman.game.Sandman;
 import com.sandman.game.sprites.Perso;
 import com.sandman.game.tools.B2WorldCreator;
 import com.sandman.game.tools.Hud;
+import com.sandman.game.tools.MenuButton;
 import com.sandman.game.tools.Needle;
 
 
@@ -43,6 +44,7 @@ public abstract class Level implements Screen{
     
     protected Hud hud;
     protected Needle needle;
+    protected MenuButton mb;
     
     public Level(final Sandman game, String mapName, String themeName, float gravity) {
     	this.game = game;
@@ -64,13 +66,13 @@ public abstract class Level implements Screen{
         world = new World(new Vector2(0, -gravity), true);
         b2dr = new Box2DDebugRenderer();
         
-        //Création et gestion des body
-        worldCreator = new B2WorldCreator(world, map);
-        
         //Creation HUD
         hud = new Hud(world, this);
         needle = new Needle(world, this);
+        mb = new MenuButton(world, this);
         
+        //Création et gestion des body
+        worldCreator = new B2WorldCreator(world, map, this);        
     }
     
     /**
@@ -146,5 +148,9 @@ public abstract class Level implements Screen{
 	
 	public Perso getPerso() {
 		return player;
+	}
+	
+	public MenuButton getMenuButton() {
+		return mb;
 	}
 }

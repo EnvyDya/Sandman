@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.sandman.game.Sandman;
+import com.sandman.game.Scene.Level;
 import com.sandman.game.sprites.Boulder;
 import com.sandman.game.sprites.Feuille;
 import com.sandman.game.sprites.InteractiveTileObject;
@@ -33,7 +34,7 @@ public class B2WorldCreator {
 	private float timerFeuilles;
 	private float timerBoulder;
     
-	public B2WorldCreator(World world, TiledMap map) {
+	public B2WorldCreator(World world, TiledMap map, Level level) {
 		   this.world = world;
 		   BodyDef bdef = new BodyDef();
 	       PolygonShape shape = new PolygonShape();
@@ -45,6 +46,9 @@ public class B2WorldCreator {
 	       
 	       boulder = new ArrayList<Boulder>();
 	       timerBoulder = 2f;
+	       
+	       //Ajout du bouton de menu
+	       interactiveTiles.add(level.getMenuButton());
 	       
 	       //Cree les box2D du sol
 	       for(MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)) {
@@ -70,8 +74,7 @@ public class B2WorldCreator {
 			
 			//Ajout de la tondeuse
 			t = new Tondeuse(world);
-			interactiveTiles.add(t);
-			
+			interactiveTiles.add(t);			
 	}
 	
 	public void update(float dt) {
