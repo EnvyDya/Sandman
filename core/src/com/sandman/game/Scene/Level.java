@@ -4,8 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -16,6 +14,7 @@ import com.sandman.game.Sandman;
 import com.sandman.game.sprites.Perso;
 import com.sandman.game.tools.B2WorldCreator;
 import com.sandman.game.tools.Hud;
+import com.sandman.game.tools.Needle;
 
 
 public abstract class Level implements Screen{
@@ -43,6 +42,7 @@ public abstract class Level implements Screen{
     protected Music mainTheme;
     
     protected Hud hud;
+    protected Needle needle;
     
     public Level(final Sandman game, String mapName, String themeName, float gravity) {
     	this.game = game;
@@ -69,6 +69,8 @@ public abstract class Level implements Screen{
         
         //Creation HUD
         hud = new Hud(world, this);
+        needle = new Needle(world, this);
+        
     }
     
     /**
