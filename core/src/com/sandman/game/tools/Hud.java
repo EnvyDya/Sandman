@@ -15,7 +15,6 @@ import com.sandman.game.Scene.Level;
 
 public class Hud extends Sprite{
 	
-	//TODO: A modifier pour convenir au HUD de notre jeu
 	private World world;
 	private Level level;
 	private Body body;
