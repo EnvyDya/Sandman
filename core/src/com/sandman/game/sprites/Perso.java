@@ -20,6 +20,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.sandman.game.Sandman;
 import com.sandman.game.Scene.Level;
 import com.sandman.game.sprites.interfaces.CanDie;
+import com.sandman.game.tools.MenuButton;
 
 public class Perso extends Sprite implements Disposable,CanDie{
     public enum State  { FALLING, JUMPING, STANDING, RUNNING};
@@ -259,7 +260,7 @@ public class Perso extends Sprite implements Disposable,CanDie{
     						//System.out.println("Contact avec l'objet interactif : " + o);
 							if(!gel || o == objetGel){
 								o.onClick();
-								if(!gel) {
+								if(!gel && o.getClass() != MenuButton.class) {
 									bruitHorloge.play(0.5f);
 								}else {
 									bruitHorloge.stop();
@@ -313,6 +314,10 @@ public class Perso extends Sprite implements Disposable,CanDie{
 
 	public InteractiveTileObject getObjetGel() {
 		return objetGel;
+	}
+	
+	public Sound getBruitHorloge() {
+		return bruitHorloge;
 	}
 
 	public void land(){

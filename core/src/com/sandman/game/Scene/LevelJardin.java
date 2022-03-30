@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.sandman.game.Sandman;
+import com.sandman.game.sprites.Bed;
 import com.sandman.game.sprites.Boulder;
 import com.sandman.game.sprites.Feuille;
 import com.sandman.game.sprites.Perso;
@@ -22,6 +23,7 @@ public class LevelJardin extends Level{
 
     //Entité variable
     private Tondeuse tondeuse;
+    private Bed lit;
     private ArrayList<Feuille> feuilles;
     private ArrayList<Boulder> boulders;
 
@@ -39,6 +41,7 @@ public class LevelJardin extends Level{
 
         //Initialisation Entités
         player = new Perso(this);
+        lit = new Bed(world, 1920/Sandman.PPM, 135/Sandman.PPM);
         tondeuse = worldCreator.getTondeuse();
         feuilles = worldCreator.getFeuille();
         boulders = worldCreator.getBoulder();
@@ -48,6 +51,11 @@ public class LevelJardin extends Level{
         world.setContactListener(colision);
         
     }
+    
+   public void stopLevel() {
+	   mainTheme.stop();
+	   sonBird.stop();
+   }
     
   @Override
   public void borderManagement() {
@@ -84,6 +92,7 @@ public class LevelJardin extends Level{
 	    game.batch.setProjectionMatrix(camera.combined);
 	    game.batch.begin();
 	    tondeuse.draw(game.batch);
+	    lit.draw(game.batch);
 		if(player.getGel()){
 	    	player.getObjetGel().draw(game.batch);
 		}
@@ -102,10 +111,11 @@ public class LevelJardin extends Level{
 		player.draw(game.batch);
 		hud.draw(game.batch);
 		needle.draw(game.batch);
+		mb.draw(game.batch);
 	    game.batch.end();
 	
 	    //Affiche les box2d dans le jeu
-	    //b2dr.render(world, camera.combined);
+	    b2dr.render(world, camera.combined);
 			
 	}
 
@@ -117,6 +127,7 @@ public class LevelJardin extends Level{
 	    worldCreator.update(dt);
 	    hud.update();
 	    needle.update();
+	    mb.update();
 	    borderManagement();
 	
 	    //On rafraichit les calculs 60x par seconde
@@ -133,8 +144,11 @@ public class LevelJardin extends Level{
 	@Override
 	public void dispose() {
 		map.dispose();
+		mainTheme.dispose();
 		renderer.dispose();
 		world.dispose();
 		b2dr.dispose();
+		player.dispose();
+		sonBird.dispose();
 	}
 }
