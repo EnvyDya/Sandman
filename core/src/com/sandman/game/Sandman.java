@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.sandman.game.Scene.LevelJardin;
+import com.sandman.game.Scene.MainMenuScreen;
 
 
 //Classe qui va gérer les différentes scènes du jeu
@@ -32,6 +33,7 @@ public class Sandman extends Game{
     	Gdx.graphics.setCursor(Gdx.graphics.newCursor(curseur, 0, 0));
 		curseur.dispose();
 		this.setScreen(new LevelJardin(this));
+		//this.setScreen(new MainMenuScreen(this));
 	}
 
 	public void render() {
