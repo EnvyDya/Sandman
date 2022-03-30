@@ -1,16 +1,22 @@
 package com.sandman.game.Scene;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.sandman.game.Sandman;
+import com.sandman.game.sprites.Egg;
 import com.sandman.game.sprites.Perso;
 import com.sandman.game.tools.B2WorldCreatorCuisine;
 import com.sandman.game.tools.ColisionListener;
 
 public class LevelCuisine extends Level{
 
-    //Gestionnaire de colision
+  //Gestionnaire de colision
 	private ColisionListener colision;
+
+  //Entité variable
+  private ArrayList<Egg> eggs;
 
   public LevelCuisine(final Sandman game) {
     super(game, "images/kitchen.tmx", "sounds/themecuisine.wav", 20f);
@@ -25,6 +31,7 @@ public class LevelCuisine extends Level{
 
     //Initialisation Entités
     player = new Perso(this,16/Sandman.PPM,208/Sandman.PPM);
+    eggs = ((B2WorldCreatorCuisine) worldCreator).getEggs();
 
     //Initialise les colisions
     colision = new ColisionListener(player);
@@ -63,7 +70,6 @@ public class LevelCuisine extends Level{
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 	
 	  renderer.render();
-		//colision.update();
 	
 	  //rendu du joueur
 	  game.batch.setProjectionMatrix(camera.combined);
@@ -72,6 +78,12 @@ public class LevelCuisine extends Level{
         
 		if(player.getGel()){
 	    player.getObjetGel().draw(game.batch);
+		}
+
+    //On update et on dessine en même temps pour réduire la complexité d'un parcours
+		for(Egg e : eggs) {
+			e.update();
+			e.draw(game.batch);
 		}
 		
 	  game.batch.end();
@@ -83,7 +95,7 @@ public class LevelCuisine extends Level{
 
     @Override
     public void update(float dt) {
-        player.handleInput(dt);
+      player.handleInput(dt);
 	    player.update(dt);
 	    worldCreator.update(dt);
 	    borderManagement();
@@ -102,11 +114,11 @@ public class LevelCuisine extends Level{
 
     @Override
     public void dispose() {
-        map.dispose();
-		renderer.dispose();
-		world.dispose();
-		b2dr.dispose();
-		//hud.dispose();
+      map.dispose();
+      renderer.dispose();
+      world.dispose();
+      b2dr.dispose();
+      //hud.dispose();
     }
     
 }

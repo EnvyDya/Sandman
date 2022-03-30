@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.sandman.game.Scene.LevelCuisine;
-import com.sandman.game.Scene.LevelJardin;
 
 
 //Classe qui va gérer les différentes scènes du jeu

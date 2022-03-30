@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.1" orientation="orthogonal" renderorder="right-down" width="130" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="5">
+<map version="1.8" tiledversion="1.8.1" orientation="orthogonal" renderorder="right-down" width="130" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="5">
  <tileset firstgid="1" name="cuisinetile" tilewidth="16" tileheight="16" tilecount="224" columns="14">
   <image source="kitchen.png" width="224" height="256"/>
  </tileset>
@@ -13,6 +13,9 @@
    eJzt1kkKAjEQBdDaOuwdTuNO9ATSK4/i0U3wAFYhQqf7Pfj0rqCST5MIAAAAAAAAAAD43TWRe3HmFPHKzF1qquc1B7eIy7dMxZm9B5m5S031vOYgs9ejOHPtPaie1xzogR50eqAHnR7oQZfZyzuxFu/Ej7X3YKn/g75Xu9tnIXowmOxelXPQg/HogR50evCfHmxati27lv0A3+S96kFt/zi0HFtOLecBvm9x/xxH
   </data>
  </layer>
+ <imagelayer id="6" name="Calque d'Images 1" offsetx="37.6363" offsety="220.121">
+  <image source="boitedoeuf.png" width="128" height="52"/>
+ </imagelayer>
  <objectgroup id="3" name="Sol">
   <object id="1" x="0.333333" y="272" width="158.333" height="207"/>
   <object id="2" x="159.5" y="400.5" width="176.25" height="79.25"/>

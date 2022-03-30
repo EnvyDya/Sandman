@@ -2,6 +2,7 @@ package com.sandman.game.tools;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -28,18 +29,24 @@ public abstract class B2WorldCreator{
 	       Body body;
 
 	       //Cree les box2D du sol
-	       for(MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)) {
-	    	   Rectangle rect = ((RectangleMapObject) object).getRectangle();
-	    	   
-	    	   bdef.type = BodyDef.BodyType.StaticBody;
-	    	   bdef.position.set((rect.getX() + rect.getWidth()/2)/Sandman.PPM, (rect.getY() + rect.getHeight()/2)/Sandman.PPM);
-	    	   
-	    	   body = world.createBody(bdef);
-	    	   
-	    	   shape.setAsBox((rect.getWidth()/2)/Sandman.PPM, (rect.getHeight()/2)/Sandman.PPM);
-	    	   fdef.shape = shape;
-	    	   body.createFixture(fdef);
-	       }
+			for (MapLayer layer : map.getLayers()) {
+				if(layer.getName().equals("Sol")){
+					for(MapObject object : layer.getObjects().getByType(RectangleMapObject.class)) {
+						Rectangle rect = ((RectangleMapObject) object).getRectangle();
+						
+						bdef.type = BodyDef.BodyType.StaticBody;
+						bdef.position.set((rect.getX() + rect.getWidth()/2)/Sandman.PPM, (rect.getY() + rect.getHeight()/2)/Sandman.PPM);
+						
+						body = world.createBody(bdef);
+						
+						shape.setAsBox((rect.getWidth()/2)/Sandman.PPM, (rect.getHeight()/2)/Sandman.PPM);
+						fdef.shape = shape;
+						body.createFixture(fdef);
+					}
+					break;
+				}
+			}
+	       
 			
 	}
 	

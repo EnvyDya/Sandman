@@ -83,7 +83,6 @@ public class LevelJardin extends Level{
 	    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 	
 	    renderer.render();
-		//colision.update();
 	
 	    //rendu du joueur
 	    game.batch.setProjectionMatrix(camera.combined);
@@ -107,7 +106,7 @@ public class LevelJardin extends Level{
 	    game.batch.end();
 	
 	    //Affiche les box2d dans le jeu
-	    b2dr.render(world, camera.combined);
+	    //b2dr.render(world, camera.combined);
 			
 	}
 

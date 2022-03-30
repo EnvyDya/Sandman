@@ -27,7 +27,7 @@ public class Tondeuse extends InteractiveTileObject implements Danger{
     public Tondeuse(World world){
         //TODO revoir pour la hitbox
         //Rectangle de positionnement et hitbox de la tondeuse
-        super(new TextureRegion(new Texture("images/Tondeuse.png")),world,new Rectangle(1428, 95, 80, 55), BodyDef.BodyType.StaticBody);
+        super(new TextureRegion(new Texture("images/Tondeuse.png")),world,new Rectangle(1428, 95, 80, 55), BodyDef.BodyType.StaticBody,0);
 
         atuer = new ArrayList<CanDie>();
         
