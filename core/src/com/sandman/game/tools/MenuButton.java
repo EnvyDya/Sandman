@@ -35,7 +35,9 @@ public class MenuButton extends InteractiveTileObject{
 	@Override
 	public void onClick() {
 		//Revient au menu principal
-		level.getGame().setScreen(new MainMenuScreen(level.getGame()));
+		Sandman game = level.getGame();
+		game.setScreen(new MainMenuScreen(game));
+		level.stopLevel();
 	}
 	
 	public void update() {

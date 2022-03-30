@@ -52,6 +52,11 @@ public class LevelJardin extends Level{
         
     }
     
+   public void stopLevel() {
+	   mainTheme.stop();
+	   sonBird.stop();
+   }
+    
   @Override
   public void borderManagement() {
     if(player.b2body.getPosition().x < 1) {
@@ -139,8 +144,11 @@ public class LevelJardin extends Level{
 	@Override
 	public void dispose() {
 		map.dispose();
+		mainTheme.dispose();
 		renderer.dispose();
 		world.dispose();
 		b2dr.dispose();
+		player.dispose();
+		sonBird.dispose();
 	}
 }

@@ -81,6 +81,11 @@ public abstract class Level implements Screen{
     public abstract void borderManagement();
     
     /**
+     * Function to call when a level is stopped
+     */
+    public abstract void stopLevel();
+    
+    /**
     * Méthode qui place la caméra au bon endroit sur la carte
     */
     public abstract void cameraHandle();

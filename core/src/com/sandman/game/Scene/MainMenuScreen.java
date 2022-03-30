@@ -1,6 +1,7 @@
 package com.sandman.game.Scene;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -27,11 +28,9 @@ public class MainMenuScreen implements Screen {
 		game.batch.setProjectionMatrix(camera.combined);
 
 		game.batch.begin();
-		game.font.draw(game.batch, "Bienvenue sur le Menu Principal", 300, 240);
-		game.font.draw(game.batch, "Appuyer pour commencer à jouer", 300, 200);
 		game.batch.end();
 
-		if (Gdx.input.isTouched()) {
+		if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
 			game.setScreen(new LevelJardin(game));
 			dispose();
 		}
