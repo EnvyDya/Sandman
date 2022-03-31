@@ -319,6 +319,10 @@ public class Perso extends Sprite implements Disposable,CanDie{
 	public Sound getBruitHorloge() {
 		return bruitHorloge;
 	}
+	
+	public Level getLevel() {
+		return level;
+	}
 
 	public void land(){
 		landing = true;
