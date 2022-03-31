@@ -258,7 +258,7 @@ public class Perso extends Sprite implements Disposable,CanDie{
     					if(o.body == b) {
     						//Le cas échéant, on réalise le comportement associé à l'objet récupéré
     						//System.out.println("Contact avec l'objet interactif : " + o);
-							if(!gel || o == objetGel){
+							if(!gel || o == objetGel || o.getClass() == MenuButton.class){
 								o.onClick();
 								if(!gel && o.getClass() != MenuButton.class) {
 									bruitHorloge.play(0.5f);
