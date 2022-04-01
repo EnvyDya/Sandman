@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.sandman.game.Sandman;
 import com.sandman.game.sprites.Cafard;
+import com.sandman.game.sprites.Drop;
 import com.sandman.game.sprites.Egg;
 import com.sandman.game.sprites.Knife;
 import com.sandman.game.sprites.Perso;
@@ -19,6 +20,7 @@ public class LevelCuisine extends Level{
 
   //Entité variable
   private ArrayList<Egg> eggs;
+  private ArrayList<Drop> drop;
   private Knife knife;
   private Cafard cafard;
 
@@ -38,6 +40,8 @@ public class LevelCuisine extends Level{
     eggs = ((B2WorldCreatorCuisine) worldCreator).getEggs();
     knife = ((B2WorldCreatorCuisine) worldCreator).getKnife();
     cafard = ((B2WorldCreatorCuisine) worldCreator).getCafard();
+    drop = ((B2WorldCreatorCuisine) worldCreator).getDrop();
+
 
     //Initialise les colisions
     colision = new ColisionListener(player);
@@ -93,6 +97,11 @@ public class LevelCuisine extends Level{
 			e.update();
 			e.draw(game.batch);
 		}
+
+    for (Drop d : drop) {
+      d.update();
+      d.draw(game.batch);
+    }
 		
 	  game.batch.end();
 	

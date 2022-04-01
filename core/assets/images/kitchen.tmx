@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.1" orientation="orthogonal" renderorder="right-down" width="130" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="12" nextobjectid="12">
+<map version="1.8" tiledversion="1.8.1" orientation="orthogonal" renderorder="right-down" width="130" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="13" nextobjectid="15">
  <tileset firstgid="1" name="cuisinetile" tilewidth="16" tileheight="16" tilecount="224" columns="14">
   <image source="kitchen.png" width="224" height="256"/>
  </tileset>
@@ -26,6 +26,9 @@
  <imagelayer id="11" name="PlanchePain" offsetx="636.917" offsety="256.583">
   <image source="planchedecoupe.jpg" width="216" height="16"/>
  </imagelayer>
+ <imagelayer id="12" name="Fourchette" offsetx="175.742" offsety="290.667">
+  <image source="fork.png" width="160" height="110"/>
+ </imagelayer>
  <objectgroup id="3" name="Sol">
   <object id="1" x="0.333333" y="272" width="158.333" height="207"/>
   <object id="2" x="159.5" y="400.5" width="176.25" height="79.25"/>
@@ -34,8 +37,8 @@
   <object id="7" x="1375.27" y="357.818" width="88.5455" height="13.4545"/>
   <object id="8" x="1392" y="347.455" width="54.5455" height="10"/>
   <object id="9" x="1388.91" y="371.455" width="62.7273" height="76.5455"/>
-  <object id="10" x="159.375" y="272.375" width="176.25" height="15.125"/>
   <object id="11" x="636.875" y="256.5" width="216" height="15.375"/>
+  <object id="14" x="169.071" y="385.862" width="182.047" height="24.5373" rotation="-32"/>
  </objectgroup>
  <objectgroup id="4" name="Eau"/>
 </map>
