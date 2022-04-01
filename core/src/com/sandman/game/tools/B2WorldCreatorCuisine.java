@@ -4,12 +4,16 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.physics.box2d.World;
+import com.sandman.game.sprites.Cafard;
 import com.sandman.game.sprites.Egg;
+import com.sandman.game.sprites.Knife;
 
 public class B2WorldCreatorCuisine extends B2WorldCreator {
 
-  //Liste des entités
+	//Liste des entités
 	private ArrayList<Egg> eggs;
+	private Knife knife;
+	private Cafard cafard;
 	
 	//Compteurs des spawn Oeufs
 	private float timerEgg1;
@@ -17,12 +21,20 @@ public class B2WorldCreatorCuisine extends B2WorldCreator {
 	private float timerEgg3;
     
   public B2WorldCreatorCuisine(World world, TiledMap map) {
-	super(world, map);
+	  super(world, map);
 
-  eggs = new ArrayList<Egg>();
-	timerEgg1 = 0.8f;
-	timerEgg2 = 1f;
-	timerEgg3 = 0.5f;
+	  //Ajout du couteau
+	  knife = new Knife(world, 728, 128);
+	  interactiveTiles.add(knife);
+
+	  //Ajout du cafard
+	  cafard = new Cafard(world, 1520, -50);
+	  interactiveTiles.add(cafard);
+
+	  eggs = new ArrayList<Egg>();
+	  timerEgg1 = 0.8f;
+	  timerEgg2 = 1f;
+	  timerEgg3 = 0.5f;
 
   }
   
@@ -76,6 +88,14 @@ public class B2WorldCreatorCuisine extends B2WorldCreator {
 
   public ArrayList<Egg> getEggs() {
       return eggs;
+  }
+
+  public Knife getKnife() {
+	  return knife;
+  }
+
+  public Cafard getCafard() {
+	  return cafard;
   }
     
 }

@@ -20,7 +20,7 @@ public class Feuille extends InteractiveTileObject implements Danger{
 
 	//Constructeur
     public Feuille(World world, int posX, int posY){
-        //Rectangle de positionnement et hitbox de la tondeuse
+        //Rectangle de positionnement et hitbox de la feuille
         super(new TextureRegion(new Texture("images/feuille.png")),world,new Rectangle(posX, posY, 40, 40), BodyDef.BodyType.KinematicBody,10);
         //Etat initial
         gel = false;
@@ -52,13 +52,19 @@ public class Feuille extends InteractiveTileObject implements Danger{
 		gel = !gel;
 		if(gel) {
 			body.setLinearVelocity(0, 0);
-		}else {
+		}
+        else {
 			body.setLinearVelocity(0f, -8f);
 		}
 	}
 	
 	public void update() {
 		setPosition(body.getPosition().x - getWidth()/2, body.getPosition().y - 10/Sandman.PPM);
+        if(!gel){
+            for (CanDie canDie : atuer) {
+                canDie.die();
+            }
+        }
 	}
 
 	@Override

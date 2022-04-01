@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.sandman.game.Sandman;
+import com.sandman.game.sprites.Cafard;
 import com.sandman.game.sprites.Egg;
+import com.sandman.game.sprites.Knife;
 import com.sandman.game.sprites.Perso;
 import com.sandman.game.tools.B2WorldCreatorCuisine;
 import com.sandman.game.tools.ColisionListener;
@@ -17,6 +19,8 @@ public class LevelCuisine extends Level{
 
   //Entité variable
   private ArrayList<Egg> eggs;
+  private Knife knife;
+  private Cafard cafard;
 
   public LevelCuisine(final Sandman game) {
     super(game, "images/kitchen.tmx", "sounds/themecuisine.wav", 20f);
@@ -30,8 +34,10 @@ public class LevelCuisine extends Level{
     jumpForce = 15f;
 
     //Initialisation Entités
-    player = new Perso(this,16/Sandman.PPM,208/Sandman.PPM);
+    player = new Perso(this,600/Sandman.PPM,128/Sandman.PPM);
     eggs = ((B2WorldCreatorCuisine) worldCreator).getEggs();
+    knife = ((B2WorldCreatorCuisine) worldCreator).getKnife();
+    cafard = ((B2WorldCreatorCuisine) worldCreator).getCafard();
 
     //Initialise les colisions
     colision = new ColisionListener(player);
@@ -75,7 +81,9 @@ public class LevelCuisine extends Level{
 	  game.batch.setProjectionMatrix(camera.combined);
     game.batch.begin();
 		player.draw(game.batch);
-        
+    knife.draw(game.batch);
+    cafard.draw(game.batch);
+
 		if(player.getGel()){
 	    player.getObjetGel().draw(game.batch);
 		}
@@ -97,6 +105,8 @@ public class LevelCuisine extends Level{
     public void update(float dt) {
       player.handleInput(dt);
 	    player.update(dt);
+      knife.update();
+      cafard.update(dt);
 	    worldCreator.update(dt);
 	    borderManagement();
 	

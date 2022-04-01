@@ -18,10 +18,11 @@ import com.sandman.game.sprites.interfaces.Danger;
 
 public class Tondeuse extends InteractiveTileObject implements Danger{
 
+    public ArrayList<CanDie> atuer;
+
     //Attribut animation
     private Animation<TextureRegion> animTondeuse;
     private float stateTimer;
-    public ArrayList<CanDie> atuer;
 
     //Constructeur
     public Tondeuse(World world){

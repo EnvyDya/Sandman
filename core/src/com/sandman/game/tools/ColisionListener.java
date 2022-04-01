@@ -83,7 +83,9 @@ public class ColisionListener implements ContactListener {
                     danger = fixB;
                     objet = fixA;
                 }
-                ((Danger) danger.getUserData()).cantKillAnymore(((CanDie) objet.getUserData()));
+                if(CanDie.class.isAssignableFrom(objet.getUserData().getClass())){
+                    ((Danger) danger.getUserData()).cantKillAnymore(((CanDie) objet.getUserData()));
+                }
             }
         }
     }

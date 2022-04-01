@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.sandman.game.Sandman;
@@ -15,27 +15,25 @@ import com.sandman.game.sprites.interfaces.CanDie;
 import com.sandman.game.sprites.interfaces.Danger;
 
 
-public class Egg extends InteractiveTileObject implements Danger{
+public class Knife extends InteractiveTileObject implements Danger{
 	public ArrayList<CanDie> atuer;
 
 	//Constructeur
-    public Egg(World world, float posX, float posY){
-        //Rectangle de positionnement et hitbox de l'oeuf
-        super(new TextureRegion(new Texture("images/egg.png")),world,new Rectangle(posX, posY, 32, 39), BodyDef.BodyType.KinematicBody,9); 
+    public Knife(World world, float posX, float posY){
+        //Rectangle de positionnement et hitbox du couteau
+        super(new TextureRegion(new Texture("images/knife.png")),world,new Rectangle(posX, posY, 32, 240), BodyDef.BodyType.KinematicBody,120); 
         //Etat initial
         gel = false;
-        body.getFixtureList().get(0).setSensor(true);
 		
 		atuer = new ArrayList<CanDie>();
 
-        setBounds(body.getPosition().x, body.getPosition().y, 32/Sandman.PPM, 39/Sandman.PPM);
-        body.setLinearVelocity(0f, -8f);
+        setBounds(body.getPosition().x, body.getPosition().y, 32/Sandman.PPM, 240/Sandman.PPM);
+        body.setLinearVelocity(0f, -30f);
 
-		//Création d'un sensor en dessous de l'oeuf qui va detecté les colisions
+		//Création d'un sensor en dessous du couteau qui va detecté les colisions
         FixtureDef fdef = new FixtureDef();
-        CircleShape danger = new CircleShape();
-        danger.setPosition(new Vector2(0, 8/Sandman.PPM));
-        danger.setRadius(1);
+        EdgeShape danger = new EdgeShape();
+        danger.set(new Vector2(-15/Sandman.PPM, -1/Sandman.PPM),new Vector2(15/Sandman.PPM, -1/Sandman.PPM));
         fdef.shape = danger;
         fdef.isSensor = true;
         body.createFixture(fdef).setUserData(this);
@@ -46,19 +44,32 @@ public class Egg extends InteractiveTileObject implements Danger{
 		gel = !gel;
 		if(gel) {
 			body.setLinearVelocity(0, 0);
+            body.setType(BodyDef.BodyType.StaticBody);
 		}else {
-			body.setLinearVelocity(0f, -8f);
+            body.setType(BodyDef.BodyType.KinematicBody);
+			body.setLinearVelocity(0f, -30f);
+            
 		}
 	}
 	
 	public void update() {
-		setPosition(body.getPosition().x - getWidth()/2, body.getPosition().y - 10/Sandman.PPM);
+        gestionEtat();
+		setPosition(body.getPosition().x - getWidth()/2, body.getPosition().y);
         if(!gel){
             for (CanDie canDie : atuer) {
                 canDie.die();
             }
         }
 	}
+
+    public void gestionEtat(){
+        if (body.getPosition().y < 224/Sandman.PPM) {
+            body.setLinearVelocity(0f, 15f);
+        }
+        else if(body.getPosition().y - getHeight() > 128/Sandman.PPM){
+            body.setLinearVelocity(0f, -30f);
+        }
+    }
 
 	@Override
     public Boolean canKill(CanDie die) {
