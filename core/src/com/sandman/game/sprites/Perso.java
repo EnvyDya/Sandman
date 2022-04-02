@@ -221,7 +221,6 @@ public class Perso extends Sprite implements Disposable,CanDie{
      * Methode qui prend en charge les appuis de touche
      */
     public void handleInput(float dt) {
-    	//TODO: Régler problème escalade des murs
       
     	//On vérifie si une touche de saut est appuyée et que le joueur ne soit pas déjà dans les airs
     	if(Gdx.input.isKeyPressed(Input.Keys.SPACE) && (getState() == State.STANDING || getState() == State.RUNNING)) {

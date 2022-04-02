@@ -24,7 +24,7 @@ public class ButtonObject extends InteractiveTileObject{
 	//Constructeur
     public ButtonObject(World world, float posX, float posY){
         //Rectangle de positionnement et hitbox du boutton
-        super(new TextureRegion(new Texture("images/button.png")),world,new Rectangle(posX, posY, 80, 50), BodyDef.BodyType.StaticBody,5); 
+        super(new TextureRegion(new Texture("images/button.png")),world,new Rectangle(posX, posY, 40, 25), BodyDef.BodyType.StaticBody,14); 
         //Etat initial
         gel = false;
         on = false;
@@ -39,16 +39,8 @@ public class ButtonObject extends InteractiveTileObject{
             frameButton.add(new TextureRegion(getTexture(),i*80,0,80,50));
         }
 
-        setBounds(body.getPosition().x-40/Sandman.PPM, body.getPosition().y, 80/Sandman.PPM, 50/Sandman.PPM);
+        setBounds(body.getPosition().x-20/Sandman.PPM, body.getPosition().y, 40/Sandman.PPM, 25/Sandman.PPM);
         setRegion(getFrame());
-
-		// //Création d'une hitbox pour monter sur le cafard
-        // FixtureDef fdef = new FixtureDef();
-        // PolygonShape danger = new PolygonShape();
-        // Vector2 center = new Vector2(0/Sandman.PPM,32/Sandman.PPM);
-        // danger.setAsBox((getWidth()/2) - 16/Sandman.PPM , 32/Sandman.PPM,center,0);
-        // fdef.shape = danger;
-        // body.createFixture(fdef).setUserData(this);
 
     }
 
@@ -99,6 +91,10 @@ public class ButtonObject extends InteractiveTileObject{
                 return frameButton.get(3);
             }
         }
+    }
+
+    public boolean getOn(){
+        return !on;
     }
 
 }

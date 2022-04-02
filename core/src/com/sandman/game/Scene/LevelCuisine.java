@@ -9,6 +9,7 @@ import com.sandman.game.sprites.ButtonObject;
 import com.sandman.game.sprites.Cafard;
 import com.sandman.game.sprites.Drop;
 import com.sandman.game.sprites.Egg;
+import com.sandman.game.sprites.Fire;
 import com.sandman.game.sprites.Knife;
 import com.sandman.game.sprites.Perso;
 import com.sandman.game.tools.B2WorldCreatorCuisine;
@@ -25,6 +26,7 @@ public class LevelCuisine extends Level{
   private Knife knife;
   private Cafard cafard;
   private ButtonObject bouton1;
+  private Fire feu;
 
   public LevelCuisine(final Sandman game) {
     super(game, "images/kitchen.tmx", "sounds/themecuisine.wav", 20f);
@@ -44,6 +46,7 @@ public class LevelCuisine extends Level{
     cafard = ((B2WorldCreatorCuisine) worldCreator).getCafard();
     drop = ((B2WorldCreatorCuisine) worldCreator).getDrop();
     bouton1 = ((B2WorldCreatorCuisine) worldCreator).getBouton1();
+    feu = ((B2WorldCreatorCuisine) worldCreator).getFeu();
 
 
     //Initialise les colisions
@@ -58,8 +61,8 @@ public class LevelCuisine extends Level{
       player.b2body.setTransform(1, player.b2body.getPosition().y, player.b2body.getAngle());
       player.b2body.setLinearVelocity(0, player.b2body.getLinearVelocity().y);
     }
-    else if (player.b2body.getPosition().x > 129) {
-      player.b2body.setTransform(129, player.b2body.getPosition().y, player.b2body.getAngle());
+    else if (player.b2body.getPosition().x > 114) {
+      player.b2body.setTransform(114, player.b2body.getPosition().y, player.b2body.getAngle());
       player.b2body.setLinearVelocity(0, player.b2body.getLinearVelocity().y);
     }
   }
@@ -67,7 +70,7 @@ public class LevelCuisine extends Level{
   @Override
   public void cameraHandle() {
     //Gestion de la caméra horizontale
-    if(player.b2body.getPosition().x >= 15 && player.b2body.getPosition().x <= 115) {
+    if(player.b2body.getPosition().x >= 15 && player.b2body.getPosition().x <= 100) {
         camera.position.x = player.b2body.getPosition().x;
     }
     if(player.b2body.getPosition().y >= 10 && player.b2body.getPosition().y <= 20) {
@@ -91,6 +94,7 @@ public class LevelCuisine extends Level{
     knife.draw(game.batch);
     cafard.draw(game.batch);
     bouton1.draw(game.batch);
+    feu.draw(game.batch);
 
 		if(player.getGel()){
 	    player.getObjetGel().draw(game.batch);
@@ -110,7 +114,7 @@ public class LevelCuisine extends Level{
 	  game.batch.end();
 	
 	  //Affiche les box2d dans le jeu
-	  b2dr.render(world, camera.combined);
+	  //b2dr.render(world, camera.combined);
         
     }
 
@@ -121,6 +125,7 @@ public class LevelCuisine extends Level{
       knife.update();
       cafard.update(dt);
       bouton1.update(dt);
+      feu.update(dt);
 	    worldCreator.update(dt);
 	    borderManagement();
 	

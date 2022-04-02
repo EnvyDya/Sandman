@@ -105,10 +105,10 @@ public class Cafard extends InteractiveTileObject implements Danger{
     }
 
     public void gestionEtat(){
-        if (body.getPosition().x < 1520/Sandman.PPM) {
+        if (body.getPosition().x < 1220/Sandman.PPM) {
             body.setLinearVelocity(10f, 0f);
         }
-        else if(body.getPosition().x - getWidth() > 1760/Sandman.PPM){
+        else if(body.getPosition().x - getWidth() > 1460/Sandman.PPM){
             body.setLinearVelocity(-10f, 0f);
         }
     }

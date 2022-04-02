@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.1" orientation="orthogonal" renderorder="right-down" width="130" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="13" nextobjectid="18">
+<map version="1.8" tiledversion="1.8.1" orientation="orthogonal" renderorder="right-down" width="115" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="14" nextobjectid="19">
  <tileset firstgid="1" name="cuisinetile" tilewidth="16" tileheight="16" tilecount="224" columns="14">
   <image source="kitchen.png" width="224" height="256"/>
  </tileset>
  <tileset firstgid="225" source="tile.tsx"/>
- <layer id="1" name="Background" width="130" height="30">
+ <layer id="1" name="Background" width="115" height="30">
   <data encoding="base64" compression="zlib">
-   eJztl8FtwzAMRbVlkVtGaTtJdkh9T5sBkgyQZJXyYAM5yDZpMhIp/QMhEPj0J8xn2j6mlH4ohjGOK/nA0K9dY8ol2tb9vfTB9efk8H8/B1v7WOpFypnUf+6aEm3r/qX6AAe+/aNzkNOXnEMr/qX6wD7w7V9rHwyF/b3PobZ/dA5y+oh7ubZ/rfeCFQetPI+1/aPvg1bmUNvfGwdb9s+a/1yuqZXcm571mllYcwgO4nHwrn3E9Zb0w9X2rNfMAhy0oy/FQU4PDvzosQ9izAkcgIOIHOxS+vygcy12Sm9w4JsDmvGBwwHFHhz40YODGHMCB+DAMwdzuYaDuZzzjbmUc7U96zWzAAft6K04mPaIJQfDgje3lnNfJm3Pes0scjr6Hzy9zvub/iO/Mv+SpDuAAz96Kw625Hgv+NFbfx+Ag5h6bs0vxR/FeTwtcm6NpvYs0Pas59ZcKK4Ut/G0yLk1mtqbQNuznltzp3hQPMfTIufWaGqfAm3Pem7NP1wAzfo=
+   eJztl02uwjAMhHNLxI6jACfhDtA9PwcADgBcBS9a6empxeOmoY6ZSlZka9xp8jVRu08pHSSaNvZK3gB67R5dbtFG90d8tZp1Lkheci2j+pdgibx31rkM3dOije6v9SA1L3P5dX8PLPv031zLKP4eWEbZF3P7k2Ucfw8s+/Q1nnFz+3tgGWVfzO1PlnH8S7Acc6ZocxnKc3otzx5Fr9XGvHdkWQfLb58x/3WW50G1UfRkGUdfmmWfnizrZMl9SZZkOR/LZUrrhYxaLMnSPUvhtENYSqzIkizJkiy9rLU3lkN5DsuhHPlu+pSj2ih6soyjz2XZ7fspWTYfvNFeZC06bRS9VkPvJ/8ax7/MtvKPsun5TxHdjix9shyT84wto9dqZFmPXqudJM4Sl3acIkd7cnovBm0UvVa7Stwk7u04RY725PTeDdra9ej1kHhKvNpxihztyel9GbS169HrDVQVe6M=
   </data>
  </layer>
- <layer id="2" name="Graphique" width="130" height="30">
+ <layer id="2" name="Graphique" width="115" height="30">
   <data encoding="base64" compression="zlib">
-   eJzt1kkKAjEQBdDaOuwdTuNO9ATSK4/i0U3wAFYhQqf7Pfj0rqCST5MIAAAAAAAAAAD43TWRe3HmFPHKzF1qquc1B7eIy7dMxZm9B5m5S031vOYgs9ejOHPtPaie1xzogR50eqAHnR7oQZfZyzuxFu/Ej7X3YKn/g75Xu9tnIXowmOxelXPQg/HogR50evCfHmxati27lv0A3+S96kFt/zi0HFtOLecBvm9x/xxH
+   eJzt1ksKwkAQhOHe+tj7OI070RNIVjmKR7fdBsJUgdLY/h8Us0jTMCkCiQAAAAAAAAAAAAAA4LOuQu7mziniqeytTEe3iMsok7nz3aWytzLfeJfVlHs/zJ10WYMu+6DLPuiyD+Xe/Pv8Br7LPtQus5/ZCF0WULt03hNd1qDLPv61y03eaZvZZfYr5/L5aN6dU05nVuymXZeHvNMxc8qcV87l89G8O6eczuwLKM5+9Q==
   </data>
  </layer>
  <imagelayer id="6" name="Oeufs" offsetx="37.6363" offsety="220.121">
@@ -20,7 +20,7 @@
  <imagelayer id="7" name="Evier" offsetx="159" offsety="83.6667">
   <image source="evier.png" width="160" height="189"/>
  </imagelayer>
- <imagelayer id="9" name="Poubelle" offsetx="1376" offsety="336">
+ <imagelayer id="9" name="Poubelle" offsetx="992" offsety="336">
   <image source="trashbin.png" width="88" height="112"/>
  </imagelayer>
  <imagelayer id="11" name="PlanchePain" offsetx="636.917" offsety="256.583">
@@ -29,16 +29,20 @@
  <imagelayer id="12" name="Verre" offsetx="269.568" offsety="320.887">
   <image source="glass.png" width="67" height="80"/>
  </imagelayer>
+ <imagelayer id="13" name="Four" offsetx="434" offsety="255.833">
+  <image source="gashob.png" width="164" height="224"/>
+ </imagelayer>
  <objectgroup id="3" name="Sol">
   <object id="1" x="0.333333" y="272" width="158.333" height="207"/>
   <object id="2" x="159.5" y="400.5" width="176.25" height="79.25"/>
-  <object id="3" x="336.333" y="272" width="1039" height="207.667"/>
-  <object id="4" x="1376" y="448.333" width="703.667" height="30.6667"/>
-  <object id="7" x="1375.27" y="357.818" width="88.5455" height="13.4545"/>
-  <object id="8" x="1392" y="347.455" width="54.5455" height="10"/>
-  <object id="9" x="1388.91" y="371.455" width="62.7273" height="76.5455"/>
+  <object id="3" x="336.333" y="272" width="654.333" height="207.667"/>
+  <object id="4" x="992" y="448.333" width="846.667" height="30.6667"/>
+  <object id="7" x="989.937" y="357.151" width="88.5455" height="13.4545"/>
+  <object id="8" x="1008" y="346.788" width="54.5455" height="10"/>
+  <object id="9" x="1006.24" y="372.788" width="62.7273" height="76.5455"/>
   <object id="11" x="636.875" y="256.5" width="216" height="15.375"/>
   <object id="17" x="269.667" y="320.667" width="66.6667" height="79.3333"/>
+  <object id="18" x="434" y="264" width="163.636" height="8"/>
  </objectgroup>
  <objectgroup id="4" name="Eau"/>
 </map>

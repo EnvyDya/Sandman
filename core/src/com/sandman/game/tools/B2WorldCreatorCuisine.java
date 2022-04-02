@@ -8,6 +8,7 @@ import com.sandman.game.sprites.ButtonObject;
 import com.sandman.game.sprites.Cafard;
 import com.sandman.game.sprites.Drop;
 import com.sandman.game.sprites.Egg;
+import com.sandman.game.sprites.Fire;
 import com.sandman.game.sprites.Knife;
 
 public class B2WorldCreatorCuisine extends B2WorldCreator {
@@ -18,6 +19,7 @@ public class B2WorldCreatorCuisine extends B2WorldCreator {
 	private Knife knife;
 	private Cafard cafard;
 	private ButtonObject bouton1;
+	private Fire feu;
 	
 	//Compteurs des spawn Oeufs
 	private float timerEgg1;
@@ -35,12 +37,13 @@ public class B2WorldCreatorCuisine extends B2WorldCreator {
 	  interactiveTiles.add(knife);
 
 	  //Ajout du cafard
-	  cafard = new Cafard(world, 1520, -50);
+	  cafard = new Cafard(world, 1220, -50);
 	  interactiveTiles.add(cafard);
 
 	  //Ajout Bouton Feu
-	  bouton1 = new ButtonObject(world, 400, 183);
+	  bouton1 = new ButtonObject(world, 392, 195);
 	  interactiveTiles.add(bouton1);
+	  feu = new Fire(world, 530, 194, bouton1);
 
 	  //Init Eggs
 	  eggs = new ArrayList<Egg>();
@@ -144,6 +147,10 @@ private void gestionEgg() {
 
   public ButtonObject getBouton1() {
 	  return bouton1;
+  }
+
+  public Fire getFeu() {
+	  return feu;
   }
     
 }
