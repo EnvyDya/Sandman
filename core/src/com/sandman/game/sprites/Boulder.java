@@ -14,7 +14,7 @@ public class Boulder extends InteractiveTileObject{
         //Rectangle de positionnement et hitbox des pierres
     	//Position spawner près de la tondeuse : 1300x 130y
     	//Position spawner près du spawn : 690x 110y
-        super(new TextureRegion(new Texture("images/Boulder.png")),world,new Rectangle(posX, posY, 20, 20), BodyDef.BodyType.DynamicBody);
+        super(new TextureRegion(new Texture("images/Boulder.png")),world,new Rectangle(posX, posY, 20, 20), BodyDef.BodyType.DynamicBody,0);
         //Etat initial
         gel = false;
 

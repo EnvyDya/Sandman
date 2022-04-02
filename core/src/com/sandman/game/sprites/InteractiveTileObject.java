@@ -1,8 +1,10 @@
 package com.sandman.game.sprites;
 
+
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
@@ -23,33 +25,35 @@ public abstract class InteractiveTileObject extends Sprite{
 	protected Fixture fixture;
 	protected boolean gel;
 	
+	
 	public InteractiveTileObject(World world, Rectangle bounds) {
 		this.world = world;
-		defineObject(bounds, BodyDef.BodyType.StaticBody);
+		defineObject(bounds, BodyDef.BodyType.StaticBody,0);
 		gel = false;
 	}
 
 	//Constructeur pour les sprites
-	public InteractiveTileObject(TextureRegion region, World world, Rectangle bounds, BodyType bodyType) {
+	public InteractiveTileObject(TextureRegion region, World world, Rectangle bounds, BodyType bodyType,float offsetvertical) {
 		super(region);
 		this.world = world; 
-		defineObject(bounds, bodyType);
+		defineObject(bounds, bodyType,offsetvertical);
 		gel = false;
 	}
 
 	//Creer la hitbox de l'objet
-	public void defineObject(Rectangle bounds, BodyType bodyType){
+	public void defineObject(Rectangle bounds, BodyType bodyType,float offsetvertical){
 		BodyDef bdef = new BodyDef();
 		FixtureDef fdef = new FixtureDef();
 		PolygonShape shape = new PolygonShape();
 		
 		//Création du body
 		bdef.type = bodyType;
- 	    bdef.position.set((bounds.getX() + bounds.getWidth()/2)/Sandman.PPM, (bounds.getY() + bounds.getHeight()/2)/Sandman.PPM);
+ 	    bdef.position.set((bounds.getX() + bounds.getWidth()/2)/Sandman.PPM, ((bounds.getY() + bounds.getHeight()/2)/Sandman.PPM));
  	    body = world.createBody(bdef);
  	  
  	    //Création de la fixture
- 	    shape.setAsBox((bounds.getWidth()/2)/Sandman.PPM, (bounds.getHeight()/2)/Sandman.PPM);
+		Vector2 center = new Vector2(0/Sandman.PPM,offsetvertical/Sandman.PPM);
+ 	    shape.setAsBox((bounds.getWidth()/2)/Sandman.PPM, (bounds.getHeight()/2)/Sandman.PPM,center,0);
  	    fdef.shape = shape;
  	    fixture = body.createFixture(fdef);
 	}

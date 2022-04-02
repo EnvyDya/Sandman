@@ -69,10 +69,7 @@ public abstract class Level implements Screen{
         //Creation HUD
         hud = new Hud(world, this);
         needle = new Needle(world, this);
-        mb = new MenuButton(world, this);
-        
-        //Création et gestion des body
-        worldCreator = new B2WorldCreator(world, map, this);        
+        mb = new MenuButton(world, this);      
     }
     
     /**

@@ -52,9 +52,11 @@ public class Perso extends Sprite implements Disposable,CanDie{
 
 	//Attributs Mort
 	private boolean dead;
+	private float spawnx;
+	private float spawny;
   
     //Constructeur
-    public Perso(Level level) {
+    public Perso(Level level,float spawnx,float spawny) {
     	super(new TextureRegion(new Texture("images/Sandman.png")));
 		this.level = level;
 
@@ -70,6 +72,8 @@ public class Perso extends Sprite implements Disposable,CanDie{
 		runningRight = true;
 		dead = false;
 		landing = true;
+		this.spawnx =spawnx;
+		this.spawny = spawny;
 
 		createFrames();
 
@@ -155,7 +159,7 @@ public class Perso extends Sprite implements Disposable,CanDie{
 
 	//lance le respawn du joueur en le repositionnant au spawn et annule son dernier gel
 	public void respawn(){
-		b2body.setTransform(new Vector2(16/Sandman.PPM, 64/Sandman.PPM), 0);
+		b2body.setTransform(new Vector2(spawnx, spawny), 0);
 		level.getCamera().setToOrtho(false, 30, 20);
 		dead = false;
 		if(gel){
@@ -218,7 +222,6 @@ public class Perso extends Sprite implements Disposable,CanDie{
      * Methode qui prend en charge les appuis de touche
      */
     public void handleInput(float dt) {
-    	//TODO: Régler problème escalade des murs
       
     	//On vérifie si une touche de saut est appuyée et que le joueur ne soit pas déjà dans les airs
     	if(Gdx.input.isKeyPressed(Input.Keys.SPACE) && (getState() == State.STANDING || getState() == State.RUNNING)) {
@@ -282,11 +285,7 @@ public class Perso extends Sprite implements Disposable,CanDie{
     public void definePerso() {
     	BodyDef bdef = new BodyDef();
 
-		//Position Spawn :
-    	bdef.position.set(16/Sandman.PPM, 64/Sandman.PPM);
-
-		//Position Tondeuse :
-		//bdef.position.set(1300/Sandman.PPM, 150/Sandman.PPM);
+		bdef.position.set(spawnx, spawny);
 
     	bdef.type = BodyDef.BodyType.DynamicBody;
     	b2body = level.getWorld().createBody(bdef);
@@ -301,7 +300,7 @@ public class Perso extends Sprite implements Disposable,CanDie{
 
 		//Création d'un sensor en dessous du perso qui va detecté les colisions
         EdgeShape pied = new EdgeShape();
-        pied.set(new Vector2(-9/Sandman.PPM, -15/Sandman.PPM),new Vector2(9/Sandman.PPM, -15/Sandman.PPM));
+        pied.set(new Vector2(-9/Sandman.PPM, -14/Sandman.PPM),new Vector2(9/Sandman.PPM, -14/Sandman.PPM));
         fdef.shape = pied;
         fdef.isSensor = true;
         b2body.createFixture(fdef).setUserData("pied");

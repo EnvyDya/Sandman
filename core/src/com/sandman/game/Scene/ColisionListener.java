@@ -66,7 +66,7 @@ public class ColisionListener implements ContactListener {
                     objet = fixA;
                 }
                 //si le danger peut tuer et que l'objet peut mourir alors invoque la méthode die
-                if(((Danger) danger.getUserData()).canKill() && CanDie.class.isAssignableFrom(objet.getUserData().getClass())){
+                if(((Danger) danger.getUserData()).canKill(((CanDie) objet.getUserData())) && CanDie.class.isAssignableFrom(objet.getUserData().getClass())){
                     ((CanDie) objet.getUserData()).die();
                 }
             }
