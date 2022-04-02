@@ -141,6 +141,10 @@ public class LevelCuisine extends Level{
         
     }
 
+    public void stopLevel() {
+      mainTheme.stop();
+    }
+
     @Override
     public void dispose() {
       map.dispose();

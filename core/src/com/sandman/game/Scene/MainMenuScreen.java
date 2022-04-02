@@ -45,8 +45,7 @@ public class MainMenuScreen implements Screen {
 				dispose();
 			}
 			if(pos.x > 385 && pos.x < 570 && pos.y > 210 && pos.y < 270) {
-				//TODO: Remplacer par level cuisine
-				game.setScreen(new LevelJardin(game));
+				game.setScreen(new LevelCuisine(game));
 				dispose();
 			}
 		}

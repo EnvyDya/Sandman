@@ -17,7 +17,7 @@ public class MenuButton extends InteractiveTileObject{
         //Rectangle de positionnement et hitbox des pierres
     	//Position spawner près de la tondeuse : 1300x 130y
     	//Position spawner près du spawn : 690x 110y
-        super(new TextureRegion(new Texture("images/menuButton.png")),world,new Rectangle(425, 270, 40, 40), BodyDef.BodyType.DynamicBody);
+        super(new TextureRegion(new Texture("images/menuButton.png")),world,new Rectangle(425, 270, 40, 40), BodyDef.BodyType.DynamicBody,0);
         //Etat initial
         gel = false;
         
