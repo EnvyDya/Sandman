@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.physics.box2d.World;
+import com.sandman.game.Scene.Level;
 import com.sandman.game.sprites.ButtonObject;
 import com.sandman.game.sprites.Cafard;
 import com.sandman.game.sprites.Drop;
@@ -29,8 +30,8 @@ public class B2WorldCreatorCuisine extends B2WorldCreator {
 	//Compteur spawn goute
 	private float timergoute;
     
-  public B2WorldCreatorCuisine(World world, TiledMap map) {
-	  super(world, map);
+  public B2WorldCreatorCuisine(World world, TiledMap map,Level level) {
+	  super(world, map,level);
 
 	  //Ajout du couteau
 	  knife = new Knife(world, 728, 128);

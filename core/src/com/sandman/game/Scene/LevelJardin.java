@@ -33,7 +33,7 @@ public class LevelJardin extends Level{
         super(game, "images/jardin.tmx", "sounds/themejardin.wav", 20f);
 
 		//Création et gestion des body
-        worldCreator = new B2WorldCreatorJardin(world, map);
+        worldCreator = new B2WorldCreatorJardin(world, map, this);
 
         //ajout bruit Oiseaux
         sonBird = Gdx.audio.newSound(Gdx.files.internal("sounds/sonBird.wav"));

@@ -7,6 +7,7 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.World;
+import com.sandman.game.Scene.Level;
 import com.sandman.game.sprites.Boulder;
 import com.sandman.game.sprites.Feuille;
 import com.sandman.game.sprites.Tondeuse;
@@ -23,8 +24,8 @@ public class B2WorldCreatorJardin extends B2WorldCreator{
 	private float timerFeuilles;
 	private float timerBoulder;
     
-	public B2WorldCreatorJardin(World world, TiledMap map) {
-		super(world, map);
+	public B2WorldCreatorJardin(World world, TiledMap map,Level level) {
+		super(world, map, level);
 
 	    feuille = new ArrayList<Feuille>();
 	    timerFeuilles = 0f;

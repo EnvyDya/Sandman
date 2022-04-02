@@ -32,7 +32,7 @@ public class LevelCuisine extends Level{
     super(game, "images/kitchen.tmx", "sounds/themecuisine.wav", 20f);
 
     //Création et gestion des body
-    worldCreator = new B2WorldCreatorCuisine(world, map);
+    worldCreator = new B2WorldCreatorCuisine(world, map, this);
 
     //Player variable
     speed = 1.5f;
@@ -95,6 +95,9 @@ public class LevelCuisine extends Level{
     cafard.draw(game.batch);
     bouton1.draw(game.batch);
     feu.draw(game.batch);
+    hud.draw(game.batch);
+		needle.draw(game.batch);
+		mb.draw(game.batch);
 
 		if(player.getGel()){
 	    player.getObjetGel().draw(game.batch);

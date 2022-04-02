@@ -13,20 +13,25 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.sandman.game.Sandman;
+import com.sandman.game.Scene.Level;
 import com.sandman.game.sprites.InteractiveTileObject;
 
 public abstract class B2WorldCreator{
 	protected World world;
+	private MenuButton bouton;
 	
 	//Liste de toutes nos interactives tiles
     public ArrayList<InteractiveTileObject> interactiveTiles = new ArrayList<InteractiveTileObject>();
 
-	public B2WorldCreator(World world, TiledMap map) {
+	public B2WorldCreator(World world, TiledMap map,Level level) {
 		   this.world = world;
 		   BodyDef bdef = new BodyDef();
 	       PolygonShape shape = new PolygonShape();
 	       FixtureDef fdef = new FixtureDef();
 	       Body body;
+
+		   bouton = level.getMenuButton();
+		   interactiveTiles.add(bouton);
 
 	       //Cree les box2D du sol
 			for (MapLayer layer : map.getLayers()) {
