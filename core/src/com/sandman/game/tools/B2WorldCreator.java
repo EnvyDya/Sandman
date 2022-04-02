@@ -12,7 +12,6 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.SortedIntList.Iterator;
 import com.sandman.game.Sandman;
 import com.sandman.game.sprites.InteractiveTileObject;
 
@@ -37,11 +36,6 @@ public abstract class B2WorldCreator{
 						
 						bdef.type = BodyDef.BodyType.StaticBody;
 						bdef.position.set((rect.getX() + rect.getWidth()/2)/Sandman.PPM, (rect.getY() + rect.getHeight()/2)/Sandman.PPM);
-
-						if(object.getProperties().get("rotation")!=null){
-							bdef.angle = ((float) object.getProperties().get("rotation"))*(-1);
-							bdef.position.add(0, 52/Sandman.PPM);
-						}
 						
 						body = world.createBody(bdef);					
 						shape.setAsBox((rect.getWidth()/2)/Sandman.PPM, (rect.getHeight()/2)/Sandman.PPM);

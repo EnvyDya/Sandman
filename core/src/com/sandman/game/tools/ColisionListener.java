@@ -5,6 +5,7 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.sandman.game.sprites.ButtonObject;
 import com.sandman.game.sprites.Perso;
 import com.sandman.game.sprites.Water;
 import com.sandman.game.sprites.interfaces.CanDie;
@@ -26,18 +27,30 @@ public class ColisionListener implements ContactListener {
 
             //Regarde si le perso attérit sur quelque chose
             if(fixA.getUserData()=="pied" || fixB.getUserData()=="pied"){
-                if(Water.class.isAssignableFrom(fixA.getUserData().getClass())){
-                    if(((Water)fixA.getUserData()).isFrozen()){
-                        perso.land();
+                if(fixA.getUserData()=="pied"){
+                    if(Water.class.isAssignableFrom(fixB.getUserData().getClass())){
+                        if(((Water)fixB.getUserData()).isFrozen()){
+                            perso.land();
+                        }
                     }
-                }
-                else if(Water.class.isAssignableFrom(fixB.getUserData().getClass())){
-                    if(((Water)fixB.getUserData()).isFrozen()){
+                    else if(ButtonObject.class.isAssignableFrom(fixB.getUserData().getClass())){
+                        ((ButtonObject) fixB.getUserData()).pression();
                         perso.land();
                     }
                 }
                 else{
-                    perso.land();
+                    if(Water.class.isAssignableFrom(fixA.getUserData().getClass())){
+                        if(((Water)fixA.getUserData()).isFrozen()){
+                            perso.land();
+                        }
+                    }
+                    else if(ButtonObject.class.isAssignableFrom(fixA.getUserData().getClass())){
+                        ((ButtonObject) fixA.getUserData()).pression();
+                        perso.land();
+                    }
+                    else{
+                        perso.land();
+                    }
                 }
             }
 
@@ -85,6 +98,18 @@ public class ColisionListener implements ContactListener {
                 }
                 if(CanDie.class.isAssignableFrom(objet.getUserData().getClass())){
                     ((Danger) danger.getUserData()).cantKillAnymore(((CanDie) objet.getUserData()));
+                }
+            }
+            else if(fixA.getUserData()=="pied" || fixB.getUserData()=="pied"){
+                if(fixA.getUserData()=="pied"){
+                    if(ButtonObject.class.isAssignableFrom(fixB.getUserData().getClass())){
+                        ((ButtonObject) fixB.getUserData()).finpression();
+                    }
+                }
+                else{
+                    if(ButtonObject.class.isAssignableFrom(fixA.getUserData().getClass())){
+                        ((ButtonObject) fixA.getUserData()).finpression();
+                    }
                 }
             }
         }

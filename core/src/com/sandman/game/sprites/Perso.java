@@ -300,7 +300,7 @@ public class Perso extends Sprite implements Disposable,CanDie{
 
 		//Création d'un sensor en dessous du perso qui va detecté les colisions
         EdgeShape pied = new EdgeShape();
-        pied.set(new Vector2(-9/Sandman.PPM, -15/Sandman.PPM),new Vector2(9/Sandman.PPM, -15/Sandman.PPM));
+        pied.set(new Vector2(-9/Sandman.PPM, -14/Sandman.PPM),new Vector2(9/Sandman.PPM, -14/Sandman.PPM));
         fdef.shape = pied;
         fdef.isSensor = true;
         b2body.createFixture(fdef).setUserData("pied");
