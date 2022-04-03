@@ -335,6 +335,6 @@ public class Perso extends Sprite implements Disposable,CanDie{
 
 	@Override
 	public void die() {
-		//dead = true;
+		dead = true;
 	}
 }

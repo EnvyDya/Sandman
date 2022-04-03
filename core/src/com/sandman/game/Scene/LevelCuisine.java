@@ -128,7 +128,6 @@ public class LevelCuisine extends Level{
 
     @Override
     public void update(float dt) {
-      System.out.println(camera.position);
       player.handleInput(dt);
 	    player.update(dt);
       knife.update();
@@ -143,6 +142,8 @@ public class LevelCuisine extends Level{
 	    	
 	    cameraHandle();
       mb.update();
+      hud.update();
+      needle.update();
 	    camera.update();
       
 	    	

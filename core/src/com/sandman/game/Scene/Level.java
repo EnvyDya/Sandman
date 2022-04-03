@@ -67,8 +67,8 @@ public abstract class Level implements Screen{
         b2dr = new Box2DDebugRenderer();
         
         //Creation HUD
-        hud = new Hud(world, this);
-        needle = new Needle(world, this);     
+        hud = new Hud(this);
+        needle = new Needle(this);     
     }
     
     /**
