@@ -31,7 +31,7 @@ public class Hud extends Sprite{
 		
 		//Création du body
 		bdef.type = BodyType.StaticBody;
- 	    bdef.position.set(0, 0);
+ 	    bdef.position.set(0,0);
  	    body = world.createBody(bdef);
  	    body.setActive(false);
 	    

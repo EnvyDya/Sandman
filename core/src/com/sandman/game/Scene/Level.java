@@ -68,8 +68,7 @@ public abstract class Level implements Screen{
         
         //Creation HUD
         hud = new Hud(world, this);
-        needle = new Needle(world, this);
-        mb = new MenuButton(world, this);      
+        needle = new Needle(world, this);     
     }
     
     /**

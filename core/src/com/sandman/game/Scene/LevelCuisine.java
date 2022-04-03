@@ -44,6 +44,7 @@ public class LevelCuisine extends Level{
     //Initialisation Entités
     player = new Perso(this,16/Sandman.PPM,224/Sandman.PPM);
     lit = new Bed(world, 1800/Sandman.PPM, 39/Sandman.PPM);
+    mb = ((B2WorldCreatorCuisine) worldCreator).getBouton();
     eggs = ((B2WorldCreatorCuisine) worldCreator).getEggs();
     knife = ((B2WorldCreatorCuisine) worldCreator).getKnife();
     cafard = ((B2WorldCreatorCuisine) worldCreator).getCafard();
@@ -76,8 +77,8 @@ public class LevelCuisine extends Level{
     if(player.b2body.getPosition().x >= 15 && player.b2body.getPosition().x <= 100) {
         camera.position.x = player.b2body.getPosition().x;
     }
-    if(player.b2body.getPosition().y >= 10 && player.b2body.getPosition().y <= 20) {
-        camera.position.y = player.b2body.getPosition().y;
+    if(player.b2body.getPosition().y >= 6 && player.b2body.getPosition().y <= 20) {
+        camera.position.y = player.b2body.getPosition().y+4;
     }
   }
 
@@ -121,12 +122,13 @@ public class LevelCuisine extends Level{
 	  game.batch.end();
 	
 	  //Affiche les box2d dans le jeu
-	  //b2dr.render(world, camera.combined);
+	  b2dr.render(world, camera.combined);
         
     }
 
     @Override
     public void update(float dt) {
+      System.out.println(camera.position);
       player.handleInput(dt);
 	    player.update(dt);
       knife.update();
@@ -140,8 +142,9 @@ public class LevelCuisine extends Level{
 	    world.step(1/60f, 6, 2);
 	    	
 	    cameraHandle();
-	    	
+      mb.update();
 	    camera.update();
+      
 	    	
 	    //Dit au renderer de n'afficher que ce que la camera voit
 	    renderer.setView(camera);

@@ -47,6 +47,7 @@ public class LevelJardin extends Level{
         //Initialisation Entités
         lit = new Bed(world, 1920/Sandman.PPM, 135/Sandman.PPM);
         player = new Perso(this,16/Sandman.PPM,64/Sandman.PPM);
+		mb = ((B2WorldCreatorJardin) worldCreator).getBouton();
         tondeuse = ((B2WorldCreatorJardin)worldCreator).getTondeuse();
         feuilles = ((B2WorldCreatorJardin) worldCreator).getFeuille();
         boulders = ((B2WorldCreatorJardin) worldCreator).getBoulder();

@@ -30,7 +30,7 @@ public abstract class B2WorldCreator{
 	       FixtureDef fdef = new FixtureDef();
 	       Body body;
 
-		   bouton = level.getMenuButton();
+		   bouton = new MenuButton(world, level);
 		   interactiveTiles.add(bouton);
 
 	       //Cree les box2D du sol
@@ -52,6 +52,10 @@ public abstract class B2WorldCreator{
 			}
 	       
 			
+	}
+
+	public MenuButton getBouton() {
+		return bouton;
 	}
 	
 	public abstract void update(float dt);
