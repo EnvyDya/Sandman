@@ -43,7 +43,7 @@ public class LevelCuisine extends Level{
 
     //Initialisation Entités
     player = new Perso(this,16/Sandman.PPM,224/Sandman.PPM);
-    lit = new Bed(world, 1800/Sandman.PPM, 39/Sandman.PPM);
+    lit = new Bed(world, 1752/Sandman.PPM, 39/Sandman.PPM);
     mb = ((B2WorldCreatorCuisine) worldCreator).getBouton();
     eggs = ((B2WorldCreatorCuisine) worldCreator).getEggs();
     knife = ((B2WorldCreatorCuisine) worldCreator).getKnife();
@@ -122,7 +122,7 @@ public class LevelCuisine extends Level{
 	  game.batch.end();
 	
 	  //Affiche les box2d dans le jeu
-	  b2dr.render(world, camera.combined);
+	  //b2dr.render(world, camera.combined);
         
     }
 
