@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.sandman.game.Sandman;
+import com.sandman.game.sprites.Bed;
 import com.sandman.game.sprites.ButtonObject;
 import com.sandman.game.sprites.Cafard;
 import com.sandman.game.sprites.Drop;
@@ -21,6 +22,7 @@ public class LevelCuisine extends Level{
 	private ColisionListener colision;
 
   //Entité variable
+  private Bed lit;
   private ArrayList<Egg> eggs;
   private ArrayList<Drop> drop;
   private Knife knife;
@@ -41,6 +43,7 @@ public class LevelCuisine extends Level{
 
     //Initialisation Entités
     player = new Perso(this,16/Sandman.PPM,224/Sandman.PPM);
+    lit = new Bed(world, 1800/Sandman.PPM, 39/Sandman.PPM);
     eggs = ((B2WorldCreatorCuisine) worldCreator).getEggs();
     knife = ((B2WorldCreatorCuisine) worldCreator).getKnife();
     cafard = ((B2WorldCreatorCuisine) worldCreator).getCafard();
@@ -91,6 +94,7 @@ public class LevelCuisine extends Level{
 	  game.batch.setProjectionMatrix(camera.combined);
     game.batch.begin();
 		player.draw(game.batch);
+    lit.draw(game.batch);
     knife.draw(game.batch);
     cafard.draw(game.batch);
     bouton1.draw(game.batch);

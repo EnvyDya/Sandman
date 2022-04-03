@@ -5,6 +5,9 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.sandman.game.Sandman;
+import com.sandman.game.Scene.MainMenuScreen;
+import com.sandman.game.sprites.Bed;
 import com.sandman.game.sprites.ButtonObject;
 import com.sandman.game.sprites.Perso;
 import com.sandman.game.sprites.Water;
@@ -37,6 +40,12 @@ public class ColisionListener implements ContactListener {
                         ((ButtonObject) fixB.getUserData()).pression();
                         perso.land();
                     }
+                    else if(Bed.class.isAssignableFrom(fixB.getUserData().getClass())){
+                        Sandman game = perso.getLevel().getGame();
+                        game.setScreen(new MainMenuScreen(game));
+                        perso.getLevel().stopLevel();
+                    }
+                    
                 }
                 else{
                     if(Water.class.isAssignableFrom(fixA.getUserData().getClass())){
@@ -47,6 +56,11 @@ public class ColisionListener implements ContactListener {
                     else if(ButtonObject.class.isAssignableFrom(fixA.getUserData().getClass())){
                         ((ButtonObject) fixA.getUserData()).pression();
                         perso.land();
+                    }
+                    else if(Bed.class.isAssignableFrom(fixA.getUserData().getClass())){
+                        Sandman game = perso.getLevel().getGame();
+                        game.setScreen(new MainMenuScreen(game));
+                        perso.getLevel().stopLevel();
                     }
                     else{
                         perso.land();

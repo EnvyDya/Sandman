@@ -13,14 +13,13 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.sandman.game.Sandman;
 
 public class Bed extends Sprite{
-	private World world;
 	private Body body;
 	private Fixture fixture;
 	
     //Constructeur
     public Bed(World world, float posX, float posY){
     	super(new TextureRegion(new Texture("images/bedsprite.png")));
-		this.world = world;
+		
 		
 		BodyDef bdef = new BodyDef();
 		FixtureDef fdef = new FixtureDef();
