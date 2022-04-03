@@ -61,6 +61,7 @@ public class LevelJardin extends Level{
    public void stopLevel() {
 	   mainTheme.stop();
 	   sonBird.stop();
+	   player.getBruitHorloge().stop();
    }
     
   @Override
